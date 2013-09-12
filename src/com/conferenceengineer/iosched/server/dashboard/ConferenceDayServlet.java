@@ -2,6 +2,8 @@ package com.conferenceengineer.iosched.server.dashboard;
 
 import com.conferenceengineer.iosched.server.datamodel.Conference;
 import com.conferenceengineer.iosched.server.datamodel.ConferenceDAO;
+import com.conferenceengineer.iosched.server.datamodel.ConferenceDay;
+import com.conferenceengineer.iosched.server.datamodel.TrackDAO;
 import com.conferenceengineer.iosched.server.utils.EntityManagerWrapperBridge;
 
 import javax.persistence.EntityManager;
@@ -10,34 +12,40 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
- * Display the conference dashboard to the user.
+ * Servlet to handle tracks
  */
-public class Dashboard extends HttpServlet {
+public class ConferenceDayServlet extends HttpServlet {
+
+    /**
+     * Post is add!!!
+     */
 
     @Override
-    public void doGet(final HttpServletRequest request, final HttpServletResponse response)
+    public void doPost(final HttpServletRequest request, final HttpServletResponse response)
         throws IOException, ServletException {
-
-        request.setAttribute("serverStatus", "All servers are operational");
-        request.setAttribute("serverStatusType", "Good");
-
         EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
         try {
+            em.getTransaction().begin();
             String conferenceIdString = request.getServletContext().getInitParameter("conferenceId");
             Integer conferenceId = Integer.parseInt(conferenceIdString);
 
             Conference conference = ConferenceDAO.getInstance().get(em, conferenceId);
-            request.setAttribute("conference", conference);
 
-            request.getRequestDispatcher("/dashboard/dashboard.jsp").forward(request, response);
+            String date = request.getParameter("date");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            em.persist(new ConferenceDay(conference, sdf.parse(date)));
+            em.getTransaction().commit();
+        } catch (ParseException e) {
+            throw new ServletException(e);
         } finally {
             em.close();
         }
+
+        response.sendRedirect("Dashboard");
     }
 }

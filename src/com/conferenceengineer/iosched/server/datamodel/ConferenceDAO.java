@@ -23,20 +23,6 @@ public class ConferenceDAO {
     }
 
     /**
-     * Store the information about the authentication credentials for an external authenticator.
-     *
-     * @param entityManager The EntityManager currently in user
-     * @param name The name of the conference.
-     */
-    public Conference create(final EntityManager entityManager, final String name,
-                                 final Date start, final Date end) {
-        Conference conference = create(entityManager, name);
-        conference.setStartDate(start);
-        conference.setEndDate(end);
-        return conference;
-    }
-
-    /**
      * Get a conference by it's ID.
      *
      * @param em The currently active EntityManager.

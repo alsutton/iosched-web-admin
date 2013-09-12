@@ -1,5 +1,7 @@
 package com.conferenceengineer.iosched.server.datamodel;
 
+import com.conferenceengineer.iosched.server.datamodel.ConferenceDay;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -27,13 +29,9 @@ public class Conference {
     @Column(name="conference_name")
     private String name;
 
-    @Column(name="start_date")
-    @Temporal(value=TemporalType.DATE)
-    private Date startDate;
-
-    @Column(name="end_date")
-    @Temporal(value=TemporalType.DATE)
-    private Date endDate;
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "conference")
+    @OrderBy("date")
+    private List<ConferenceDay> dateList;
 
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "conference")
     @OrderBy("name")
@@ -79,20 +77,12 @@ public class Conference {
         this.name = name;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public List<ConferenceDay> getDateList() {
+        return dateList;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setDateList(List<ConferenceDay> dateList) {
+        this.dateList = dateList;
     }
 
     public List<Track> getTrackList() {

@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,22 +41,7 @@ public class BootstrapServlet extends HttpServlet {
 
             UserAuthenticationInformationDAO.getInstance().createInternalAuthenticationEntry(em, al, "admin");
 
-            Calendar start = Calendar.getInstance();
-            start.set(Calendar.YEAR, 2013);
-            start.set(Calendar.MONTH, 9);
-            start.set(Calendar.DAY_OF_MONTH, 24);
-
-            Calendar end = Calendar.getInstance();
-            end.set(Calendar.YEAR, 2013);
-            end.set(Calendar.MONTH, 9);
-            end.set(Calendar.DAY_OF_MONTH, 27);
-
-            ConferenceDAO.
-                    getInstance().
-                        create( em,
-                                request.getServletContext().getInitParameter("conferenceName"),
-                                start.getTime(),
-                                end.getTime());
+            em.persist(new Conference(request.getServletContext().getInitParameter("conferenceName")));
 
             response.sendRedirect(request.getContextPath());
 

@@ -12,7 +12,7 @@
 
     <context-param>
         <param-name>conferenceId</param-name>
-        <param-value>3</param-value>
+        <param-value>9</param-value>
     </context-param>
 
     <filter>
@@ -66,8 +66,18 @@
     </servlet>
 
     <servlet>
+        <servlet-name>TalkSlotServlet</servlet-name>
+        <servlet-class>com.conferenceengineer.iosched.server.dashboard.TalkSlotServlet</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>TracksServlet</servlet-name>
         <servlet-class>com.conferenceengineer.iosched.server.dashboard.TracksServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>ConferenceDayServlet</servlet-name>
+        <servlet-class>com.conferenceengineer.iosched.server.dashboard.ConferenceDayServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -91,7 +101,17 @@
     </servlet-mapping>
 
     <servlet-mapping>
+        <servlet-name>TalkSlotServlet</servlet-name>
+        <url-pattern>/dashboard/talkSlots</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
         <servlet-name>TracksServlet</servlet-name>
         <url-pattern>/dashboard/tracks</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ConferenceDayServlet</servlet-name>
+        <url-pattern>/dashboard/conferenceDays</url-pattern>
     </servlet-mapping>
 </web-app>

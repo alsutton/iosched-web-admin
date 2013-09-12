@@ -16,9 +16,9 @@ public class TalkSlot {
     @Column(name="id")
     private int id;
 
-    @Column(name="slot_date")
-    @Temporal(value=TemporalType.DATE)
-    private Date date;
+    @ManyToOne
+    @JoinColumn(name="conference_day")
+    private ConferenceDay conferenceDay;
 
     @Column(name="slot_start")
     @Temporal(value=TemporalType.TIMESTAMP)
@@ -32,12 +32,14 @@ public class TalkSlot {
     @JoinColumn(name="location_id")
     private Location location;
 
-    @ManyToOne
-    @JoinColumn(name="track_id")
-    private Track track;
-
     public TalkSlot() {
         super();
+    }
+
+    public TalkSlot(final ConferenceDay conferenceDay, final Calendar start, final Calendar end) {
+        this.conferenceDay = conferenceDay;
+        this.start = start;
+        this.end = end;
     }
 
     public int getId() {
@@ -48,12 +50,12 @@ public class TalkSlot {
         this.id = id;
     }
 
-    public Date getDate() {
-        return date;
+    public ConferenceDay getConferenceDay() {
+        return conferenceDay;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setConferenceDay(ConferenceDay conferenceDay) {
+        this.conferenceDay = conferenceDay;
     }
 
     public Calendar getStart() {
@@ -78,13 +80,5 @@ public class TalkSlot {
 
     public void setLocation(Location location) {
         this.location = location;
-    }
-
-    public Track getTrack() {
-        return track;
-    }
-
-    public void setTrack(Track track) {
-        this.track = track;
     }
 }
