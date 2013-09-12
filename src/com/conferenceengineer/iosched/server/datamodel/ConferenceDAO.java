@@ -2,6 +2,7 @@ package com.conferenceengineer.iosched.server.datamodel;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,8 +16,35 @@ public class ConferenceDAO {
      * @param entityManager The EntityManager currently in user
      * @param name The name of the conference.
      */
-    public void Conference(final EntityManager entityManager, final String name) {
-        entityManager.persist(new Conference(name));
+    public Conference create(final EntityManager entityManager, final String name) {
+        Conference conference = new Conference(name);
+        entityManager.persist(conference);
+        return conference;
+    }
+
+    /**
+     * Store the information about the authentication credentials for an external authenticator.
+     *
+     * @param entityManager The EntityManager currently in user
+     * @param name The name of the conference.
+     */
+    public Conference create(final EntityManager entityManager, final String name,
+                                 final Date start, final Date end) {
+        Conference conference = create(entityManager, name);
+        conference.setStartDate(start);
+        conference.setEndDate(end);
+        return conference;
+    }
+
+    /**
+     * Get a conference by it's ID.
+     *
+     * @param em The currently active EntityManager.
+     * @param id The ID of the conference to get.
+     */
+
+    public Conference get(final EntityManager em, final Integer id) {
+        return em.find(Conference.class, id);
     }
 
     /**

@@ -29,13 +29,16 @@ public class AuthenticationFilter implements Filter {
                 return;
             }
 
-            servletRequest.setAttribute("entity_manager", em);
-            servletRequest.setAttribute("user", user);
-
-            filterChain.doFilter(servletRequest, servletResponse);
+            String username = user.getHumanName();
+            if(username == null || username.isEmpty()) {
+                username = user.getEmail();
+            }
+            servletRequest.setAttribute("username", username);
         } finally {
             em.close();
         }
+
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override

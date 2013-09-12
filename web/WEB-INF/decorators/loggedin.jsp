@@ -12,6 +12,8 @@
     <link rel="stylesheet" type="text/css" href="http://dcuk2013.funkyandroid.net/css/bootstrap.min.css" >
     <link rel="stylesheet" type="text/css" href="http://dcuk2013.funkyandroid.net/css/style.css" >
     <title>${initParam.conferenceName}</title>
+    <script src="http://dcuk2013.funkyandroid.net/js/jquery-1.10.2.min.js"></script>
+    <script src="http://dcuk2013.funkyandroid.net/js/bootstrap.min.js"></script>
 	<decorator:head />
 </head>
 <body>
@@ -28,10 +30,7 @@
             </div>
             <c:if test="${requestScope.user != null}">
                 <div class="navbar-right">
-                    <c:choose>
-                        <c:when test="${empty requestScope.user.humanName}">${requestScope.user.email}</c:when>
-                        <c:otherwise><c:out value="${requestScope.user.humanName}" /></c:otherwise>
-                    </c:choose> &nbsp;|&nbsp; <a href="<c:url value='/Logout' />">Logout</a>
+                    <c:out value="${requestScope.username}" />&nbsp;|&nbsp; <a href="<c:url value='/Logout' />">Logout</a>
                 </div>
             </c:if>
         </div>
@@ -45,7 +44,5 @@
         <p class="text-center">&copy;Copyright 2013 Funky Android Ltd., All rights reserved.</p>
     </div>
 </div>
-<script src="http://dcuk2013.funkyandroid.net/js/jquery.js"></script>
-<script src="http://dcuk2013.funkyandroid.net/js/bootstrap.min.js"></script>
 </body>
 </html>

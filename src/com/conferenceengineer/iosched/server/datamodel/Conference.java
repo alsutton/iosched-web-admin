@@ -2,6 +2,7 @@ package com.conferenceengineer.iosched.server.datamodel;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Representation of a user in the system
@@ -34,6 +35,9 @@ public class Conference {
     @Temporal(value=TemporalType.DATE)
     private Date endDate;
 
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "conference")
+    @OrderBy("name")
+    private List<Track> trackList;
 
     public Conference() {
         super();
@@ -89,5 +93,13 @@ public class Conference {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public List<Track> getTrackList() {
+        return trackList;
+    }
+
+    public void setTrackList(List<Track> trackList) {
+        this.trackList = trackList;
     }
 }

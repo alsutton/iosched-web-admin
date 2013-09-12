@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table( name = "track" )
-public class Track {
+public class Track implements Comparable<Track>{
 
     @Id
     @GeneratedValue
@@ -36,5 +36,35 @@ public class Track {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Conference getConference() {
+        return conference;
+    }
+
+    public void setConference(Conference conference) {
+        this.conference = conference;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public int compareTo(Track otherTrack) {
+        if(name == null && otherTrack.name == null) {
+            return 0;
+        }
+        if(name == null) {
+            return Integer.MIN_VALUE;
+        }
+        if(otherTrack.name == null) {
+            return Integer.MAX_VALUE;
+        }
+        return name.compareTo(otherTrack.name);
     }
 }

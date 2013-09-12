@@ -10,6 +10,11 @@
         <param-value>Droidcon London 2013</param-value>
     </context-param>
 
+    <context-param>
+        <param-name>conferenceId</param-name>
+        <param-value>3</param-value>
+    </context-param>
+
     <filter>
         <filter-name>AuthenticationFilter</filter-name>
         <filter-class>com.conferenceengineer.iosched.server.AuthenticationFilter</filter-class>
@@ -41,6 +46,11 @@
     </filter-mapping>
 
     <servlet>
+        <servlet-name>Bootstrap</servlet-name>
+        <servlet-class>com.conferenceengineer.iosched.server.BootstrapServlet</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>Dashboard</servlet-name>
         <servlet-class>com.conferenceengineer.iosched.server.dashboard.Dashboard</servlet-class>
     </servlet>
@@ -55,9 +65,14 @@
         <servlet-class>com.conferenceengineer.iosched.server.Logout</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>TracksServlet</servlet-name>
+        <servlet-class>com.conferenceengineer.iosched.server.dashboard.TracksServlet</servlet-class>
+    </servlet>
+
     <servlet-mapping>
-        <servlet-name>Logout</servlet-name>
-        <url-pattern>/Logout</url-pattern>
+        <servlet-name>Bootstrap</servlet-name>
+        <url-pattern>/Bootstrap</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
@@ -66,7 +81,17 @@
     </servlet-mapping>
 
     <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/Logout</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
         <servlet-name>Dashboard</servlet-name>
         <url-pattern>/dashboard/Dashboard</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>TracksServlet</servlet-name>
+        <url-pattern>/dashboard/tracks</url-pattern>
     </servlet-mapping>
 </web-app>
