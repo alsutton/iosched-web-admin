@@ -26,14 +26,14 @@
                 </button>
                 <a class="navbar-brand" href="/">${initParam.conferenceName}</a>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="http://funkyandroid.com/eps/index.html">About the EPS</a></li>
-                    <li><a href="http://funkyandroid.com/eps/demo.html">Demo</a></li>
-                    <li><a href="http://funkyandroid.com/eps/download.html">Download</a></li>
-                    <li class="active"><a href="https://funkyandroid.com/eps/store/">Buy</a></li>
-                </ul>
-            </div>
+            <c:if test="${requestScope.user != null}">
+                <div class="navbar-right">
+                    <c:choose>
+                        <c:when test="${empty requestScope.user.humanName}">${requestScope.user.email}</c:when>
+                        <c:otherwise><c:out value="${requestScope.user.humanName}" /></c:otherwise>
+                    </c:choose> &nbsp;|&nbsp; <a href="<c:url value='/Logout' />">Logout</a>
+                </div>
+            </c:if>
         </div>
     </div>
     <div class="container">
@@ -42,20 +42,10 @@
 </div>
 <div id="footer">
     <div class="container">
-        <p class="text-center"><a href="http://www.linkedin.com/company/funky-android-limited" rel="author" style="text-decoration:none;" target="_blank">
-            <img src="https://528be3620adf65cf9552-6ff5bf27bb9e4d87d2fb856504d6886d.ssl.cf3.rackcdn.com/linkedin.png" alt="LinkedIn" />
-        </a>
-            &nbsp;
-            <a href="https://twitter.com/funkyandroid" rel="author" style="text-decoration:none;" target="_blank">
-                <img src="https://528be3620adf65cf9552-6ff5bf27bb9e4d87d2fb856504d6886d.ssl.cf3.rackcdn.com/twitter.png" alt="Twitter" />
-            </a>
-            &nbsp;
-            <a href="https://www.facebook.com/FunkyAndroid" rel="author" style="text-decoration:none;" target="_blank">
-                <img src="https://528be3620adf65cf9552-6ff5bf27bb9e4d87d2fb856504d6886d.ssl.cf3.rackcdn.com/facebook.png" alt="Facebook" />
-            </a></p>
+        <p class="text-center">&copy;Copyright 2013 Funky Android Ltd., All rights reserved.</p>
     </div>
 </div>
-<script src="https://a58cb323b3f25c8f2f77-eec300142ae6d0545b31737a10fa357c.ssl.cf3.rackcdn.com/bootstrap-3_0_0/js/jquery.js"></script>
-<script src="https://a58cb323b3f25c8f2f77-eec300142ae6d0545b31737a10fa357c.ssl.cf3.rackcdn.com/bootstrap-3_0_0/js/bootstrap.min.js"></script>
+<script src="http://dcuk2013.funkyandroid.net/js/jquery.js"></script>
+<script src="http://dcuk2013.funkyandroid.net/js/bootstrap.min.js"></script>
 </body>
 </html>

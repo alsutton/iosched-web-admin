@@ -37,7 +37,7 @@
         <p class="text-center">&copy;Copyright 2013 Funky Android Ltd., All rights reserved.</p>
     </div>
 </div>
-<script src="https://a58cb323b3f25c8f2f77-eec300142ae6d0545b31737a10fa357c.ssl.cf3.rackcdn.com/bootstrap-3_0_0/js/jquery.js"></script>
-<script src="https://a58cb323b3f25c8f2f77-eec300142ae6d0545b31737a10fa357c.ssl.cf3.rackcdn.com/bootstrap-3_0_0/js/bootstrap.min.js"></script>
+<script src="http://dcuk2013.funkyandroid.net/js/jquery.js"></script>
+<script src="http://dcuk2013.funkyandroid.net/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -28,11 +28,14 @@ public class AuthenticationFilter implements Filter {
                 ((HttpServletResponse)servletResponse).sendError(HttpServletResponse.SC_FORBIDDEN);
                 return;
             }
+
+            servletRequest.setAttribute("entity_manager", em);
+            servletRequest.setAttribute("user", user);
+
+            filterChain.doFilter(servletRequest, servletResponse);
         } finally {
             em.close();
         }
-
-        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override

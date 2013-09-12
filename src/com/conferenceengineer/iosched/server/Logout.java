@@ -18,7 +18,7 @@ public class Logout extends HttpServlet {
      * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
      */
 
-    public void doPost(final HttpServletRequest request, final HttpServletResponse response)
+    public void doGet(final HttpServletRequest request, final HttpServletResponse response)
         throws IOException {
         LoginUtils.getInstance().removeCookie(response);
         response.sendRedirect(request.getContextPath());

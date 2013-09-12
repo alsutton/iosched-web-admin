@@ -49,12 +49,22 @@
         <servlet-name>Login</servlet-name>
         <servlet-class>com.conferenceengineer.iosched.server.Login</servlet-class>
     </servlet>
-    
+
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>com.conferenceengineer.iosched.server.Logout</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/Logout</url-pattern>
+    </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
     </servlet-mapping>
-    
+
     <servlet-mapping>
         <servlet-name>Dashboard</servlet-name>
         <url-pattern>/dashboard/Dashboard</url-pattern>

@@ -25,6 +25,11 @@ public final class EntityManagerWrapperBridge {
      */
 
     public static EntityManager getEntityManager(final ServletRequest request) {
+        EntityManager activeEntityManager = (EntityManager)request.getAttribute("entity_manager");
+        if(activeEntityManager != null) {
+            return activeEntityManager;
+        }
+
         EntityManagerFactoryWrapper emfw =
                 (EntityManagerFactoryWrapper) request.getAttribute(EntityWrapperManagerFilter.EMFW_ATTRIBUTE);
         return emfw.getEntityManager();
