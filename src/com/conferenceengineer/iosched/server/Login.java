@@ -65,7 +65,7 @@ public class Login extends HttpServlet {
 
                 if(loginUtils.isUserValid(name, password, authenticator)) {
                     loginUtils.addCookie(response, user);
-                    response.sendRedirect("/admin/ControlPanel");
+                    response.sendRedirect("/dashboard/Dashboard");
                     return;
                 }
             }

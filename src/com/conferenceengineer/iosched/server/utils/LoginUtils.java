@@ -110,7 +110,6 @@ public final class LoginUtils {
             cookie.setMaxAge(0);
         }
         cookie.setPath("/");
-        cookie.setDomain(".conferenceengineer.com");
         return cookie;
     }
 
