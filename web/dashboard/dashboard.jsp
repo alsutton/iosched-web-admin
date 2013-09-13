@@ -194,44 +194,46 @@
     </div>
 
     <div class="tab-pane" id="locations">
-            <div class="row">
-                <div class="page-header">
-                    <h1>Locations</h1>
-                </div>
+        <div class="row">
+            <div class="page-header">
+                <h1>Locations</h1>
             </div>
+        </div>
 
-            <div class="modal fade" id="addLocation" tabindex="-1" role="dialog" aria-labelledby="addLocation" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">Add Location</h4>
-                        </div>
-                        <form action="talkLocations" role="form" method="POST">
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label for="newLocationName">Please enter the name of the location;</label>
-                                    <input type="text" name="name" id="newLocationName" class="form-control" placeholder="Room 1" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="newLocationAddress">Please any helpful location hint;</label>
-                                    <input type="text" name="address" id="newLocationAddress" class="form-control" placeholder="Level 2" />
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </div>
-                        </form>
+        <div class="modal fade" id="addLocation" tabindex="-1" role="dialog" aria-labelledby="addLocation" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Add Location</h4>
                     </div>
+                    <form action="talkLocations" role="form" method="POST">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="newLocationName">Please enter the name of the location;</label>
+                                <input type="text" name="name" id="newLocationName" class="form-control" placeholder="Room 1" />
+                            </div>
+                            <div class="form-group">
+                                <label for="newLocationAddress">Please any helpful location hint;</label>
+                                <input type="text" name="address" id="newLocationAddress" class="form-control" placeholder="Level 2" />
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
                 </div>
             </div>
+        </div>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <a data-toggle="modal" href="#addLocation" class="btn btn-primary btn-sm">Add Location</a>
-                    <a href="talkLocations" target="_blank" class="btn btn-default btn-sm">Download JSON</a>
-                </div>
+        <div class="row">
+            <div class="col-md-12">
+                <a data-toggle="modal" href="#addLocation" class="btn btn-primary btn-sm">Add Location</a>
+                <a href="talkLocations" target="_blank" class="btn btn-default btn-sm">Download JSON</a>
             </div>
+        </div>
+
+        <div style="padding-top:5px">&nbsp;</div>
 
         <div class="row">
             <div class="col-md-12">
