@@ -28,8 +28,8 @@ public final class SessionsJSON {
                     json.put("id", Integer.toString(talk.getId()));
                     json.put("title", talk.getName());
                     json.put("description", talk.getShortDescription());
-                    json.put("startTimestamp", slot.getStart().getTimeInMillis());
-                    json.put("endTimestamp", slot.getEnd().getTimeInMillis());
+                    json.put("startTimestamp", slot.getStart().getTimeInMillis()/1000);
+                    json.put("endTimestamp", slot.getEnd().getTimeInMillis()/1000);
 
                     JSONArray presenterIds = new JSONArray();
                     for(Presenter presenter : talk.getPresenters()) {
