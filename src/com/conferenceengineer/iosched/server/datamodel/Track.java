@@ -21,13 +21,20 @@ public class Track implements Comparable<Track>{
     @Column(name="track_name")
     private String name;
 
+    @Column(name="colour")
+    private String colour;
+
+    @Column(name="description")
+    private String description;
+
     public Track() {
         super();
     }
 
-    public Track(final String name, final Conference conference) {
-        this.name = name;
+    public Track(final Conference conference, final String name, final String description) {
         this.conference = conference;
+        this.name = name;
+        this.description = description;
     }
 
     public int getId() {
@@ -54,17 +61,33 @@ public class Track implements Comparable<Track>{
         this.name = name;
     }
 
+    public String getColour() {
+        return colour;
+    }
+
+    public void setColour(String colour) {
+        this.colour = colour;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
-    public int compareTo(Track otherTrack) {
-        if(name == null && otherTrack.name == null) {
+    public int compareTo(Track other) {
+        if(name == null && other.name == null) {
             return 0;
         }
         if(name == null) {
             return Integer.MIN_VALUE;
         }
-        if(otherTrack.name == null) {
+        if(other.name == null) {
             return Integer.MAX_VALUE;
         }
-        return name.compareTo(otherTrack.name);
+        return name.compareTo(other.name);
     }
 }

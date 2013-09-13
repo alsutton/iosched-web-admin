@@ -37,6 +37,10 @@ public class Conference {
     @OrderBy("name")
     private List<Track> trackList;
 
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "conference")
+    @OrderBy("name")
+    private List<TalkLocation> talkLocationList;
+
     public Conference() {
         super();
     }
@@ -91,5 +95,13 @@ public class Conference {
 
     public void setTrackList(List<Track> trackList) {
         this.trackList = trackList;
+    }
+
+    public List<TalkLocation> getTalkLocationList() {
+        return talkLocationList;
+    }
+
+    public void setTalkLocationList(List<TalkLocation> talkLocationList) {
+        this.talkLocationList = talkLocationList;
     }
 }

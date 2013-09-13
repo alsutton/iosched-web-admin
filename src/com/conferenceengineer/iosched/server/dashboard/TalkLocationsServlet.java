@@ -1,9 +1,7 @@
 package com.conferenceengineer.iosched.server.dashboard;
 
-import com.conferenceengineer.iosched.server.datamodel.Conference;
-import com.conferenceengineer.iosched.server.datamodel.ConferenceDAO;
-import com.conferenceengineer.iosched.server.datamodel.Track;
-import com.conferenceengineer.iosched.server.exporters.TracksJSON;
+import com.conferenceengineer.iosched.server.datamodel.*;
+import com.conferenceengineer.iosched.server.exporters.TalkLocationsJSON;
 import com.conferenceengineer.iosched.server.utils.EntityManagerWrapperBridge;
 
 import javax.persistence.EntityManager;
@@ -17,7 +15,7 @@ import java.io.PrintWriter;
 /**
  * Servlet to handle tracks
  */
-public class TracksServlet extends HttpServlet {
+public class TalkLocationsServlet extends HttpServlet {
 
     /**
      * Get the JSON in a format suitable for IOSched
@@ -33,7 +31,7 @@ public class TracksServlet extends HttpServlet {
             Integer conferenceId = Integer.parseInt(conferenceIdString);
 
             Conference conference = ConferenceDAO.getInstance().get(em, conferenceId);
-            json = TracksJSON.export(conference);
+            json = TalkLocationsJSON.export(conference);
         } finally {
             em.close();
         }
@@ -63,13 +61,14 @@ public class TracksServlet extends HttpServlet {
             Conference conference = ConferenceDAO.getInstance().get(em, conferenceId);
 
             String name = request.getParameter("name");
-            String description = request.getParameter("description");
-            em.persist(new Track(conference, name, description));
+            String address = request.getParameter("address");
+
+            em.persist(new TalkLocation(conference, name, address));
             em.getTransaction().commit();
         } finally {
             em.close();
         }
 
-        response.sendRedirect("Dashboard#tracks");
+        response.sendRedirect("Dashboard");
     }
 }
