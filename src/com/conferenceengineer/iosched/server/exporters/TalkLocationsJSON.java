@@ -24,14 +24,15 @@ public final class TalkLocationsJSON {
     public static String export(final Conference conference) {
         JSONObject root = new JSONObject();
         JSONArray locations = new JSONArray();
-        List<TalkLocation> talkLocations = conference.getTalkLocationList();
-        for(TalkLocation location : talkLocations) {
+
+        for(TalkLocation location : conference.getTalkLocationList()) {
             JSONObject trackJSON = new JSONObject();
             trackJSON.put("id", Integer.toString(location.getId()));
             trackJSON.put("name", location.getName());
             trackJSON.put("floor", location.getAddress());
             locations.put(trackJSON);
         }
+
         root.put("rooms", locations);
         return root.toString();
     }

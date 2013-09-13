@@ -1,6 +1,7 @@
 package com.conferenceengineer.iosched.server.datamodel;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -23,6 +24,10 @@ public class Talk {
     @JoinColumn(name="talk_slot_id")
     private TalkSlot slot;
 
+    @ManyToOne
+    @JoinColumn(name="talk_location_id")
+    private TalkLocation location;
+
     @Column(name="title")
     private String name;
 
@@ -33,14 +38,21 @@ public class Talk {
     private String longDescription;
 
     @ManyToMany(mappedBy = "talks")
+    @OrderBy("name")
     private Set<Presenter> presenters;
 
     public Talk() {
         super();
     }
 
-    public Talk(final String name) {
+    public Talk(final TalkSlot slot, final TalkLocation location,
+                final Track track,
+                final String name, final String shortDescription) {
+        this.slot = slot;
+        this.location = location;
+        this.track = track;
         this.name = name;
+        this.shortDescription = shortDescription;
     }
 
     public int getId() {
@@ -67,6 +79,14 @@ public class Talk {
         this.slot = slot;
     }
 
+    public TalkLocation getLocation() {
+        return location;
+    }
+
+    public void setLocation(TalkLocation location) {
+        this.location = location;
+    }
+
     public String getName() {
         return name;
     }
@@ -89,5 +109,13 @@ public class Talk {
 
     public void setLongDescription(String longDescription) {
         this.longDescription = longDescription;
+    }
+
+    public Set<Presenter> getPresenters() {
+        return presenters;
+    }
+
+    public void setPresenters(Set<Presenter> presenters) {
+        this.presenters = presenters;
     }
 }

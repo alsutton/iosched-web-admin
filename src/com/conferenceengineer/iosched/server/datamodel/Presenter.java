@@ -15,9 +15,14 @@ public class Presenter {
     @Column(name="id")
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    private SystemUser user;
+    @Column(name="name")
+    private String name;
+
+    @Column(name="image_url")
+    private String imageURL;
+
+    @Column(name="social_link")
+    private String socialLink;
 
     @Column(name="short_biography")
     private String shortBiography;
@@ -25,12 +30,26 @@ public class Presenter {
     @Column(name="long_biography")
     private String longBiography;
 
+    @ManyToOne
+    @JoinColumn(name="conference_id")
+    private Conference conference;
+
     @ManyToMany
     @JoinTable(name="talk_presenter")
     private Set<Talk> talks;
 
     public Presenter() {
         super();
+    }
+
+    public Presenter(final Conference conference, final String name, final String imageURL, final String socialURL,
+                     final String shortBiography, final String longBiography) {
+        this.conference = conference;
+        this.name = name;
+        this.imageURL = imageURL;
+        this.socialLink = socialURL;
+        this.shortBiography = shortBiography;
+        this.longBiography = longBiography;
     }
 
     public int getId() {
@@ -41,12 +60,28 @@ public class Presenter {
         this.id = id;
     }
 
-    public SystemUser getUser() {
-        return user;
+    public String getName() {
+        return name;
     }
 
-    public void setUser(SystemUser user) {
-        this.user = user;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public String getSocialLink() {
+        return socialLink;
+    }
+
+    public void setSocialLink(String socialLink) {
+        this.socialLink = socialLink;
     }
 
     public String getShortBiography() {
@@ -63,6 +98,14 @@ public class Presenter {
 
     public void setLongBiography(String longBiography) {
         this.longBiography = longBiography;
+    }
+
+    public Conference getConference() {
+        return conference;
+    }
+
+    public void setConference(Conference conference) {
+        this.conference = conference;
     }
 
     public Set<Talk> getTalks() {

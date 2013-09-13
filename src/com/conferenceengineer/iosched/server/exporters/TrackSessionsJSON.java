@@ -1,6 +1,7 @@
 package com.conferenceengineer.iosched.server.exporters;
 
 import com.conferenceengineer.iosched.server.datamodel.Conference;
+import com.conferenceengineer.iosched.server.datamodel.Talk;
 import com.conferenceengineer.iosched.server.datamodel.Track;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -10,9 +11,9 @@ import java.util.List;
 /**
  * Exporter for talk slots in the JSON format iosched wants
  */
-public final class TracksJSON {
+public final class TrackSessionsJSON {
 
-    private TracksJSON() {
+    private TrackSessionsJSON() {
         super();
     }
 
@@ -25,16 +26,21 @@ public final class TracksJSON {
         JSONArray tracks = new JSONArray();
 
         for(Track track : conference.getTrackList()) {
-            JSONObject trackJSON = new JSONObject();
-            trackJSON.put("id", Integer.toString(track.getId()));
-            trackJSON.put("name", track.getName());
-            trackJSON.put("abstract", track.getDescription());
-            trackJSON.put("color", "#336699");
-            trackJSON.put("level", "1");
-            tracks.put(trackJSON);
+            JSONObject json = new JSONObject();
+            json.put("id", Integer.toString(track.getId()));
+            json.put("title", track.getName());
+            json.put("description", track.getDescription());
+
+            JSONArray sessions = new JSONArray();
+            for(Talk talk : track.getTalkList()) {
+                sessions.put(Integer.toString(talk.getId()));
+            }
+            json.put("sessions", sessions);
+
+            tracks.put(json);
         }
 
-        root.put("track", tracks);
+        root.put("tracks", tracks);
         return root.toString();
     }
 }

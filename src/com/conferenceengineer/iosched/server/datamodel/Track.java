@@ -1,6 +1,7 @@
 package com.conferenceengineer.iosched.server.datamodel;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Representation of a user in the system
@@ -14,10 +15,6 @@ public class Track implements Comparable<Track>{
     @Column(name="id")
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name="conference_id")
-    private Conference conference;
-
     @Column(name="track_name")
     private String name;
 
@@ -26,6 +23,14 @@ public class Track implements Comparable<Track>{
 
     @Column(name="description")
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name="conference_id")
+    private Conference conference;
+
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "track")
+    @OrderBy("name")
+    private List<Talk> talkList;
 
     public Track() {
         super();
@@ -75,6 +80,14 @@ public class Track implements Comparable<Track>{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Talk> getTalkList() {
+        return talkList;
+    }
+
+    public void setTalkList(List<Talk> talkList) {
+        this.talkList = talkList;
     }
 
     @Override

@@ -66,8 +66,18 @@
     </servlet>
 
     <servlet>
+        <servlet-name>SpeakersServlet</servlet-name>
+        <servlet-class>com.conferenceengineer.iosched.server.dashboard.SpeakersServlet</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>TalkLocationsServlet</servlet-name>
         <servlet-class>com.conferenceengineer.iosched.server.dashboard.TalkLocationsServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>TalksServlet</servlet-name>
+        <servlet-class>com.conferenceengineer.iosched.server.dashboard.TalksServlet</servlet-class>
     </servlet>
 
     <servlet>
@@ -78,6 +88,11 @@
     <servlet>
         <servlet-name>TracksServlet</servlet-name>
         <servlet-class>com.conferenceengineer.iosched.server.dashboard.TracksServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>TrackSessionsServlet</servlet-name>
+        <servlet-class>com.conferenceengineer.iosched.server.dashboard.TrackSessionsServlet</servlet-class>
     </servlet>
 
     <servlet>
@@ -106,8 +121,23 @@
     </servlet-mapping>
 
     <servlet-mapping>
+        <servlet-name>SpeakersServlet</servlet-name>
+        <url-pattern>/dashboard/speakers</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>TalksServlet</servlet-name>
+        <url-pattern>/dashboard/talks</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
         <servlet-name>TalkLocationsServlet</servlet-name>
         <url-pattern>/dashboard/talkLocations</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>TrackSessionsServlet</servlet-name>
+        <url-pattern>/dashboard/trackSessions</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

@@ -3,6 +3,7 @@ package com.conferenceengineer.iosched.server.datamodel;
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Representation of a user in the system
@@ -31,6 +32,10 @@ public class TalkSlot {
     @ManyToOne
     @JoinColumn(name="location_id")
     private Location location;
+
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "slot")
+    @OrderBy("name")
+    private List<Talk> talkList;
 
     public TalkSlot() {
         super();
@@ -80,5 +85,13 @@ public class TalkSlot {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public List<Talk> getTalkList() {
+        return talkList;
+    }
+
+    public void setTalkList(List<Talk> talkList) {
+        this.talkList = talkList;
     }
 }

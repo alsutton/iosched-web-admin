@@ -35,6 +35,10 @@ public class Conference {
 
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "conference")
     @OrderBy("name")
+    private List<Presenter> presenterList;
+
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "conference")
+    @OrderBy("name")
     private List<Track> trackList;
 
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "conference")
@@ -87,6 +91,14 @@ public class Conference {
 
     public void setDateList(List<ConferenceDay> dateList) {
         this.dateList = dateList;
+    }
+
+    public List<Presenter> getPresenterList() {
+        return presenterList;
+    }
+
+    public void setPresenterList(List<Presenter> presenterList) {
+        this.presenterList = presenterList;
     }
 
     public List<Track> getTrackList() {

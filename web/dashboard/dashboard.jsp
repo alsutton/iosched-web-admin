@@ -55,11 +55,18 @@
             </div>
         </div>
 
-        <div class="row"><div class="col-md-12"><a data-toggle="modal" href="#addDayModal" class="btn btn-primary btn-sm">Add Day</a></div></div>
+        <div class="row">
+            <div class="col-md-12">
+                <a data-toggle="modal" href="#addDayModal" class="btn btn-primary btn-sm">Add Day</a>
+                <a href="talks" target="_blank" class="btn btn-default btn-sm">Download Sessions JSON</a>
+                <a href="trackSessions" target="_blank" class="btn btn-default btn-sm">Download Track/Sessions JSON</a>
+            </div>
+        </div>
 
         <c:forEach var="conferenceDay" items="${conference.dateList}">
+            <fmt:formatDate var="conferenceDate" value="${conferenceDay.date}" pattern="dd MMMM yyyy"/>
             <div class="row">
-                <div class="col-md-12"><h2><fmt:formatDate value="${conferenceDay.date}" pattern="dd MMMM yyyy"/></h2></div>
+                <div class="col-md-12"><h2><c:out value="${conferenceDate}" /></h2></div>
             </div>
 
             <fmt:formatDate var="dateCode" value="${conferenceDay.date}" pattern="yyyyMMdd"/>
@@ -99,28 +106,58 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                            <fmt:formatDate value="${slot.start.time}" pattern="hh:mm"/>&nbsp;-&nbsp;<fmt:formatDate value="${slot.end.time}" pattern="hh:mm"/>
+                            <fmt:formatDate var="startTime" value="${slot.start.time}" pattern="HH:mm"/>
+                            <fmt:formatDate var="endTime" value="${slot.end.time}" pattern="HH:mm"/>
+                            <c:out value="${startTime}" />&nbsp;-&nbsp;<c:out value="${endTime}" />
                         </h3>
                     </div>
                     <div class="panel-body">
 
-                        <div class="modal fade" id="addTalkModal${slot.id}" tabindex="-1" role="dialog" aria-labelledby="addTalkModal${slot.id}" aria-hidden="true">
+                        <div class="modal fade" id="newTalkModal${slot.id}" tabindex="-1" role="dialog" aria-labelledby="newTalkModal${slot.id}" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                         <h4 class="modal-title">Add A Session</h4>
                                     </div>
-                                    <form action="talk" role="form" method="POST">
-                                        <input type="hidden" name="day" value="${conferenceDay.id}" />
+                                    <form action="talks" role="form" method="POST">
+                                        <input type="hidden" name="slotId" value="${slot.id}" />
                                         <div class="modal-body">
                                             <div class="form-group">
-                                                <label for="newStart_${dateCode}">Please enter the start time (hh:mm);</label>
-                                                <input type="text" name="start" id="newStart_${dateCode}" class="form-control" placeholder="hh:mm" />
+                                                <label for="newTalkSlot_${slot.id}">Time Slot</label>
+                                                <input type="text" id="newTalkSlot_${slot.id}" class="form-control" readonly="readonly" value="${conferenceDate}, ${startTime}-${endTime}" />
                                             </div>
                                             <div class="form-group">
-                                                <label for="newEnd_${dateCode}">Please enter the end time (hh:mm);</label>
-                                                <input type="text" name="end" id="newEnd_${dateCode}" class="form-control" placeholder="hh:mm"/>
+                                                <label for="newTalkTitle_${slot.id}">Title</label>
+                                                <input type="text" name="title" id="newTalkTitle_${slot.id}" class="form-control" placeholder="A talk about something" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="newTalkPresenter_${slot.id}">Speaker</label>
+                                                <select name="presenter" id="newTalkPresenter_${slot.id}" class="form-control">
+                                                    <c:forEach var="presenter" items="${conference.presenterList}">
+                                                        <option value="${presenter.id}">${presenter.name}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="newTalkTrack_${slot.id}">Track</label>
+                                                <select name="track" id="newTalkTrack_${slot.id}" class="form-control">
+                                                    <c:forEach var="track" items="${conference.trackList}">
+                                                        <option value="${track.id}">${track.name}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="newTalkLocation_${slot.id}">Location</label>
+                                                <select name="location" id="newTalkLocation_${slot.id}" class="form-control">
+                                                <c:forEach var="location" items="${conference.talkLocationList}">
+                                                    <option value="${location.id}">${location.name}</option>
+                                                </c:forEach>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="newTalkDescription_${slot.id}">Description</label>
+                                                <textarea name="description" id="newTalkDescription_${slot.id}" class="form-control" placeholder="This talk will cover something really interesting." ></textarea>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -131,7 +168,23 @@
                             </div>
                         </div>
 
-                        <div class="row"><div class="col-md-12"><a data-toggle="modal" href="#addTalkModal${slot.id}" class="btn btn-default btn-sm">Add a session</a></div></div>
+                        <div class="row"><div class="col-md-12"><a data-toggle="modal" href="#newTalkModal${slot.id}" class="btn btn-default btn-sm">Add a session</a></div></div>
+
+                        <div style="padding-top:5px">&nbsp;</div>
+
+                        <c:forEach var="talk" items="${slot.talkList}">
+                            <div class="row">
+                                <div class="col-md-12">
+                                        <h4>[${talk.track.name}] ${talk.name}</h4>
+                                        <p>Location: (${talk.location.name})</p>
+                                        <p>Presenters:
+                                        <c:forEach var="presenter" items="${talk.presenters}">
+                                            ${presenter.name}<br/>
+                                        </c:forEach>
+                                        </p>
+                                </div>
+                            </div>
+                        </c:forEach>
 
                     </div>
                 </div>
@@ -191,6 +244,66 @@
     </div>
 
     <div class="tab-pane" id="speakers">
+        <div class="row">
+            <div class="page-header">
+                <h1>Speakers</h1>
+            </div>
+        </div>
+
+        <div class="modal fade" id="addSpeaker" tabindex="-1" role="dialog" aria-labelledby="addSpeaker" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Add Speaker</h4>
+                    </div>
+                    <form action="speakers" role="form" method="POST">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="newSpeakerName">Speaker name;</label>
+                                <input type="text" name="name" id="newSpeakerName" class="form-control" placeholder="Al Sutton" />
+                            </div>
+                            <div class="form-group">
+                                <label for="newSpeakerImage">URL for the speakers picture;</label>
+                                <input type="text" name="imageURL" id="newSpeakerImage" class="form-control" placeholder="http://www.xyz.com/pic_of_al.png" />
+                            </div>
+                            <div class="form-group">
+                                <label for="newSpeakerSocialURL">URL for the speakers social network;</label>
+                                <input type="text" name="socialURL" id="newSpeakerSocialURL" class="form-control" placeholder="http://www.twitter.com/alsutton" />
+                            </div>
+                            <div class="form-group">
+                                <label for="newSpeakerShortBio">Short Biography;</label>
+                                <textarea name="shortBio" id="newSpeakerShortBio" class="form-control" placeholder="Al has been talking for ages." rows="2"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="newSpeakerLongBio">Long Biography;</label>
+                                <textarea name="longBio" id="newSpeakerLongBio" class="form-control" placeholder="Al has been talking for ages and is still talking :O" rows="5"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <a data-toggle="modal" href="#addSpeaker" class="btn btn-primary btn-sm">Add Speaker</a>
+                <a href="speakers" target="_blank" class="btn btn-default btn-sm">Download JSON</a>
+            </div>
+        </div>
+
+        <div style="padding-top:5px">&nbsp;</div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <c:forEach var="presenter" items="${conference.presenterList}">
+                    <p>${presenter.name}</p>
+                </c:forEach>
+            </div>
+        </div>
     </div>
 
     <div class="tab-pane" id="locations">
@@ -242,7 +355,6 @@
                 </c:forEach>
             </div>
         </div>
-
     </div>
 </div>
 
