@@ -173,10 +173,71 @@
                         <div style="padding-top:5px">&nbsp;</div>
 
                         <c:forEach var="talk" items="${slot.talkList}">
+                            <div class="modal fade" id="editTalkModal${talk.id}" tabindex="-1" role="dialog" aria-labelledby="editTalkModal${talk.id}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title">Edit Session</h4>
+                                        </div>
+                                        <form action="talks" role="form" method="POST">
+                                            <input type="hidden" name="talkId" value="${talk.id}" />
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label for="editTalkSlot_${talk.id}">Time Slot</label>
+                                                    <input type="text" id="editTalkSlot_${talk.id}" class="form-control" readonly="readonly" value="${conferenceDate}, ${startTime}-${endTime}" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="editTalkTitle_${talk.id}">Title</label>
+                                                    <input type="text" name="title" id="editTalkTitle_${talk.id}" class="form-control" value="${talk.name}" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="editTalkTrack_${talk.id}">Track</label>
+                                                    <select name="track" id="editTalkTrack_${talk.id}" class="form-control">
+                                                        <c:forEach var="track" items="${conference.trackList}">
+                                                            <c:choose>
+                                                                <c:when test="${talk.track.id == track.id}">
+                                                                    <option value="${track.id}" selected="selected">${track.name}</option>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <option value="${track.id}">${track.name}</option>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="editTalkLocation_${talk.id}">Location</label>
+                                                    <select name="location" id="editTalkLocation_${talk.id}" class="form-control">
+                                                        <c:forEach var="location" items="${conference.talkLocationList}">
+                                                            <c:choose>
+                                                                <c:when test="${talk.location.id == location.id}">
+                                                                    <option value="${location.id}" selected="selected">${location.name}</option>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <option value="${location.id}">${location.name}</option>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="editTalkDescription_${talk.id}">Description</label>
+                                                    <textarea name="description" id="newTalkDescription_${slot.id}" class="form-control" >${talk.shortDescription}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <div class="col-md-12">
-                                        <h4>[${talk.track.name}] ${talk.name}</h4>
-                                        <p>Location: (${talk.location.name})</p>
+                                        <h4><a data-toggle="modal" href="#editTalkModal${talk.id}">[${talk.track.name}] ${talk.name}</a></h4>
+                                        <p>Location: ${talk.location.name}</p>
                                         <p>Presenters:
                                         <c:forEach var="presenter" items="${talk.presenters}">
                                             ${presenter.name}<br/>

@@ -46,9 +46,6 @@ public class TalksServlet extends HttpServlet {
         }
     }
 
-    /**
-     * Post is add!!!
-     */
 
     @Override
     public void doPost(final HttpServletRequest request, final HttpServletResponse response)
@@ -57,17 +54,26 @@ public class TalksServlet extends HttpServlet {
         try {
             em.getTransaction().begin();
 
-            TalkSlot slot = em.find( TalkSlot.class, Integer.parseInt(request.getParameter("slotId")));
             TalkLocation location = em.find(TalkLocation.class, Integer.parseInt(request.getParameter("location")));
             Track track = em.find(Track.class, Integer.parseInt(request.getParameter("track")));
-            Presenter presenter = em.find( Presenter.class, Integer.parseInt(request.getParameter("presenter")));
 
             String title = request.getParameter("title");
             String description = request.getParameter("description");
 
-            Talk talk = new Talk(slot, location, track, title, description);
-            em.persist(talk);
-            presenter.getTalks().add(talk);
+            // Slot ID present means it's an add
+            if(request.getParameter("slotId") == null) {
+                Talk talk = em.find(Talk.class, Integer.parseInt(request.getParameter("talkId")));
+                talk.setLocation(location);
+                talk.setTrack(track);
+                talk.setName(title);
+                talk.setShortDescription(description);
+            } else {
+                Presenter presenter = em.find( Presenter.class, Integer.parseInt(request.getParameter("presenter")));
+                TalkSlot slot = em.find( TalkSlot.class, Integer.parseInt(request.getParameter("slotId")));
+                Talk talk = new Talk(slot, location, track, title, description);
+                em.persist(talk);
+                presenter.getTalks().add(talk);
+            }
             em.getTransaction().commit();
         } finally {
             em.close();
