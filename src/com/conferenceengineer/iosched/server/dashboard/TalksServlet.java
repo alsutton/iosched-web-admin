@@ -37,9 +37,8 @@ public class TalksServlet extends HttpServlet {
             em.close();
         }
 
-        PrintWriter output;
-        output = response.getWriter();
-        output.print(json);
+        response.setHeader("Content-Disposition", "attachment; filename=\"sessions.json\"");
+        response.getWriter().print(json);
     }
 
 

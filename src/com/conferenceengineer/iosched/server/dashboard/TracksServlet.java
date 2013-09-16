@@ -24,7 +24,8 @@ public class TracksServlet extends HttpServlet {
      */
 
     @Override
-    public void doGet(final HttpServletRequest request, final HttpServletResponse response) {
+    public void doGet(final HttpServletRequest request, final HttpServletResponse response)
+        throws IOException {
         String json;
 
         EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
@@ -38,13 +39,8 @@ public class TracksServlet extends HttpServlet {
             em.close();
         }
 
-        PrintWriter output = null;
-        try {
-            output = response.getWriter();
-            output.print(json);
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+        response.setHeader("Content-Disposition", "attachment; filename=\"tracks.json\"");
+        response.getWriter().print(json);
     }
 
     /**
