@@ -59,17 +59,29 @@ public class SpeakersServlet extends HttpServlet {
         EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
         try {
             em.getTransaction().begin();
-            String conferenceIdString = request.getServletContext().getInitParameter("conferenceId");
-            Integer conferenceId = Integer.parseInt(conferenceIdString);
 
-            Conference conference = ConferenceDAO.getInstance().get(em, conferenceId);
+            String speakerId = request.getParameter("speakerId");
+            Presenter presenter;
+            if(speakerId == null) {
+                presenter = new Presenter();
+                String conferenceIdString = request.getServletContext().getInitParameter("conferenceId");
+                Integer conferenceId = Integer.parseInt(conferenceIdString);
+                Conference conference = ConferenceDAO.getInstance().get(em, conferenceId);
+                presenter.setConference(conference);
+            } else {
+                presenter = em.find(Presenter.class, Integer.parseInt(speakerId));
+            }
 
-            String name = request.getParameter("name");
-            String imageURL = request.getParameter("imageURL");
-            String socialURL = request.getParameter("socialURL");
-            String shortBio = request.getParameter("shortBio");
-            String longBio = request.getParameter("longBio");
-            em.persist(new Presenter(conference, name, imageURL, socialURL, shortBio, longBio));
+
+            presenter.setName(request.getParameter("name"));
+            presenter.setImageURL(request.getParameter("imageURL"));
+            presenter.setSocialLink(request.getParameter("socialURL"));
+            presenter.setShortBiography(request.getParameter("shortBio"));
+            presenter.setLongBiography(request.getParameter("longBio"));
+
+            if(speakerId == null) {
+                em.persist(presenter);
+            }
             em.getTransaction().commit();
         } finally {
             em.close();

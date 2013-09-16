@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
@@ -40,7 +40,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">Add Day</h4>
                     </div>
-                    <form action="conferenceDays" role="form" method="POST">
+                    <form accept-charset="utf-8" action="conferenceDays" role="form" method="POST">
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="newDay">Please enter date (dd-mm-yyyy);</label>
@@ -78,7 +78,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             <h4 class="modal-title">Add Session Slot</h4>
                         </div>
-                        <form action="talkSlots" role="form" method="POST">
+                        <form accept-charset="utf-8" action="talkSlots" role="form" method="POST">
                         <input type="hidden" name="day" value="${conferenceDay.id}" />
                             <div class="modal-body">
                                 <div class="form-group">
@@ -120,7 +120,7 @@
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                         <h4 class="modal-title">Add A Session</h4>
                                     </div>
-                                    <form action="talks" role="form" method="POST">
+                                    <form accept-charset="utf-8" action="talks" role="form" method="POST">
                                         <input type="hidden" name="slotId" value="${slot.id}" />
                                         <div class="modal-body">
                                             <div class="form-group">
@@ -180,7 +180,7 @@
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                             <h4 class="modal-title">Edit Session</h4>
                                         </div>
-                                        <form action="talks" role="form" method="POST">
+                                        <form accept-charset="utf-8" action="talks" role="form" method="POST">
                                             <input type="hidden" name="talkId" value="${talk.id}" />
                                             <div class="modal-body">
                                                 <div class="form-group">
@@ -243,6 +243,7 @@
                                             ${presenter.name}<br/>
                                         </c:forEach>
                                         </p>
+                                        <p>${talk.shortDescription}</p>
                                 </div>
                             </div>
                         </c:forEach>
@@ -267,7 +268,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">Add Track</h4>
                     </div>
-                    <form action="tracks" role="form" method="POST">
+                    <form accept-charset="utf-8" action="tracks" role="form" method="POST">
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="newTrackName">Please enter the new track name;</label>
@@ -318,7 +319,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">Add Speaker</h4>
                     </div>
-                    <form action="speakers" role="form" method="POST">
+                    <form accept-charset="utf-8" action="speakers" role="form" method="POST">
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="newSpeakerName">Speaker name;</label>
@@ -361,7 +362,47 @@
         <div class="row">
             <div class="col-md-12">
                 <c:forEach var="presenter" items="${conference.presenterList}">
-                    <p>${presenter.name}</p>
+                    <div class="modal fade" id="editSpeaker_${presenter.id}" tabindex="-1" role="dialog" aria-labelledby="editSpeaker_${presenter.id}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title">Edit Speaker</h4>
+                                </div>
+                                <form accept-charset="utf-8" action="speakers" role="form" method="POST">
+                                <input type="hidden" name="speakerId" value="${presenter.id}" />
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="editSpeaker_${presenter.id}_Name">Speaker name;</label>
+                                            <input type="text" name="name" id="editSpeaker_${presenter.id}_Name" class="form-control" value="${presenter.name}" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editSpeaker_${presenter.id}_Image">URL for the speakers picture;</label>
+                                            <input type="text" name="imageURL" id="editSpeaker_${presenter.id}_Image" class="form-control" value="${presenter.imageURL}" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editSpeaker_${presenter.id}_SocialURL">URL for the speakers social network;</label>
+                                            <input type="text" name="socialURL" id="editSpeaker_${presenter.id}_SocialURL" class="form-control" value="${presenter.socialLink}" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editSpeaker_${presenter.id}_ShortBio">Short Biography;</label>
+                                            <textarea name="shortBio" id="editSpeaker_${presenter.id}_ShortBio" class="form-control" rows="2">${presenter.shortBiography}</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editSpeaker_${presenter.id}_LongBio">Long Biography;</label>
+                                            <textarea name="longBio" id="editSpeaker_${presenter.id}_LongBio" class="form-control" rows="5">${presenter.longBiography}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4><a data-toggle="modal" href="#editSpeaker_${presenter.id}">${presenter.name}</a></h4>
+                    <p>${presenter.shortBiography}</p>
                 </c:forEach>
             </div>
         </div>
@@ -381,7 +422,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">Add Location</h4>
                     </div>
-                    <form action="talkLocations" role="form" method="POST">
+                    <form accept-charset="utf-8" action="talkLocations" role="form" method="POST">
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="newLocationName">Please enter the name of the location;</label>

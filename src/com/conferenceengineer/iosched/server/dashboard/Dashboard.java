@@ -23,6 +23,7 @@ public class Dashboard extends HttpServlet {
     @Override
     public void doGet(final HttpServletRequest request, final HttpServletResponse response)
         throws IOException, ServletException {
+        response.setCharacterEncoding("UTF-8");
 
         request.setAttribute("serverStatus", "All servers are operational");
         request.setAttribute("serverStatusType", "Good");
