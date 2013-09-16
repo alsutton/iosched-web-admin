@@ -38,7 +38,7 @@ public class TalksServlet extends HttpServlet {
         }
 
         response.setHeader("Content-Disposition", "attachment; filename=\"sessions.json\"");
-        response.getWriter().print(json);
+        response.getOutputStream().write(json.getBytes("UTF-8"));
     }
 
 

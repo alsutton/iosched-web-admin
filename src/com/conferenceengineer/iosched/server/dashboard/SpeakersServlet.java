@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
 
 /**
  * Servlet to handle tracks
@@ -43,7 +44,7 @@ public class SpeakersServlet extends HttpServlet {
 
 
         response.setHeader("Content-Disposition", "attachment; filename=\"presenters.json\"");
-        response.getWriter().print(json);
+        response.getOutputStream().write(json.getBytes("UTF-8"));
     }
 
     /**

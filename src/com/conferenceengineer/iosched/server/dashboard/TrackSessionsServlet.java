@@ -41,6 +41,6 @@ public class TrackSessionsServlet extends HttpServlet {
         }
 
         response.setHeader("Content-Disposition", "attachment; filename=\"session_tracks.json\"");
-        response.getWriter().print(json);
+        response.getOutputStream().write(json.getBytes("UTF-8"));
     }
 }

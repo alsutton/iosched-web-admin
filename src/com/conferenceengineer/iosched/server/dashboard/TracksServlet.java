@@ -40,7 +40,7 @@ public class TracksServlet extends HttpServlet {
         }
 
         response.setHeader("Content-Disposition", "attachment; filename=\"tracks.json\"");
-        response.getWriter().print(json);
+        response.getOutputStream().write(json.getBytes("UTF-8"));
     }
 
     /**
