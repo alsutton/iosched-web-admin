@@ -54,23 +54,27 @@ public class TalksServlet extends HttpServlet {
         try {
             em.getTransaction().begin();
 
+            Talk talk;
+            String slotId = request.getParameter("slotId");
+            if(slotId == null) {
+                talk = new Talk();
+            } else {
+                talk = em.find(Talk.class, Integer.parseInt(slotId));
+            }
+
             TalkLocation location = em.find(TalkLocation.class, Integer.parseInt(request.getParameter("location")));
             Track track = em.find(Track.class, Integer.parseInt(request.getParameter("track")));
-
             String title = request.getParameter("title");
             String description = request.getParameter("description");
 
+            talk.setLocation(location);
+            talk.setTrack(track);
+            talk.setName(title);
+            talk.setShortDescription(description);
+
             // Slot ID present means it's an add
-            if(request.getParameter("slotId") == null) {
-                Talk talk = em.find(Talk.class, Integer.parseInt(request.getParameter("talkId")));
-                talk.setLocation(location);
-                talk.setTrack(track);
-                talk.setName(title);
-                talk.setShortDescription(description);
-            } else {
+            if( slotId == null) {
                 Presenter presenter = em.find( Presenter.class, Integer.parseInt(request.getParameter("presenter")));
-                TalkSlot slot = em.find( TalkSlot.class, Integer.parseInt(request.getParameter("slotId")));
-                Talk talk = new Talk(slot, location, track, title, description);
                 em.persist(talk);
                 presenter.getTalks().add(talk);
             }
