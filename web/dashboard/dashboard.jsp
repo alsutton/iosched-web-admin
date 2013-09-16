@@ -121,7 +121,7 @@
                                         <h4 class="modal-title">Add A Session</h4>
                                     </div>
                                     <form accept-charset="utf-8" action="talks" role="form" method="POST">
-                                        <input type="hidden" name="slotId" value="${slot.id}" />
+                                        <input type="hidden" name="slot" value="${slot.id}" />
                                         <div class="modal-body">
                                             <div class="form-group">
                                                 <label for="newTalkSlot_${slot.id}">Time Slot</label>

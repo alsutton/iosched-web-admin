@@ -107,14 +107,16 @@ public class TalksServlet extends HttpServlet {
 
     private void populateObject(final EntityManager em, final Talk talk, final HttpServletRequest request) {
         TalkLocation location = em.find(TalkLocation.class, Integer.parseInt(request.getParameter("location")));
-        Track track = em.find(Track.class, Integer.parseInt(request.getParameter("track")));
-        String title = request.getParameter("title");
-        String description = request.getParameter("description");
-
         talk.setLocation(location);
+
+        TalkSlot slot = em.find(TalkSlot.class, Integer.parseInt(request.getParameter("slot")));
+        talk.setSlot(slot);
+
+        Track track = em.find(Track.class, Integer.parseInt(request.getParameter("track")));
         talk.setTrack(track);
-        talk.setName(title);
-        talk.setShortDescription(description);
+
+        talk.setName(request.getParameter("title"));
+        talk.setShortDescription(request.getParameter("description"));
     }
 
     /**
