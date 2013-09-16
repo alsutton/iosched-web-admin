@@ -38,7 +38,7 @@ public final class SessionsJSON {
                     json.put("presenterIds", presenterIds);
 
                     json.put("subtype", "SESSION");
-                    json.put("location", talk.getLocation().getName());
+                    json.put("location", Integer.toString(talk.getLocation().getId()));
                     json.put("isLivestream", false);
                     sessions.put(json);
                 }
