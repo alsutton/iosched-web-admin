@@ -2,7 +2,6 @@ package com.conferenceengineer.iosched.server.dashboard;
 
 import com.conferenceengineer.iosched.server.datamodel.*;
 import com.conferenceengineer.iosched.server.exporters.SessionsJSON;
-import com.conferenceengineer.iosched.server.exporters.TracksJSON;
 import com.conferenceengineer.iosched.server.utils.EntityManagerWrapperBridge;
 
 import javax.persistence.EntityManager;
@@ -23,7 +22,8 @@ public class TalksServlet extends HttpServlet {
      */
 
     @Override
-    public void doGet(final HttpServletRequest request, final HttpServletResponse response) {
+    public void doGet(final HttpServletRequest request, final HttpServletResponse response)
+        throws IOException {
         String json;
 
         EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
@@ -37,13 +37,9 @@ public class TalksServlet extends HttpServlet {
             em.close();
         }
 
-        PrintWriter output = null;
-        try {
-            output = response.getWriter();
-            output.print(json);
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+        PrintWriter output;
+        output = response.getWriter();
+        output.print(json);
     }
 
 
@@ -53,30 +49,11 @@ public class TalksServlet extends HttpServlet {
         EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
         try {
             em.getTransaction().begin();
-
-            Talk talk;
-            String slotId = request.getParameter("slotId");
-            if(slotId == null) {
-                talk = new Talk();
+            String talkId = request.getParameter("talkId");
+            if(talkId == null) {
+                add(em, request);
             } else {
-                talk = em.find(Talk.class, Integer.parseInt(slotId));
-            }
-
-            TalkLocation location = em.find(TalkLocation.class, Integer.parseInt(request.getParameter("location")));
-            Track track = em.find(Track.class, Integer.parseInt(request.getParameter("track")));
-            String title = request.getParameter("title");
-            String description = request.getParameter("description");
-
-            talk.setLocation(location);
-            talk.setTrack(track);
-            talk.setName(title);
-            talk.setShortDescription(description);
-
-            // Slot ID present means it's an add
-            if( slotId == null) {
-                Presenter presenter = em.find( Presenter.class, Integer.parseInt(request.getParameter("presenter")));
-                em.persist(talk);
-                presenter.getTalks().add(talk);
+                edit(em, request, talkId);
             }
             em.getTransaction().commit();
         } finally {
@@ -84,5 +61,77 @@ public class TalksServlet extends HttpServlet {
         }
 
         response.sendRedirect("Dashboard#tracks");
+    }
+
+    /**
+     * Handle an add
+     */
+
+    private void add(final EntityManager em, final HttpServletRequest request) {
+        Talk talk = new Talk();
+        populateObject(em, talk, request);
+        em.persist(talk);
+        addPresenter(em, talk, request);
+    }
+
+    /**
+     * Handle an edit
+     */
+
+    private void edit(final EntityManager em, final HttpServletRequest request, final String slotId) {
+        Talk talk = em.find(Talk.class, Integer.parseInt(slotId));
+        String presenterId = request.getParameter("presenter");
+        if(presenterId != null) {
+            // We're just altering a presenter
+            editPresenter(em, request, talk, presenterId);
+            return;
+        }
+
+        // We're updating the object.
+        populateObject(em, talk, request);
+    }
+
+
+    private void editPresenter(final EntityManager em, final HttpServletRequest request, final Talk talk,
+                               final String presenterId) {
+        if(request.getParameter("delete") != null) {
+            deletePresenter(em, talk, presenterId);
+        } else {
+            addPresenter(em, talk, presenterId);
+        }
+    }
+
+    /**
+     * Populate the object with the information from the request.
+     */
+
+    private void populateObject(final EntityManager em, final Talk talk, final HttpServletRequest request) {
+        TalkLocation location = em.find(TalkLocation.class, Integer.parseInt(request.getParameter("location")));
+        Track track = em.find(Track.class, Integer.parseInt(request.getParameter("track")));
+        String title = request.getParameter("title");
+        String description = request.getParameter("description");
+
+        talk.setLocation(location);
+        talk.setTrack(track);
+        talk.setName(title);
+        talk.setShortDescription(description);
+    }
+
+    /**
+     * Add a presenter to a talk
+     */
+
+    private void addPresenter(final EntityManager em, final Talk talk, final HttpServletRequest request) {
+        addPresenter(em,talk,request.getParameter("presenter"));
+    }
+
+    private void addPresenter(final EntityManager em, final Talk talk, final String presenterId) {
+        Presenter presenter = em.find( Presenter.class, Integer.parseInt(presenterId));
+        presenter.getTalks().add(talk);
+    }
+
+    private void deletePresenter(final EntityManager em, final Talk talk, final String presenterId) {
+        Presenter presenter = em.find( Presenter.class, Integer.parseInt(presenterId));
+        presenter.getTalks().remove(talk);
     }
 }

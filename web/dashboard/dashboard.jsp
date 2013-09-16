@@ -223,7 +223,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="editTalkDescription_${talk.id}">Description</label>
-                                                    <textarea name="description" id="newTalkDescription_${slot.id}" class="form-control" >${talk.shortDescription}</textarea>
+                                                    <textarea name="description" id="editTalkDescription_${slot.id}" class="form-control" >${talk.shortDescription}</textarea>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -234,14 +234,67 @@
                                 </div>
                             </div>
 
+                            <div class="modal fade" id="addPresenterModal${talk.id}" tabindex="-1" role="dialog" aria-labelledby="addPresenterModal${talk.id}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title">Add A Presenter</h4>
+                                        </div>
+                                        <form accept-charset="utf-8" action="talks" role="form" method="POST">
+                                            <input type="hidden" name="talkId" value="${talk.id}" />
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label for="addPresenterModal${slot.id}">Speaker</label>
+                                                    <select name="presenter" id="addPresenterModal${slot.id}" class="form-control">
+                                                        <c:forEach var="presenter" items="${conference.presenterList}">
+                                                            <option value="${presenter.id}">${presenter.name}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <div class="row">
                                 <div class="col-md-12">
                                         <h4><a data-toggle="modal" href="#editTalkModal${talk.id}">[${talk.track.name}] ${talk.name}</a></h4>
+
                                         <p>Location: ${talk.location.name}</p>
                                         <p>Presenters:
-                                        <c:forEach var="presenter" items="${talk.presenters}">
-                                            ${presenter.name}<br/>
+                                        <c:forEach var="presenter" items="${talk.presenters}" varStatus="status">
+                                            <div class="modal fade" id="removePresenterModal${talk.id}${presenter.id}" tabindex="-1" role="dialog" aria-labelledby="removePresenterModal${talk.id}${presenter.id}" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                            <h4 class="modal-title">Remove A Presenter</h4>
+                                                        </div>
+                                                        <form accept-charset="utf-8" action="talks" role="form" method="POST">
+                                                            <input type="hidden" name="talkId" value="${talk.id}">
+                                                            <input type="hidden" name="presenter" value="${presenter.id}">
+                                                            <input type="hidden" name="delete" value="true">
+                                                            <div class="modal-body">
+                                                                <p>Remove ${presenter.name} from ${talk.name}.</p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="submit" class="btn btn-primary">Confirm</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <a data-toggle="modal" href="#removePresenterModal${talk.id}${presenter.id}">${presenter.name}</a><c:if test="${not status.last}">,</c:if>&nbsp;
+                                        </form>
                                         </c:forEach>
+                                            <a data-toggle="modal" href="#addPresenterModal${talk.id}" class="btn btn-default btn-xs">Add presenter</a>
                                         </p>
                                         <p>${talk.shortDescription}</p>
                                 </div>
