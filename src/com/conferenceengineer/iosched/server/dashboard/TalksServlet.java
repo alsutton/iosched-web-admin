@@ -108,8 +108,11 @@ public class TalksServlet extends HttpServlet {
         TalkLocation location = em.find(TalkLocation.class, Integer.parseInt(request.getParameter("location")));
         talk.setLocation(location);
 
-        TalkSlot slot = em.find(TalkSlot.class, Integer.parseInt(request.getParameter("slot")));
-        talk.setSlot(slot);
+        String slotId = request.getParameter("slot");
+        if(slotId != null) {
+            TalkSlot slot = em.find(TalkSlot.class, Integer.parseInt(slotId));
+            talk.setSlot(slot);
+        }
 
         Track track = em.find(Track.class, Integer.parseInt(request.getParameter("track")));
         talk.setTrack(track);
