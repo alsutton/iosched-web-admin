@@ -23,6 +23,7 @@ public final class TracksJSON {
         COLOUR_MAP.put(19, "#45699e");
         COLOUR_MAP.put(20, "#8fb655");
         COLOUR_MAP.put(21, "#cecece");
+        COLOUR_MAP.put(22, "#000000");
     }
 
 
