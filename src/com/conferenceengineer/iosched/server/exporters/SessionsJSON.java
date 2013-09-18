@@ -39,7 +39,6 @@ public final class SessionsJSON {
 
                     json.put("subtype", "SESSION");
                     json.put("location", Integer.toString(talk.getLocation().getId()));
-                    json.put("isLivestream", false);
                     sessions.put(json);
                 }
             }
