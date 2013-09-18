@@ -49,6 +49,7 @@ public final class TracksJSON {
             }
             trackJSON.put("color", colour);
             trackJSON.put("level", "1");
+            trackJSON.put("meta", 1);   // Sessions only
             tracks.put(trackJSON);
         }
 
