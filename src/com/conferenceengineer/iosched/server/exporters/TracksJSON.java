@@ -60,7 +60,7 @@ public final class TracksJSON {
             tracks.put(trackJSON);
         }
 
-        root.put("track", tracks);
+        root.put("tracks", tracks);
         return root.toString();
     }
 }
