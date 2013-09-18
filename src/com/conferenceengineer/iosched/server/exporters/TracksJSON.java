@@ -50,6 +50,13 @@ public final class TracksJSON {
             trackJSON.put("color", colour);
             trackJSON.put("level", "1");
             trackJSON.put("meta", 1);   // Sessions only
+
+            JSONArray sessions = new JSONArray();
+            for(Talk talk : track.getTalkList()) {
+                sessions.put(Integer.toString(talk.getId()));
+            }
+            trackJSON.put("sessions", sessions);
+
             tracks.put(trackJSON);
         }
 
