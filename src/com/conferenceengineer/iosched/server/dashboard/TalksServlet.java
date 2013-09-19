@@ -118,6 +118,7 @@ public class TalksServlet extends HttpServlet {
         talk.setTrack(track);
 
         talk.setName(request.getParameter("title"));
+        talk.setInformationURL(request.getParameter("infoURL"));
         talk.setShortDescription(request.getParameter("description"));
     }
 

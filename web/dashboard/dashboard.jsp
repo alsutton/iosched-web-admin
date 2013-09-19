@@ -156,6 +156,10 @@
                                                 </select>
                                             </div>
                                             <div class="form-group">
+                                                <label for="newTalkInfoURL_${slot.id}">More Info URL</label>
+                                                <input type="text" name="infoURL" id="newTalkInfoURL_${slot.id}" class="form-control" placeholder="http://somewhere/page" />
+                                            </div>
+                                            <div class="form-group">
                                                 <label for="newTalkDescription_${slot.id}">Description</label>
                                                 <textarea name="description" id="newTalkDescription_${slot.id}" class="form-control" placeholder="This talk will cover something really interesting." ></textarea>
                                             </div>
@@ -220,6 +224,10 @@
                                                             </c:choose>
                                                         </c:forEach>
                                                     </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="editTalkInfoURL_${talk.id}">More Info URL</label>
+                                                    <input type="text" name="infoURL" id="editTalkInfoURL_${talk.id}" class="form-control" value="${talk.informationURL}" />
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="editTalkDescription_${talk.id}">Description</label>

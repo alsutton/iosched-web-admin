@@ -42,13 +42,13 @@ public final class TracksJSON {
         for(Track track : conference.getTrackList()) {
             JSONObject trackJSON = new JSONObject();
             trackJSON.put("id", Integer.toString(track.getId()));
-            trackJSON.put("name", track.getName());
-            trackJSON.put("abstract", track.getDescription());
+            trackJSON.put("title", track.getName());
+            trackJSON.put("description", track.getDescription());
             String colour = COLOUR_MAP.get(track.getId());
             if(colour == null) {
                 colour = "#336699";
             }
-            trackJSON.put("color", colour);
+            trackJSON.put("colour", colour);
             trackJSON.put("level", "1");
             trackJSON.put("meta", 1);   // Sessions only
 

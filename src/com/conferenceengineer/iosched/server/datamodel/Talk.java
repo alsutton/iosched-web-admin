@@ -37,6 +37,9 @@ public class Talk {
     @Column(name="long_description")
     private String longDescription;
 
+    @Column(name="information_url")
+    private String informationURL;
+
     @ManyToMany(mappedBy = "talks")
     @OrderBy("name")
     private Set<Presenter> presenters;
@@ -109,6 +112,14 @@ public class Talk {
 
     public void setLongDescription(String longDescription) {
         this.longDescription = longDescription;
+    }
+
+    public String getInformationURL() {
+        return informationURL;
+    }
+
+    public void setInformationURL(String informationURL) {
+        this.informationURL = informationURL;
     }
 
     public Set<Presenter> getPresenters() {

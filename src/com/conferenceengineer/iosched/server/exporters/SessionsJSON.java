@@ -39,6 +39,11 @@ public final class SessionsJSON {
 
                     json.put("subtype", "SESSION");
                     json.put("location", Integer.toString(talk.getLocation().getId()));
+
+                    String link = talk.getInformationURL();
+                    if(link != null) {
+                        json.put("webLink", link);
+                    }
                     sessions.put(json);
                 }
             }
