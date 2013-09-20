@@ -96,6 +96,11 @@
     </servlet>
 
     <servlet>
+        <servlet-name>PublishServlet</servlet-name>
+        <servlet-class>com.conferenceengineer.iosched.server.dashboard.PublishServlet</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>SpeakersServlet</servlet-name>
         <servlet-class>com.conferenceengineer.iosched.server.dashboard.SpeakersServlet</servlet-class>
     </servlet>
@@ -173,6 +178,11 @@
     <servlet-mapping>
         <servlet-name>DashboardTracks</servlet-name>
         <url-pattern>/dashboard/DashboardTracks</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>PublishServlet</servlet-name>
+        <url-pattern>/dashboard/publish</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

@@ -29,6 +29,9 @@ public class Conference {
     @Column(name="conference_name")
     private String name;
 
+    @OneToOne(mappedBy = "conference")
+    private ConferenceMetadata metadata;
+
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "conference")
     @OrderBy("date")
     private List<ConferenceDay> dateList;
@@ -44,6 +47,7 @@ public class Conference {
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "conference")
     @OrderBy("name")
     private List<TalkLocation> talkLocationList;
+
 
     public Conference() {
         super();
@@ -83,6 +87,14 @@ public class Conference {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public ConferenceMetadata getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(ConferenceMetadata metadata) {
+        this.metadata = metadata;
     }
 
     public List<ConferenceDay> getDateList() {

@@ -30,6 +30,24 @@
 
 <div class="row">
     <div class="col-md-12">
+        <h4>OTA update information</h4>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        Last published :&nbsp;
+        <c:choose>
+            <c:when test="${conference.metadata == null || conference.metadata.lastPublished == null}"><i>Never</i></c:when>
+            <c:otherwise><fmt:formatDate value="${conference.metadata.lastPublished.time}" pattern="MMM dd, yyyy 'at' HH:mm"/></c:otherwise>
+        </c:choose>
+        <br /><a href="<c:url value='/dashboard/publish' />" class="btn btn-default btn-xs">Publish Now</a>
+    </div>
+</div>
+
+<div class="row">&nbsp;</div>
+<div class="row">
+    <div class="col-md-12">
         <h4>Downloads for Conference App Development (iosched)</h4>
     </div>
 </div>

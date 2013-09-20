@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * Display the conference dashboard to the user.
  */
-public class Dashboard extends HttpServlet {
+public class Dashboard extends DashboardBase {
 
     @Override
     public void doGet(final HttpServletRequest request, final HttpServletResponse response)
@@ -22,6 +22,15 @@ public class Dashboard extends HttpServlet {
         request.setAttribute("serverStatus", "All servers are operational");
         request.setAttribute("serverStatusType", "Good");
 
-        request.getRequestDispatcher("/dashboard/dashboard.jsp").forward(request, response);
+        super.doGet(request, response);
+    }
+
+    /**
+     * Get the next page to send the user to.
+     */
+
+    @Override
+    protected String getNextPage() {
+        return "dashboard.jsp";
     }
 }
