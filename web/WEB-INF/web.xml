@@ -64,7 +64,27 @@
         <servlet-name>Dashboard</servlet-name>
         <servlet-class>com.conferenceengineer.iosched.server.dashboard.Dashboard</servlet-class>
     </servlet>
-    
+
+    <servlet>
+        <servlet-name>DashboardLocations</servlet-name>
+        <servlet-class>com.conferenceengineer.iosched.server.dashboard.DashboardLocations</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>DashboardSessions</servlet-name>
+        <servlet-class>com.conferenceengineer.iosched.server.dashboard.DashboardSessions</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>DashboardSpeakers</servlet-name>
+        <servlet-class>com.conferenceengineer.iosched.server.dashboard.DashboardSpeakers</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>DashboardTracks</servlet-name>
+        <servlet-class>com.conferenceengineer.iosched.server.dashboard.DashboardTracks</servlet-class>
+    </servlet>
+
     <servlet>
         <servlet-name>Login</servlet-name>
         <servlet-class>com.conferenceengineer.iosched.server.Login</servlet-class>
@@ -133,6 +153,26 @@
     <servlet-mapping>
         <servlet-name>Dashboard</servlet-name>
         <url-pattern>/dashboard/Dashboard</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>DashboardLocations</servlet-name>
+        <url-pattern>/dashboard/DashboardLocations</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>DashboardSessions</servlet-name>
+        <url-pattern>/dashboard/DashboardSessions</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>DashboardSpeakers</servlet-name>
+        <url-pattern>/dashboard/DashboardSpeakers</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>DashboardTracks</servlet-name>
+        <url-pattern>/dashboard/DashboardTracks</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

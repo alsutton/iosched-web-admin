@@ -14,14 +14,13 @@ import java.io.IOException;
 /**
  * Display the conference dashboard to the user.
  */
-public class Dashboard extends HttpServlet {
+public class DashboardTracks extends DashboardBase {
+    /**
+     * Get the next page to send the user to.
+     */
 
     @Override
-    public void doGet(final HttpServletRequest request, final HttpServletResponse response)
-        throws IOException, ServletException {
-        request.setAttribute("serverStatus", "All servers are operational");
-        request.setAttribute("serverStatusType", "Good");
-
-        request.getRequestDispatcher("/dashboard/dashboard.jsp").forward(request, response);
+    protected String getNextPage() {
+        return "dashboard_tracks.jsp";
     }
 }
