@@ -81,6 +81,11 @@
     </servlet>
 
     <servlet>
+        <servlet-name>SearchSuggestionsServlet</servlet-name>
+        <servlet-class>com.conferenceengineer.iosched.server.dashboard.SearchSuggestionsServlet</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>TalkLocationsServlet</servlet-name>
         <servlet-class>com.conferenceengineer.iosched.server.dashboard.TalkLocationsServlet</servlet-class>
     </servlet>
@@ -128,6 +133,11 @@
     <servlet-mapping>
         <servlet-name>Dashboard</servlet-name>
         <url-pattern>/dashboard/Dashboard</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>SearchSuggestionsServlet</servlet-name>
+        <url-pattern>/dashboard/searchSuggestions</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

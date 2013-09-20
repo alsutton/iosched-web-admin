@@ -78,6 +78,7 @@
                 <a data-toggle="modal" href="#addDayModal" class="btn btn-primary btn-sm">Add Day</a>
                 <a href="talks" target="_blank" class="btn btn-default btn-sm">Download Sessions JSON</a>
                 <a href="trackSessions" target="_blank" class="btn btn-default btn-sm">Download Track/Sessions JSON</a>
+                <a href="searchSuggestions" target="_blank" class="btn btn-default btn-sm">Download Search Suggestions JSON</a>
             </div>
         </div>
 
