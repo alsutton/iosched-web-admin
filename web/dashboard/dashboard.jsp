@@ -30,7 +30,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h4>Downloads</h4>
+        <h4>Downloads for Conference App Development (iosched)</h4>
     </div>
 </div>
 
