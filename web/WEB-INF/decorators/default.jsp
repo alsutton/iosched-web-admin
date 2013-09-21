@@ -24,7 +24,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">${initParam.conferenceName}</a>
+                <a class="navbar-brand" href="/">Conference Engineer</a>
             </div>
         </div>
     </div>

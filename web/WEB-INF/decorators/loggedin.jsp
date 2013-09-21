@@ -18,26 +18,7 @@
 </head>
 <body>
 <div id="wrap">
-    <div class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">${initParam.conferenceName}</a>
-            </div>
-            <c:if test="${requestScope.user != null}">
-                <div class="navbar-right">
-                    <c:out value="${requestScope.username}" />&nbsp;|&nbsp; <a href="<c:url value='/Logout' />">Logout</a>
-                </div>
-            </c:if>
-        </div>
-    </div>
-    <div class="container">
-        <decorator:body/>
-    </div>
+    <decorator:body/>
 </div>
 <div id="footer">
     <div class="container">
