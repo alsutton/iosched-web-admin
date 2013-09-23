@@ -69,6 +69,15 @@ public class UserAuthenticationInformationDAO {
             throw new RuntimeException("The password can not be empty");
         }
 
+        store(entityManager, systemUser, AUTHENTICATOR_INTERNAL, createInternalAuthenticatorString(password));
+    }
+
+    /**
+     * Create the string to be used for internal authenticators
+     */
+
+    public String createInternalAuthenticatorString(final String password)
+        throws NoSuchAlgorithmException, UnsupportedEncodingException {
         byte[] salt = new byte[4];
         synchronized (sSecureRandom) {
             sSecureRandom.nextBytes(salt);
@@ -82,7 +91,7 @@ public class UserAuthenticationInformationDAO {
             information.append(HEX_ARRAY[thisByte&0x0f]);
         }
         information.append(passwordHash);
-        store(entityManager, systemUser, AUTHENTICATOR_INTERNAL, information.toString());
+        return information.toString();
     }
 
     /**

@@ -140,6 +140,11 @@
         <servlet-class>com.conferenceengineer.iosched.server.dashboard.ConferenceDayServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>UserServlet</servlet-name>
+        <servlet-class>com.conferenceengineer.iosched.server.dashboard.UserServlet</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>Bootstrap</servlet-name>
         <url-pattern>/Bootstrap</url-pattern>
@@ -225,4 +230,10 @@
         <servlet-name>ConferenceDayServlet</servlet-name>
         <url-pattern>/dashboard/conferenceDays</url-pattern>
     </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/dashboard/users</url-pattern>
+    </servlet-mapping>
+
 </web-app>

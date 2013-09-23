@@ -31,9 +31,13 @@
 </div>
 <div class="container">
     <div class="row">&nbsp;</div>
-    <c:if test="${not empty error}">
-        <div class="row"><div class="alert alert-danger text-center">${error}</div></div>
-        <div class="row">&nbsp;</div>
+    <c:if test="${not empty sessionScope.error}">
+        <div class="row"><div class="alert alert-danger text-center">${sessionScope.error}</div></div>
+        <c:set scope="session" var="error" value="" />
+    </c:if>
+    <c:if test="${not empty sessionScope.message}">
+        <div class="row"><div class="alert alert-success text-center">${sessionScope.message}</div></div>
+        <c:set scope="session" var="message" value="" />
     </c:if>
 
     <div class="row">
@@ -46,6 +50,36 @@
         <div class="alert ${statusClass} text-center">${serverStatus}</div>
     </div>
 
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Your information</h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <form accept-charset="utf-8" action="users" class="form-horizontal" role="form" method="POST">
+                <input type="hidden" name="id" value="${user.id}" />
+                <div class="form-group">
+                    <label for="login" class="col-lg-2">Your login</label>
+                    <div class="col-lg-4"><input type="text" id="login" class="form-control" readonly="readonly" value="${user}" /></div>
+                </div>
+                <div class="form-group">
+                    <label for="password1" class="col-lg-2">New password</label>
+                    <div class="col-lg-4"><input type="password" name="password1" id="password1" class="form-control" /></div>
+                </div>
+                <div class="form-group">
+                    <label for="password2" class="col-lg-2">Confirm new password</label>
+                    <div class="col-lg-4"><input type="password" name="password2" id="password2" class="form-control" /></div>
+                </div>
+                <div class="col-lg-6 text-right">
+                    <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">&nbsp;</div>
     <div class="row">
         <div class="col-md-12">
             <h4>OTA update information</h4>

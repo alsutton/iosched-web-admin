@@ -73,4 +73,12 @@ public class SystemUser {
     public void setImage(String image) {
         this.image = image;
     }
+
+    public String toString() {
+        if(humanName != null && !humanName.isEmpty()) {
+            return humanName;
+        }
+
+        return email;
+    }
 }
