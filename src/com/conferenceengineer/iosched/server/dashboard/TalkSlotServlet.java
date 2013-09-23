@@ -50,7 +50,7 @@ public class TalkSlotServlet extends HttpServlet {
             em.close();
         }
 
-        response.sendRedirect("Dashboard");
+        response.sendRedirect("DashboardSessions");
     }
 
     /**

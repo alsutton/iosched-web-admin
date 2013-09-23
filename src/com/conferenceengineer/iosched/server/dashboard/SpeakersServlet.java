@@ -85,6 +85,6 @@ public class SpeakersServlet extends HttpServlet {
             em.close();
         }
 
-        response.sendRedirect("Dashboard#speakers");
+        response.sendRedirect("DashboardSpeakers");
     }
 }

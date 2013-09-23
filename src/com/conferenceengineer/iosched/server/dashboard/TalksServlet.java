@@ -59,7 +59,7 @@ public class TalksServlet extends HttpServlet {
             em.close();
         }
 
-        response.sendRedirect("Dashboard#tracks");
+        response.sendRedirect("DashboardSessions");
     }
 
     /**

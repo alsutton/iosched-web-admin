@@ -65,6 +65,6 @@ public class TalkLocationsServlet extends HttpServlet {
             em.close();
         }
 
-        response.sendRedirect("Dashboard");
+        response.sendRedirect("DashboardLocations");
     }
 }

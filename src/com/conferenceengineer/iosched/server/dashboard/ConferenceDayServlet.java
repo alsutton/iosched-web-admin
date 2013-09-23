@@ -45,6 +45,6 @@ public class ConferenceDayServlet extends HttpServlet {
             em.close();
         }
 
-        response.sendRedirect("Dashboard");
+        response.sendRedirect("DashboardSessions");
     }
 }

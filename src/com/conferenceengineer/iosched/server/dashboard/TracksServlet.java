@@ -66,6 +66,6 @@ public class TracksServlet extends HttpServlet {
             em.close();
         }
 
-        response.sendRedirect("Dashboard#tracks");
+        response.sendRedirect("DashboardTracks");
     }
 }
