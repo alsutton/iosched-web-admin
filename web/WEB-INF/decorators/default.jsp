@@ -37,7 +37,7 @@
         <p class="text-center">&copy;Copyright 2013 Funky Android Ltd., All rights reserved.</p>
     </div>
 </div>
-<script src="http://dcuk2013.funkyandroid.net/js/jquery.js"></script>
-<script src="http://dcuk2013.funkyandroid.net/js/bootstrap.min.js"></script>
+<script src="<c:url value='/js/jquery-1.10.2.min.js' />"></script>
+<script src="<c:url value='/js/bootstrap.min.js' />"></script>
 </body>
 </html>

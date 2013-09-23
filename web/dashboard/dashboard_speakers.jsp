@@ -133,7 +133,7 @@
     <div class="row">&nbsp;</div>
 </div>
 
-<script src="http://dcuk2013.funkyandroid.net/js/modal.js"></script>
+<script src="<c:url value='/js/modal.js' />" />
 
 </body>
 </html>
