@@ -37,7 +37,7 @@
 
     <div class="row">
         <c:choose>
-            <c:when test='${serverStatusType eq "Good"}'><c:set var="statusClass">alert-success</c:set></c:when>
+            <c:when test='${serverStatusType eq "Good"}'><c:set var="statusClass">alert-info</c:set></c:when>
             <c:when test='${serverStatusType eq "Bad"}'><c:set var="statusClass">alert-warning</c:set></c:when>
             <c:when test='${serverStatusType eq "Ugly"}'><c:set var="statusClass">alert-danger</c:set></c:when>
             <c:otherwise><c:set var="statusClass">alert-info</c:set></c:otherwise>
