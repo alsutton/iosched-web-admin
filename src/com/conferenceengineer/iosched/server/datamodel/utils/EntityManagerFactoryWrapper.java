@@ -31,7 +31,7 @@ public class EntityManagerFactoryWrapper {
     private EntityManagerFactoryWrapper() {
         Map<String,String> entityProperties = new HashMap<String, String>();
         entityProperties.put("javax.persistence.jdbc.user", "cewebapp");
-        entityProperties.put("javax.persistence.jdbc.password", "");
+        entityProperties.put("javax.persistence.jdbc.password", "c00lb34ns");
         mEntityManagerFactory = Persistence.createEntityManagerFactory("conferenceengineer", entityProperties);
     }
 
