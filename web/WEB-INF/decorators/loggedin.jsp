@@ -12,8 +12,8 @@
     <link rel="stylesheet" type="text/css" href="http://dcuk2013.funkyandroid.net/css/bootstrap.min.css" >
     <link rel="stylesheet" type="text/css" href="http://dcuk2013.funkyandroid.net/css/style.css" >
     <title>${initParam.conferenceName}</title>
-    <script src="http://dcuk2013.funkyandroid.net/js/jquery-1.10.2.min.js"></script>
-    <script src="http://dcuk2013.funkyandroid.net/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="<c:url value='/css/bootstrap.min.css' />" >
+    <link rel="stylesheet" type="text/css" href="<c:url value='/css/style.css' />" >
 	<decorator:head />
 </head>
 <body>

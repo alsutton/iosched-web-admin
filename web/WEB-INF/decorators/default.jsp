@@ -9,8 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Funky Android Ltd.">
     <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-    <link rel="stylesheet" type="text/css" href="http://dcuk2013.funkyandroid.net/css/bootstrap.min.css" >
-    <link rel="stylesheet" type="text/css" href="http://dcuk2013.funkyandroid.net/css/style.css" >
+    <link rel="stylesheet" type="text/css" href="<c:url value='/css/bootstrap.min.css' />" >
+    <link rel="stylesheet" type="text/css" href="<c:url value='/css/style.css' />" >
     <title>${initParam.conferenceName} Admin</title>
 	<decorator:head />
 </head>
