@@ -76,12 +76,6 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <a data-toggle="modal" href="#addDayModal" class="btn btn-primary btn-sm">Add Day</a>
-        </div>
-    </div>
-
     <c:forEach var="conferenceDay" items="${conference.dateList}">
         <fmt:formatDate var="conferenceDate" value="${conferenceDay.date}" pattern="dd MMMM yyyy"/>
         <div class="row">
@@ -335,6 +329,14 @@
             </div>
         </c:forEach>
     </c:forEach>
+    <div class="row">&nbsp;</div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <a data-toggle="modal" href="#addDayModal" class="btn btn-primary btn-sm">Add Day</a>
+        </div>
+    </div>
+
     <div class="row">&nbsp;</div>
 </div>
 
