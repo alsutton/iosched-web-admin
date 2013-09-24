@@ -53,14 +53,26 @@ public class TracksServlet extends HttpServlet {
         EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
         try {
             em.getTransaction().begin();
-            String conferenceIdString = request.getServletContext().getInitParameter("conferenceId");
-            Integer conferenceId = Integer.parseInt(conferenceIdString);
 
-            Conference conference = ConferenceDAO.getInstance().get(em, conferenceId);
+            Track track;
+            String trackId = request.getParameter("id");
+            boolean isNew = (trackId == null || trackId.isEmpty());
+            if(isNew) {
+                String conferenceIdString = request.getServletContext().getInitParameter("conferenceId");
+                Integer conferenceId = Integer.parseInt(conferenceIdString);
+                Conference conference = ConferenceDAO.getInstance().get(em, conferenceId);
+                track = new Track();
+                track.setConference(conference);
+            } else {
+                track = em.find(Track.class, Integer.parseInt(trackId));
+            }
 
-            String name = request.getParameter("name");
-            String description = request.getParameter("description");
-            em.persist(new Track(conference, name, description));
+            track.setName(request.getParameter("name"));
+            track.setDescription(request.getParameter("description"));
+
+            if(isNew) {
+                em.persist(track);
+            }
             em.getTransaction().commit();
         } finally {
             em.close();

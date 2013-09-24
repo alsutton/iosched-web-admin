@@ -51,7 +51,7 @@
                         </div>
                         <div class="form-group">
                             <label for="newTrackDescription">Please enter a description;</label>
-                            <input type="text" name="description" id="newTrackDescription" class="form-control" />
+                            <textarea name="description" id="newTrackDescription" class="form-control"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -65,7 +65,33 @@
     <div class="row">
         <div class="col-md-12">
             <c:forEach var="track" items="${conference.trackList}">
-                <p>${track.name}</p>
+                <div class="modal fade" id="editTrackModal${track.id}" tabindex="-1" role="dialog" aria-labelledby="editTrackModal${track.id}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Edit Track</h4>
+                            </div>
+                            <form accept-charset="utf-8" action="<c:url value='/dashboard/tracks' />" role="form" method="POST">
+                                <input type="hidden" name="id" value="${track.id}" />
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="editTrack${track.id}Name">Please enter the new track name;</label>
+                                        <input type="text" name="name" id="editTrack${track.id}Name" class="form-control" value="${track.name}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="editTrack${track.id}Description">Please enter a description;</label>
+                                        <textarea name="description" id="editTrack${track.id}Description" class="form-control">${track.description}</textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <h4><a data-toggle="modal" href="#editTrackModal${track.id}">${track.name}</a></h4>
             </c:forEach>
         </div>
     </div>
