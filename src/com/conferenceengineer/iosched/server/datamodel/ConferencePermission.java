@@ -9,6 +9,12 @@ import javax.persistence.*;
 @Table( name = "conference_permission" )
 public class ConferencePermission {
 
+    /**
+     * The permissions for a user.
+     */
+    public static final int PERMISSION_ADMINISTER_COLLABORATORS = 0x01;
+
+
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="id")

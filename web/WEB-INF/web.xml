@@ -71,6 +71,11 @@
     </servlet>
 
     <servlet>
+        <servlet-name>Invite</servlet-name>
+        <servlet-class>com.conferenceengineer.iosched.server.dashboard.InviteServlet</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>Login</servlet-name>
         <servlet-class>com.conferenceengineer.iosched.server.Login</servlet-class>
     </servlet>
@@ -173,6 +178,11 @@
     <servlet-mapping>
         <servlet-name>DashboardTracks</servlet-name>
         <url-pattern>/dashboard/DashboardTracks</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>Invite</servlet-name>
+        <url-pattern>/dashboard/invite</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

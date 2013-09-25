@@ -48,6 +48,8 @@ public class Conference {
     @OrderBy("name")
     private List<TalkLocation> talkLocationList;
 
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "conference")
+    private List<ConferencePermission> collaborators;
 
     public Conference() {
         super();
@@ -127,5 +129,13 @@ public class Conference {
 
     public void setTalkLocationList(List<TalkLocation> talkLocationList) {
         this.talkLocationList = talkLocationList;
+    }
+
+    public List<ConferencePermission> getCollaborators() {
+        return collaborators;
+    }
+
+    public void setCollaborators(List<ConferencePermission> collaborators) {
+        this.collaborators = collaborators;
     }
 }

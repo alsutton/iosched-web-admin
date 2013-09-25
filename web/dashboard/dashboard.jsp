@@ -21,9 +21,6 @@
                 <li><a href="<c:url value='/dashboard/DashboardSpeakers' />">Speakers</a></li>
                 <li><a href="<c:url value='/dashboard/DashboardSessions' />">Schedule</a></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="<c:url value='/Logout'/>">Logout</a></li>
-            </ul>
         </div>
     </div>
 </div>
@@ -76,6 +73,36 @@
             </form>
         </div>
     </div>
+
+    <div class="row">&nbsp;</div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Collaborators</h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <ul>
+            <c:forEach var="permission" items="${conference.collaborators}">
+                <li><c:out value="${permission.systemUser}"/></li>
+            </c:forEach>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <form accept-charset="utf-8" action="invite" class="form" role="form" method="POST">
+                <label for="email">If you want to invite other people to work on this schedule, enter their email address below;</label>
+                <input type="text" id="email" class="form-control " name="email" placeholder="someone@somewhere.xyz" />
+                <button type="submit" class="btn btn-primary btn-sm" style="margin-top: 10px">Send Invite</button>
+            </form>
+        </div>
+    </div>
+
 
     <div class="row">&nbsp;</div>
     <div class="row">

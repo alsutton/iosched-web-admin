@@ -97,6 +97,7 @@ public class RegisterServlet extends HttpServlet {
         ConferencePermission permission = new ConferencePermission();
         permission.setConference(conference);
         permission.setSystemUser(user);
+        permission.setPermission(ConferencePermission.PERMISSION_ADMINISTER_COLLABORATORS);
         em.persist(permission);
 
         String password = PasswordGenerator.generatePassword();
