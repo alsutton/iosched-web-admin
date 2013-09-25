@@ -2,6 +2,7 @@ package com.conferenceengineer.iosched.server.dashboard;
 
 import com.conferenceengineer.iosched.server.datamodel.*;
 import com.conferenceengineer.iosched.server.exporters.SessionsJSON;
+import com.conferenceengineer.iosched.server.utils.ConferenceUtils;
 import com.conferenceengineer.iosched.server.utils.EntityManagerWrapperBridge;
 
 import javax.persistence.EntityManager;
@@ -10,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * Servlet to handle tracks
@@ -28,11 +28,7 @@ public class TalksServlet extends HttpServlet {
 
         EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
         try {
-            String conferenceIdString = request.getServletContext().getInitParameter("conferenceId");
-            Integer conferenceId = Integer.parseInt(conferenceIdString);
-
-            Conference conference = ConferenceDAO.getInstance().get(em, conferenceId);
-            json = SessionsJSON.export(conference);
+            json = SessionsJSON.export(ConferenceUtils.getCurrentConference(request, em));
         } finally {
             em.close();
         }

@@ -1,7 +1,6 @@
 package com.conferenceengineer.iosched.server.dashboard;
 
-import com.conferenceengineer.iosched.server.datamodel.Conference;
-import com.conferenceengineer.iosched.server.datamodel.ConferenceDAO;
+import com.conferenceengineer.iosched.server.utils.ConferenceUtils;
 import com.conferenceengineer.iosched.server.utils.EntityManagerWrapperBridge;
 
 import javax.persistence.EntityManager;
@@ -23,12 +22,7 @@ public abstract class DashboardBase extends HttpServlet {
 
         EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
         try {
-            String conferenceIdString = request.getServletContext().getInitParameter("conferenceId");
-            Integer conferenceId = Integer.parseInt(conferenceIdString);
-
-            Conference conference = ConferenceDAO.getInstance().get(em, conferenceId);
-            request.setAttribute("conference", conference);
-
+            request.setAttribute("conference", ConferenceUtils.getCurrentConference(request, em));
             request.getRequestDispatcher("/dashboard/"+getNextPage()).forward(request, response);
         } finally {
             em.close();

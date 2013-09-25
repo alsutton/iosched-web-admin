@@ -1,6 +1,7 @@
 package com.conferenceengineer.iosched.server.datamodel;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Representation of a user in the system
@@ -25,6 +26,9 @@ public class SystemUser {
 
     @Column(name="image")
     private String image;
+
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "systemUser")
+    private List<ConferencePermission> permissions;
 
     public SystemUser() {
         super();
@@ -72,6 +76,14 @@ public class SystemUser {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public List<ConferencePermission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(List<ConferencePermission> permissions) {
+        this.permissions = permissions;
     }
 
     public String toString() {

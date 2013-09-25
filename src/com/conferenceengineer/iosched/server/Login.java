@@ -1,9 +1,6 @@
 package com.conferenceengineer.iosched.server;
 
-import com.conferenceengineer.iosched.server.datamodel.SystemUser;
-import com.conferenceengineer.iosched.server.datamodel.SystemUserDAO;
-import com.conferenceengineer.iosched.server.datamodel.UserAuthenticationInformation;
-import com.conferenceengineer.iosched.server.datamodel.UserAuthenticationInformationDAO;
+import com.conferenceengineer.iosched.server.datamodel.*;
 import com.conferenceengineer.iosched.server.utils.EntityManagerWrapperBridge;
 import com.conferenceengineer.iosched.server.utils.LoginUtils;
 
@@ -14,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Login Servlet for handling conference organiser logins.
@@ -65,7 +63,21 @@ public class Login extends HttpServlet {
 
                 if(loginUtils.isUserValid(name, password, authenticator)) {
                     loginUtils.addCookie(response, user);
+
+                    List<ConferencePermission> permissions = user.getPermissions();
+                    if(permissions != null && !permissions.isEmpty()) {
+                        request.getSession().setAttribute("conferenceId", permissions.get(0).getConference().getId());
+                    } else {
+                        // Bootstrap the permissions
+                        ConferencePermission permission = new ConferencePermission();
+                        permission.setSystemUser(user);
+                        permission.setConference(em.find(Conference.class, 1));
+                        em.persist(permission);
+                        request.getSession().setAttribute("conferenceId", 1);
+                    }
+
                     response.sendRedirect("dashboard/Dashboard");
+                    em.getTransaction().commit();
                     return;
                 }
             }

@@ -1,19 +1,14 @@
 package com.conferenceengineer.iosched.server.dashboard;
 
-import com.conferenceengineer.iosched.server.datamodel.Conference;
-import com.conferenceengineer.iosched.server.datamodel.ConferenceDAO;
-import com.conferenceengineer.iosched.server.datamodel.Track;
 import com.conferenceengineer.iosched.server.exporters.TrackSessionsJSON;
-import com.conferenceengineer.iosched.server.exporters.TracksJSON;
+import com.conferenceengineer.iosched.server.utils.ConferenceUtils;
 import com.conferenceengineer.iosched.server.utils.EntityManagerWrapperBridge;
 
 import javax.persistence.EntityManager;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * Servlet to handle tracks
@@ -31,11 +26,7 @@ public class TrackSessionsServlet extends HttpServlet {
 
         EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
         try {
-            String conferenceIdString = request.getServletContext().getInitParameter("conferenceId");
-            Integer conferenceId = Integer.parseInt(conferenceIdString);
-
-            Conference conference = ConferenceDAO.getInstance().get(em, conferenceId);
-            json = TrackSessionsJSON.export(conference);
+            json = TrackSessionsJSON.export(ConferenceUtils.getCurrentConference(request, em));
         } finally {
             em.close();
         }

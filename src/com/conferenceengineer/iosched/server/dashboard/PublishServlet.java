@@ -1,11 +1,11 @@
 package com.conferenceengineer.iosched.server.dashboard;
 
 import com.conferenceengineer.iosched.server.datamodel.Conference;
-import com.conferenceengineer.iosched.server.datamodel.ConferenceDAO;
 import com.conferenceengineer.iosched.server.datamodel.ConferenceMetadata;
 import com.conferenceengineer.iosched.server.exporters.SessionsJSON;
 import com.conferenceengineer.iosched.server.exporters.SpeakersJSON;
 import com.conferenceengineer.iosched.server.exporters.TrackSessionsJSON;
+import com.conferenceengineer.iosched.server.utils.ConferenceUtils;
 import com.conferenceengineer.iosched.server.utils.EntityManagerWrapperBridge;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
@@ -23,7 +23,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -38,10 +37,7 @@ public class PublishServlet extends HttpServlet {
         throws IOException, ServletException {
         EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
         try {
-            String conferenceIdString = request.getServletContext().getInitParameter("conferenceId");
-            Integer conferenceId = Integer.parseInt(conferenceIdString);
-
-            Conference conference = ConferenceDAO.getInstance().get(em, conferenceId);
+            Conference conference = ConferenceUtils.getCurrentConference(request, em);
 
             publishUpdate("presenters", SpeakersJSON.export(conference));
             publishUpdate("tracks", TrackSessionsJSON.export(conference));

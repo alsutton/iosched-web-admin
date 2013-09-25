@@ -1,9 +1,8 @@
 package com.conferenceengineer.iosched.server.dashboard;
 
-import com.conferenceengineer.iosched.server.datamodel.Conference;
-import com.conferenceengineer.iosched.server.datamodel.ConferenceDAO;
 import com.conferenceengineer.iosched.server.datamodel.Track;
 import com.conferenceengineer.iosched.server.exporters.TracksJSON;
+import com.conferenceengineer.iosched.server.utils.ConferenceUtils;
 import com.conferenceengineer.iosched.server.utils.EntityManagerWrapperBridge;
 
 import javax.persistence.EntityManager;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * Servlet to handle tracks
@@ -30,11 +28,7 @@ public class TracksServlet extends HttpServlet {
 
         EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
         try {
-            String conferenceIdString = request.getServletContext().getInitParameter("conferenceId");
-            Integer conferenceId = Integer.parseInt(conferenceIdString);
-
-            Conference conference = ConferenceDAO.getInstance().get(em, conferenceId);
-            json = TracksJSON.export(conference);
+            json = TracksJSON.export(ConferenceUtils.getCurrentConference(request, em));
         } finally {
             em.close();
         }
@@ -58,11 +52,8 @@ public class TracksServlet extends HttpServlet {
             String trackId = request.getParameter("id");
             boolean isNew = (trackId == null || trackId.isEmpty());
             if(isNew) {
-                String conferenceIdString = request.getServletContext().getInitParameter("conferenceId");
-                Integer conferenceId = Integer.parseInt(conferenceIdString);
-                Conference conference = ConferenceDAO.getInstance().get(em, conferenceId);
                 track = new Track();
-                track.setConference(conference);
+                track.setConference(ConferenceUtils.getCurrentConference(request, em));
             } else {
                 track = em.find(Track.class, Integer.parseInt(trackId));
             }

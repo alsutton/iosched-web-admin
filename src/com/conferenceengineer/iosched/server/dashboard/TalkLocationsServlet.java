@@ -2,6 +2,7 @@ package com.conferenceengineer.iosched.server.dashboard;
 
 import com.conferenceengineer.iosched.server.datamodel.*;
 import com.conferenceengineer.iosched.server.exporters.TalkLocationsJSON;
+import com.conferenceengineer.iosched.server.utils.ConferenceUtils;
 import com.conferenceengineer.iosched.server.utils.EntityManagerWrapperBridge;
 
 import javax.persistence.EntityManager;
@@ -10,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * Servlet to handle tracks
@@ -28,11 +28,7 @@ public class TalkLocationsServlet extends HttpServlet {
 
         EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
         try {
-            String conferenceIdString = request.getServletContext().getInitParameter("conferenceId");
-            Integer conferenceId = Integer.parseInt(conferenceIdString);
-
-            Conference conference = ConferenceDAO.getInstance().get(em, conferenceId);
-            json = TalkLocationsJSON.export(conference);
+            json = TalkLocationsJSON.export(ConferenceUtils.getCurrentConference(request, em));
         } finally {
             em.close();
         }
@@ -56,11 +52,8 @@ public class TalkLocationsServlet extends HttpServlet {
             String id = request.getParameter("id");
             boolean isNew = id == null || id.isEmpty();
             if(isNew) {
-                String conferenceIdString = request.getServletContext().getInitParameter("conferenceId");
-                Integer conferenceId = Integer.parseInt(conferenceIdString);
-                Conference conference = ConferenceDAO.getInstance().get(em, conferenceId);
                 location = new TalkLocation();
-                location.setConference(conference);
+                location.setConference(ConferenceUtils.getCurrentConference(request, em));
             } else {
                 location = em.find(TalkLocation.class, Integer.parseInt(id));
             }

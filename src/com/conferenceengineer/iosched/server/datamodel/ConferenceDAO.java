@@ -23,17 +23,6 @@ public class ConferenceDAO {
     }
 
     /**
-     * Get a conference by it's ID.
-     *
-     * @param em The currently active EntityManager.
-     * @param id The ID of the conference to get.
-     */
-
-    public Conference get(final EntityManager em, final Integer id) {
-        return em.find(Conference.class, id);
-    }
-
-    /**
      * Get the details about a conference in a series
      *
      * @param entityManager The currently active EntityManager

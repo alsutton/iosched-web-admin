@@ -1,8 +1,7 @@
 package com.conferenceengineer.iosched.server.dashboard;
 
-import com.conferenceengineer.iosched.server.datamodel.Conference;
-import com.conferenceengineer.iosched.server.datamodel.ConferenceDAO;
 import com.conferenceengineer.iosched.server.exporters.SearchSuggestionsJSON;
+import com.conferenceengineer.iosched.server.utils.ConferenceUtils;
 import com.conferenceengineer.iosched.server.utils.EntityManagerWrapperBridge;
 
 import javax.persistence.EntityManager;
@@ -27,11 +26,7 @@ public class SearchSuggestionsServlet extends HttpServlet {
 
         EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
         try {
-            String conferenceIdString = request.getServletContext().getInitParameter("conferenceId");
-            Integer conferenceId = Integer.parseInt(conferenceIdString);
-
-            Conference conference = ConferenceDAO.getInstance().get(em, conferenceId);
-            json = SearchSuggestionsJSON.export(conference);
+            json = SearchSuggestionsJSON.export(ConferenceUtils.getCurrentConference(request, em));
         } finally {
             em.close();
         }

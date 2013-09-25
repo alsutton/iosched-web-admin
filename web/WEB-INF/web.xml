@@ -5,16 +5,6 @@
 		  http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
            version="2.5">
 
-    <context-param>
-        <param-name>conferenceName</param-name>
-        <param-value>Droidcon London 2013</param-value>
-    </context-param>
-
-    <context-param>
-        <param-name>conferenceId</param-name>
-        <param-value>1</param-value>
-    </context-param>
-
     <filter>
         <filter-name>AuthenticationFilter</filter-name>
         <filter-class>com.conferenceengineer.iosched.server.AuthenticationFilter</filter-class>
@@ -54,11 +44,6 @@
         <filter-name>Sitemesh</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-
-    <servlet>
-        <servlet-name>Bootstrap</servlet-name>
-        <servlet-class>com.conferenceengineer.iosched.server.BootstrapServlet</servlet-class>
-    </servlet>
 
     <servlet>
         <servlet-name>Dashboard</servlet-name>
@@ -144,11 +129,6 @@
         <servlet-name>UserServlet</servlet-name>
         <servlet-class>com.conferenceengineer.iosched.server.dashboard.UserServlet</servlet-class>
     </servlet>
-
-    <servlet-mapping>
-        <servlet-name>Bootstrap</servlet-name>
-        <url-pattern>/Bootstrap</url-pattern>
-    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
