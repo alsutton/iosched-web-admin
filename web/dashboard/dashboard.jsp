@@ -21,6 +21,9 @@
                 <li><a href="<c:url value='/dashboard/DashboardSpeakers' />">Speakers</a></li>
                 <li><a href="<c:url value='/dashboard/DashboardSessions' />">Schedule</a></li>
             </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="<c:url value='/Logout'/>">Logout</a></li>
+            </ul>
         </div>
     </div>
 </div>

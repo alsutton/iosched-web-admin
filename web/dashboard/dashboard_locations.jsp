@@ -22,12 +22,10 @@
                 <li><a href="<c:url value='/dashboard/DashboardSpeakers' />">Speakers</a></li>
                 <li><a href="<c:url value='/dashboard/DashboardSessions' />">Schedule</a></li>
             </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="<c:url value='/Logout'/>">Logout</a></li>
+            </ul>
         </div>
-        <c:if test="${requestScope.user != null}">
-            <div class="navbar-right">
-                <c:out value="${requestScope.username}" />&nbsp;|&nbsp; <a href="<c:url value='/Logout' />">Logout</a>
-            </div>
-        </c:if>
     </div>
 </div>
 <div class="container">
