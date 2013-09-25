@@ -113,12 +113,17 @@
 
     <div class="row">
         <div class="col-md-12">
-            Last published :&nbsp;
-            <c:choose>
-                <c:when test="${conference.metadata == null || conference.metadata.lastPublished == null}"><i>Never</i></c:when>
-                <c:otherwise><fmt:formatDate value="${conference.metadata.lastPublished.time}" pattern="MMM dd, yyyy 'at' HH:mm"/></c:otherwise>
-            </c:choose>
-            <br /><a href="<c:url value='/dashboard/publish' />" class="btn btn-default btn-xs">Publish Now</a>
+        <c:choose>
+            <c:when test="${conference.id == 1}">
+                Last published :&nbsp;
+                <c:choose>
+                    <c:when test="${conference.metadata == null || conference.metadata.lastPublished == null}"><i>Never</i></c:when>
+                    <c:otherwise><fmt:formatDate value="${conference.metadata.lastPublished.time}" pattern="MMM dd, yyyy 'at' HH:mm"/></c:otherwise>
+                </c:choose>
+                <br /><a href="<c:url value='/dashboard/publish' />" class="btn btn-default btn-xs">Publish Now</a>
+            </c:when>
+            <c:otherwise><i>OTA Updates are not available for this conference</i></c:otherwise>
+        </c:choose>
         </div>
     </div>
 
