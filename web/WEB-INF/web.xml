@@ -46,6 +46,11 @@
     </filter-mapping>
 
     <servlet>
+        <servlet-name>ConferenceChooser</servlet-name>
+        <servlet-class>com.conferenceengineer.iosched.server.dashboard.ConferenceChooser</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>Dashboard</servlet-name>
         <servlet-class>com.conferenceengineer.iosched.server.dashboard.Dashboard</servlet-class>
     </servlet>
@@ -153,6 +158,11 @@
     <servlet-mapping>
         <servlet-name>Register</servlet-name>
         <url-pattern>/Register</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ConferenceChooser</servlet-name>
+        <url-pattern>/dashboard/ConferenceChooser</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

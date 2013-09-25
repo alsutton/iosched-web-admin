@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Login Servlet for handling conference organiser logins.
@@ -65,18 +64,20 @@ public class Login extends HttpServlet {
                     loginUtils.addCookie(response, user);
 
                     List<ConferencePermission> permissions = user.getPermissions();
-                    if(permissions != null && !permissions.isEmpty()) {
-                        request.getSession().setAttribute("conferenceId", permissions.get(0).getConference().getId());
-                    } else {
-                        // Bootstrap the permissions
-                        ConferencePermission permission = new ConferencePermission();
-                        permission.setSystemUser(user);
-                        permission.setConference(em.find(Conference.class, 1));
-                        em.persist(permission);
-                        request.getSession().setAttribute("conferenceId", 1);
+                    if(permissions == null || permissions.isEmpty()) {
+                        request.getSession().setAttribute("conferenceId", "There has been a problem logging you in. Please try again later.");
+                        log("User "+user.getId()+" has no conference permissions");
+                        response.sendRedirect("/");
+                        return;
                     }
 
-                    response.sendRedirect("dashboard/Dashboard");
+                    if(permissions.size() > 1) {
+                        response.sendRedirect("dashboard/ConferenceChooser");
+                    } else {
+                        request.getSession().setAttribute("conferenceId", permissions.get(0).getConference().getId());
+                        response.sendRedirect("dashboard/Dashboard");
+                    }
+
                     em.getTransaction().commit();
                     return;
                 }
