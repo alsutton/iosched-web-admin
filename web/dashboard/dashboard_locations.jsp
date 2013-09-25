@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <body>
+<c:set var="conference" value="${requestScope.conference}" />
 <div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -11,7 +12,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">${conference.name}</a>
+            <a class="navbar-brand" href="<c:url value='/dashboard/Dashboard'/>"><c:out value="${conference.name}"/></a>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
@@ -31,8 +32,8 @@
 </div>
 <div class="container">
     <div class="row">&nbsp;</div>
-    <c:if test="${not empty error}">
-        <div class="row"><div class="alert alert-danger text-center">${error}</div></div>
+    <c:if test="${not empty sessionScope.error}">
+        <div class="row"><div class="alert alert-danger text-center">${sessionScope.error}</div></div>
         <div class="row">&nbsp;</div>
     </c:if>
 
@@ -43,7 +44,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">Add Location</h4>
                 </div>
-                <form accept-charset="utf-8" action="talkLocations" role="form" method="POST">
+                <form accept-charset="utf-8" action="<c:url value='/dashboard/talkLocations'/>" role="form" method="POST">
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="newLocationName">Please enter the name of the location;</label>
@@ -65,7 +66,33 @@
     <div class="row">
         <div class="col-md-12">
             <c:forEach var="location" items="${conference.talkLocationList}">
-                <p>${location.name}</p>
+                <div class="modal fade" id="editLocation${location.id}" tabindex="-1" role="dialog" aria-labelledby="editLocation${location.id}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Edit Location</h4>
+                            </div>
+                            <form accept-charset="utf-8" action="<c:url value='/dashboard/talkLocations'/>" role="form" method="POST">
+                            <input type="hidden" name="id" value="${location.id}" />
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="editLocation${location.id}Name">Please enter the name of the location;</label>
+                                        <input type="text" name="name" id="editLocation${location.id}Name" class="form-control" value="${location.name}" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="editLocation${location.id}Address">Please any helpful location hint;</label>
+                                        <input type="text" name="address" id="editLocation${location.id}Address" class="form-control" value="${location.address}" />
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <h4><a data-toggle="modal" href="#editLocation${location.id}">${location.name}</a></h4>
             </c:forEach>
         </div>
     </div>
@@ -81,7 +108,7 @@
     <div class="row">&nbsp;</div>
 </div>
 
-<script src="<c:url value='/js/modal.js' />" />
+<script src="<c:url value='/js/modal.js' />"></script>
 
 </body>
 </html>

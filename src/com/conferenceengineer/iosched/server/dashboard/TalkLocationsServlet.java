@@ -51,15 +51,26 @@ public class TalkLocationsServlet extends HttpServlet {
         EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
         try {
             em.getTransaction().begin();
-            String conferenceIdString = request.getServletContext().getInitParameter("conferenceId");
-            Integer conferenceId = Integer.parseInt(conferenceIdString);
 
-            Conference conference = ConferenceDAO.getInstance().get(em, conferenceId);
+            TalkLocation location;
+            String id = request.getParameter("id");
+            boolean isNew = id == null || id.isEmpty();
+            if(isNew) {
+                String conferenceIdString = request.getServletContext().getInitParameter("conferenceId");
+                Integer conferenceId = Integer.parseInt(conferenceIdString);
+                Conference conference = ConferenceDAO.getInstance().get(em, conferenceId);
+                location = new TalkLocation();
+                location.setConference(conference);
+            } else {
+                location = em.find(TalkLocation.class, Integer.parseInt(id));
+            }
 
-            String name = request.getParameter("name");
-            String address = request.getParameter("address");
+            location.setName(request.getParameter("name"));
+            location.setAddress(request.getParameter("address"));
 
-            em.persist(new TalkLocation(conference, name, address));
+            if(isNew) {
+                em.persist(location);
+            }
             em.getTransaction().commit();
         } finally {
             em.close();
