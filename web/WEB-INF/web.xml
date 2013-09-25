@@ -86,6 +86,11 @@
     </servlet>
 
     <servlet>
+        <servlet-name>Register</servlet-name>
+        <servlet-class>com.conferenceengineer.iosched.server.RegisterServlet</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>SpeakersServlet</servlet-name>
         <servlet-class>com.conferenceengineer.iosched.server.dashboard.SpeakersServlet</servlet-class>
     </servlet>
@@ -138,6 +143,11 @@
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>
         <url-pattern>/Logout</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>Register</servlet-name>
+        <url-pattern>/Register</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

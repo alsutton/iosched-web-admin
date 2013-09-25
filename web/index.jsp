@@ -24,5 +24,10 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-md-4 col-md-offset-4 text-center">
+        <h4>No login, but still want to play?<br/><a href="<c:url value='/Register' />">Sign-up Here</a>.</h4>
+    </div>
+</div>
 </body>
 </html>
