@@ -11,8 +11,8 @@
     <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
     <link rel="stylesheet" type="text/css" href="<c:url value='/css/bootstrap.min.css' />" >
     <link rel="stylesheet" type="text/css" href="<c:url value='/css/style.css' />" >
-    <title>${initParam.conferenceName} Admin</title>
-	<decorator:head />
+    <title>Conference Engineer</title>
+    <decorator:head />
 </head>
 <body>
 <div id="wrap">
@@ -34,7 +34,7 @@
 </div>
 <div id="footer">
     <div class="container">
-        <p class="text-center">&copy;Copyright 2013 Funky Android Ltd., All rights reserved.</p>
+        <p class="text-center">Website and back-end software : &copy;Copyright 2013 <a target="_blank" href="http://funkyandroid.com/">Funky Android Ltd.</a>, All rights reserved.</p>
     </div>
 </div>
 <script src="<c:url value='/js/jquery-1.10.2.min.js' />"></script>
