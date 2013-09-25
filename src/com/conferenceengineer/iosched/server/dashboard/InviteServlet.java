@@ -88,7 +88,7 @@ public class InviteServlet extends HttpServlet {
         Session session = Session.getDefaultInstance(props);
 
         Message message = new MimeMessage(session);
-        message.setFrom(new InternetAddress("no-reply@funkyandroid.com"));
+        message.setFrom(new InternetAddress("support@funkyandroid.com"));
         message.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
         message.setSubject("Conference Engineer Invite");
         message.setText(
@@ -114,7 +114,7 @@ public class InviteServlet extends HttpServlet {
         Session session = Session.getDefaultInstance(props);
 
         Message message = new MimeMessage(session);
-        message.setFrom(new InternetAddress("no-reply@funkyandroid.com"));
+        message.setFrom(new InternetAddress("support@funkyandroid.com"));
         message.setRecipient(Message.RecipientType.TO, new InternetAddress(user.getEmail()));
         message.setSubject("Conference Engineer Invite");
         message.setText(

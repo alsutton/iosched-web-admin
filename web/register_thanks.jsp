@@ -21,7 +21,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <p>Your password has been emailed to you, once you've got it you'll be able to sign-in <a href="<c:url='/' />">here</a>.</p>
+        <p>Your password has been emailed to you, once you've got it you'll be able to sign-in <a href="<c:url value='/'/>">here</a>.</p>
     </div>
 </div>
 
