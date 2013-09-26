@@ -9,8 +9,8 @@
 </head>
 <body>
 <div class="row">&nbsp;</div>
-<c:if test="${not empty error}">
-    <div class="row"><div class="alert alert-danger text-center">${error}</div></div>
+<c:if test="${not empty sessionScope.error}">
+    <div class="row"><div class="alert alert-danger text-center">${sessionScope.error}</div></div>
 </c:if>
 
 <div class="row">
@@ -27,6 +27,16 @@
 <div class="row">
     <div class="col-md-4 col-md-offset-4 text-center">
         <h4>No login, but still want to play?<br/><a href="<c:url value='/Register' />">Sign-up Here</a>.</h4>
+    </div>
+</div>
+
+<div class="row">&nbsp;</div>
+<div class="row">&nbsp;</div>
+<div class="row">&nbsp;</div>
+<div class="row">
+    <div class="col-md-12 text-center">
+        <p>Initially developed to support</p>
+        <a href="http://uk.droidcon.com/"><img src="<c:url value='/dcuk2013.png'/>" /></a>
     </div>
 </div>
 </body>
