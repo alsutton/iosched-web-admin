@@ -11,6 +11,7 @@
 <div class="row">&nbsp;</div>
 <c:if test="${not empty sessionScope.error}">
     <div class="row"><div class="alert alert-danger text-center">${sessionScope.error}</div></div>
+    <c:set scope="session" var="error" value="" />
 </c:if>
 
 <div class="row">
