@@ -96,7 +96,7 @@ public class Login extends HttpServlet {
 
     private void reportLoginError(final HttpServletRequest request, final HttpServletResponse response)
         throws IOException, ServletException {
-        request.setAttribute("error", "The login details were incorrect");
+        request.getSession().setAttribute("error", "The login details were incorrect");
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 
