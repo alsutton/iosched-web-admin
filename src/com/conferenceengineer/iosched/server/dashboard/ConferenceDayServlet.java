@@ -1,6 +1,7 @@
 package com.conferenceengineer.iosched.server.dashboard;
 
 import com.conferenceengineer.iosched.server.datamodel.ConferenceDay;
+import com.conferenceengineer.iosched.server.datamodel.TalkSlot;
 import com.conferenceengineer.iosched.server.utils.ConferenceUtils;
 import com.conferenceengineer.iosched.server.utils.EntityManagerWrapperBridge;
 
@@ -19,12 +20,24 @@ import java.text.SimpleDateFormat;
 public class ConferenceDayServlet extends HttpServlet {
 
     /**
-     * Post is add!!!
+     * Handle adds and deletes
      */
 
     @Override
     public void doPost(final HttpServletRequest request, final HttpServletResponse response)
         throws IOException, ServletException {
+        String action = request.getParameter("action");
+        if(action == null || action.isEmpty()) {
+            add(request, response);
+        } else if("delete".equals(action)) {
+            delete(request, response);
+        }
+
+        response.sendRedirect("DashboardSessions");
+    }
+
+    private void add(final HttpServletRequest request, final HttpServletResponse response)
+            throws IOException, ServletException {
         EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
         try {
             em.getTransaction().begin();
@@ -37,7 +50,28 @@ public class ConferenceDayServlet extends HttpServlet {
         } finally {
             em.close();
         }
+    }
 
-        response.sendRedirect("DashboardSessions");
+    /**
+     * Delete a day
+     */
+
+    private void delete(final HttpServletRequest request, final HttpServletResponse response)
+            throws ServletException, IOException{
+        String id = request.getParameter("id");
+        if(id == null || id.isEmpty()) {
+            request.getSession().setAttribute("error", "Day ID not specified");
+            return;
+        }
+
+        EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
+        try {
+            em.getTransaction().begin();
+            ConferenceDay day = em.find(ConferenceDay.class, Integer.parseInt(id));
+            em.remove(day);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
     }
 }

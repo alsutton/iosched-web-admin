@@ -28,6 +28,18 @@ public class TalkSlotServlet extends HttpServlet {
     @Override
     public void doPost(final HttpServletRequest request, final HttpServletResponse response)
         throws IOException, ServletException {
+        String action = request.getParameter("action");
+        if(action == null || action.isEmpty()) {
+            add(request, response);
+        } else if("delete".equals(action)) {
+            delete(request, response);
+        }
+
+        response.sendRedirect("DashboardSessions");
+    }
+
+    private void add(final HttpServletRequest request, final HttpServletResponse response)
+        throws IOException, ServletException {
         EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
         try {
             em.getTransaction().begin();
@@ -49,8 +61,29 @@ public class TalkSlotServlet extends HttpServlet {
         } finally {
             em.close();
         }
+    }
 
-        response.sendRedirect("DashboardSessions");
+    /**
+     * Delete a slot
+     */
+
+    private void delete(final HttpServletRequest request, final HttpServletResponse response)
+        throws ServletException, IOException{
+        String id = request.getParameter("id");
+        if(id == null || id.isEmpty()) {
+            request.getSession().setAttribute("error", "Session ID not specified");
+            return;
+        }
+
+        EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
+        try {
+            em.getTransaction().begin();
+            TalkSlot slot = em.find(TalkSlot.class, Integer.parseInt(id));
+            em.remove(slot);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
     }
 
     /**

@@ -76,8 +76,32 @@
 
     <c:forEach var="conferenceDay" items="${conference.dateList}">
         <fmt:formatDate var="conferenceDate" value="${conferenceDay.date}" pattern="dd MMMM yyyy"/>
+
+        <div class="modal fade" id="deleteDayModal${conferenceDay.id}" tabindex="-1" role="dialog" aria-labelledby="deleteDayModal${conferenceDay.id}" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Add Session Slot</h4>
+                    </div>
+                    <form accept-charset="utf-8" action="conferenceDays" role="form" method="POST">
+                        <input type="hidden" name="id" value="${conferenceDay.id}" />
+                        <input type="hidden" name="action" value="delete" />
+                        <div class="modal-body">
+                            <p>Please confirm you wish to remove <c:out value="${conferenceDate}" /> from
+                            your conference schedule.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">OK</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
         <div class="row">
-            <div class="col-md-12"><h2><c:out value="${conferenceDate}" /></h2></div>
+            <div class="col-md-12"><h2><a data-toggle="modal" href="#deleteDayModal${conferenceDay.id}"><c:out value="${conferenceDate}" /></a></h2></div>
         </div>
 
         <fmt:formatDate var="dateCode" value="${conferenceDay.date}" pattern="yyyyMMdd"/>
@@ -114,12 +138,35 @@
         <div style="padding-top:5px">&nbsp;</div>
 
         <c:forEach var="slot" items="${conferenceDay.talkSlotList}">
+            <fmt:formatDate var="startTime" value="${slot.start.time}" pattern="HH:mm"/>
+            <fmt:formatDate var="endTime" value="${slot.end.time}" pattern="HH:mm"/>
+
+            <div class="modal fade" id="deleteSlotModal${slot.id}" tabindex="-1" role="dialog" aria-labelledby="deleteSlotModal${slot.id}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Add Session Slot</h4>
+                        </div>
+                        <form accept-charset="utf-8" action="talkSlots" role="form" method="POST">
+                            <input type="hidden" name="id" value="${slot.id}" />
+                            <input type="hidden" name="action" value="delete" />
+                            <div class="modal-body">
+                                <p>Please confirm you wish to delete the <c:out value="${startTime}" />&nbsp;-&nbsp;<c:out value="${endTime}" />
+                                slot for <c:out value="${conferenceDate}" /></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">OK</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             <div class="panel panel-default">
                 <div class="panel-heading" onclick="showHide(${slot.id});">
                     <h3 class="panel-title">
-                        <fmt:formatDate var="startTime" value="${slot.start.time}" pattern="HH:mm"/>
-                        <fmt:formatDate var="endTime" value="${slot.end.time}" pattern="HH:mm"/>
-                        <c:out value="${startTime}" />&nbsp;-&nbsp;<c:out value="${endTime}" />
+                        <a data-toggle="modal" href="#deleteSlotModal${slot.id}"><c:out value="${startTime}" />&nbsp;-&nbsp;<c:out value="${endTime}" /></a>
                     </h3>
                 </div>
                 <div class="panel-body">
