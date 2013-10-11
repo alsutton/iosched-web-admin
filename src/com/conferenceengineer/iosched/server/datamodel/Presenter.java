@@ -34,6 +34,10 @@ public class Presenter {
     @JoinColumn(name="conference_id")
     private Conference conference;
 
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private SystemUser user;
+
     @ManyToMany
     @JoinTable(name="talk_presenter")
     private Set<Talk> talks;
@@ -108,11 +112,23 @@ public class Presenter {
         this.conference = conference;
     }
 
+    public SystemUser getUser() {
+        return user;
+    }
+
+    public void setUser(SystemUser user) {
+        this.user = user;
+    }
+
     public Set<Talk> getTalks() {
         return talks;
     }
 
     public void setTalks(Set<Talk> talks) {
         this.talks = talks;
+    }
+
+    public String toString() {
+        return getName();
     }
 }

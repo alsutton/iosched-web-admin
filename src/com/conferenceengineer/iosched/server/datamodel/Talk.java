@@ -11,10 +11,20 @@ import java.util.Set;
 @Table( name = "talk" )
 public class Talk {
 
+    /**
+     * The types of talks
+     */
+
+    public static final int TYPE_ACCEPTED = 0, TYPE_PROPOSED = 1;
+
     @Id
     @GeneratedValue
     @Column(name="id")
     private int id;
+
+    @ManyToOne
+    @JoinColumn(name="conference_id")
+    private Conference conference;
 
     @ManyToOne
     @JoinColumn(name="track_id")
@@ -27,6 +37,9 @@ public class Talk {
     @ManyToOne
     @JoinColumn(name="talk_location_id")
     private TalkLocation location;
+
+    @Column(name="type")
+    private Integer type;
 
     @Column(name="title")
     private String name;
@@ -48,16 +61,6 @@ public class Talk {
         super();
     }
 
-    public Talk(final TalkSlot slot, final TalkLocation location,
-                final Track track,
-                final String name, final String shortDescription) {
-        this.slot = slot;
-        this.location = location;
-        this.track = track;
-        this.name = name;
-        this.shortDescription = shortDescription;
-    }
-
     public int getId() {
         return id;
     }
@@ -66,12 +69,28 @@ public class Talk {
         this.id = id;
     }
 
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     public Track getTrack() {
         return track;
     }
 
     public void setTrack(Track track) {
         this.track = track;
+    }
+
+    public Conference getConference() {
+        return conference;
+    }
+
+    public void setConference(Conference conference) {
+        this.conference = conference;
     }
 
     public TalkSlot getSlot() {

@@ -46,6 +46,31 @@
     </filter-mapping>
 
     <servlet>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>com.conferenceengineer.iosched.server.Login</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>com.conferenceengineer.iosched.server.Logout</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>Register</servlet-name>
+        <servlet-class>com.conferenceengineer.iosched.server.RegisterServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>BarcampDashboard</servlet-name>
+        <servlet-class>com.conferenceengineer.iosched.server.barcamp.Dashboard</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>BarcampTalks</servlet-name>
+        <servlet-class>com.conferenceengineer.iosched.server.barcamp.TalksServlet</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>ConferenceChooser</servlet-name>
         <servlet-class>com.conferenceengineer.iosched.server.dashboard.ConferenceChooser</servlet-class>
     </servlet>
@@ -81,23 +106,8 @@
     </servlet>
 
     <servlet>
-        <servlet-name>Login</servlet-name>
-        <servlet-class>com.conferenceengineer.iosched.server.Login</servlet-class>
-    </servlet>
-
-    <servlet>
-        <servlet-name>Logout</servlet-name>
-        <servlet-class>com.conferenceengineer.iosched.server.Logout</servlet-class>
-    </servlet>
-
-    <servlet>
         <servlet-name>PublishServlet</servlet-name>
         <servlet-class>com.conferenceengineer.iosched.server.dashboard.PublishServlet</servlet-class>
-    </servlet>
-
-    <servlet>
-        <servlet-name>Register</servlet-name>
-        <servlet-class>com.conferenceengineer.iosched.server.RegisterServlet</servlet-class>
     </servlet>
 
     <servlet>
@@ -158,6 +168,16 @@
     <servlet-mapping>
         <servlet-name>Register</servlet-name>
         <url-pattern>/Register</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>BarcampDashboard</servlet-name>
+        <url-pattern>/barcamp/view/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>BarcampTalks</servlet-name>
+        <url-pattern>/barcamp/talks</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

@@ -1,6 +1,7 @@
 package com.conferenceengineer.iosched.server;
 
 import com.conferenceengineer.iosched.server.utils.LoginUtils;
+import com.conferenceengineer.iosched.server.utils.ServletUtils;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +22,7 @@ public class Logout extends HttpServlet {
     public void doGet(final HttpServletRequest request, final HttpServletResponse response)
         throws IOException {
         LoginUtils.getInstance().removeCookie(response);
-        response.sendRedirect(request.getContextPath());
+        ServletUtils.redirectToIndex(request, response);
     }
 
 }
