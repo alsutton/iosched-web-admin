@@ -40,6 +40,7 @@
                 <li class="active"><a href="#">Schedule</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li><a href="<c:url value='/dashboard/conference'/>">Build</a></li>
                 <li><a href="<c:url value='/Logout'/>">Logout</a></li>
             </ul>
         </div>

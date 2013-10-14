@@ -80,7 +80,7 @@ public class Login extends HttpServlet {
                     }
 
                     if(permissions.size() > 1) {
-                        response.sendRedirect("dashboard/ConferenceChooser");
+                        response.sendRedirect("dashboard/conference");
                     } else {
                         request.getSession().setAttribute("conferenceId", permissions.get(0).getConference().getId());
                         response.sendRedirect("dashboard/Dashboard");

@@ -76,8 +76,8 @@
     </servlet>
 
     <servlet>
-        <servlet-name>ConferenceChooser</servlet-name>
-        <servlet-class>com.conferenceengineer.iosched.server.dashboard.ConferenceChooser</servlet-class>
+        <servlet-name>ConferenceServlet</servlet-name>
+        <servlet-class>com.conferenceengineer.iosched.server.dashboard.ConferenceServlet</servlet-class>
     </servlet>
 
     <servlet>
@@ -191,8 +191,8 @@
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>ConferenceChooser</servlet-name>
-        <url-pattern>/dashboard/ConferenceChooser</url-pattern>
+        <servlet-name>ConferenceServlet</servlet-name>
+        <url-pattern>/dashboard/conference</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

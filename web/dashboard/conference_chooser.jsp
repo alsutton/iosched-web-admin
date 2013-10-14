@@ -45,11 +45,40 @@
         </div>
     </div>
 
+    <div class="modal fade" id="addConference" tabindex="-1" role="dialog" aria-labelledby="addConference" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Add Track</h4>
+                </div>
+                <form accept-charset="utf-8" action="<c:url value='/dashboard/conference' />" role="form" method="POST">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="name">Please enter the new conference name;</label>
+                            <input type="text" name="name" id="name" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-12">
             <c:forEach var="permission" items="${user.permissions}">
-                <p><a href="ConferenceChooser?id=${permission.conference.id}">${permission.conference.name}</a></p>
+                <p><a href="conference?id=${permission.conference.id}">${permission.conference.name}</a></p>
             </c:forEach>
+        </div>
+    </div>
+
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-md-12">
+            <a data-toggle="modal" href="#addConference" class="btn btn-primary btn-sm">Create New Conference</a>
         </div>
     </div>
 
