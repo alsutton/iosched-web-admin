@@ -59,7 +59,7 @@
 
     <div class="row">
         <div class="col-md-12" style="padding-bottom: 10px">
-            Vote for the talks you'd like to see at this the ${conference.name} barcamp!
+            Vote for the talks you'd like to see at the ${conference.name} barcamp!
         </div>
     </div>
 
