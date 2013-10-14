@@ -26,7 +26,11 @@ public class ServletUtils {
         if(contextPath.endsWith("/")) {
             contextPath = contextPath.substring(contextPath.length()-1);
         }
-        response.sendRedirect(contextPath+path);
+        String redirectPath = contextPath+path;
+        if(redirectPath.startsWith("//")) {
+            redirectPath = redirectPath.substring(1);
+        }
+        response.sendRedirect(redirectPath);
     }
 
 }

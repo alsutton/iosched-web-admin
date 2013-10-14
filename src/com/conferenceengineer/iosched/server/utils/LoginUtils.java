@@ -105,6 +105,8 @@ public final class LoginUtils {
         if( user != null ) {
             cookieString.append(Integer.toString(user.getId()));
             cookie = new Cookie(COOKIE_NAME, cookieString.toString());
+            cookie.setMaxAge(60*60*24*14);
+            cookie.setPath("/");
         } else {
             cookie = new Cookie(COOKIE_NAME, "");
             cookie.setMaxAge(0);

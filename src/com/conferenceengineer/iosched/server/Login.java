@@ -3,6 +3,8 @@ package com.conferenceengineer.iosched.server;
 import com.conferenceengineer.iosched.server.datamodel.*;
 import com.conferenceengineer.iosched.server.utils.EntityManagerWrapperBridge;
 import com.conferenceengineer.iosched.server.utils.LoginUtils;
+import com.conferenceengineer.iosched.server.utils.ServletUtils;
+import com.conferenceengineer.iosched.server.utils.Tracker;
 
 import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
@@ -63,11 +65,17 @@ public class Login extends HttpServlet {
                 if(loginUtils.isUserValid(name, password, authenticator)) {
                     loginUtils.addCookie(response, user);
 
+                    String area = Tracker.getLocation(request);
+                    if(area != null && area.startsWith("barcamp_")) {
+                        ServletUtils.redirectTo(request, response, "/barcamp/view/"+area.substring(8));
+                        return;
+                    }
+
                     List<ConferencePermission> permissions = user.getPermissions();
                     if(permissions == null || permissions.isEmpty()) {
                         request.getSession().setAttribute("conferenceId", "There has been a problem logging you in. Please try again later.");
-                        log("User "+user.getId()+" has no conference permissions");
-                        response.sendRedirect("/");
+                        log("User " + user.getId() + " has no conference permissions");
+                        ServletUtils.redirectToIndex(request, response);
                         return;
                     }
 

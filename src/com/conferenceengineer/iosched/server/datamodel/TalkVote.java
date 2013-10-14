@@ -19,8 +19,8 @@ public class TalkVote {
     private Talk talk;
 
     @ManyToOne
-    @JoinColumn(name="users_id")
-    private SystemUser systemUser;
+    @JoinColumn(name="voter_id")
+    private Voter voter;
 
     @Column(name="vote")
     private int vote;
@@ -45,12 +45,12 @@ public class TalkVote {
         this.talk = talk;
     }
 
-    public SystemUser getSystemUser() {
-        return systemUser;
+    public Voter getVoter() {
+        return voter;
     }
 
-    public void setSystemUser(SystemUser systemUser) {
-        this.systemUser = systemUser;
+    public void setVoter(Voter voter) {
+        this.voter = voter;
     }
 
     public int getVote() {

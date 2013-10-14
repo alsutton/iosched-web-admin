@@ -2,9 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
-<head>
-
-</head>
 <body>
 <div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -37,8 +34,7 @@
                     <h4 class="modal-title">Locked Voting</h4>
                 </div>
                 <div class="modal-body">
-                    To ensure everyone only gets one vote we only allow people who've <a href="<c:url value='/'/>">Logged in</a>
-                    to vote.
+                    To ensure we can correctly track votes you need to enable cookies on your browser.
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-primary">OK</button>
@@ -53,33 +49,45 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-md-12">
+            The order of the talks will be randomised each time you vote.
+        </div>
+    </div>
     <c:forEach var="talk" items="${talks}" varStatus="talkStatus">
         <div class="row">
             <div class="col-md-12">
                 <c:choose>
-                    <c:when test="${empty user}"><a data-toggle="modal" href="#locked"><span class="glyphicon glyphicon-lock"></span></a></c:when>
+                    <c:when test="${empty cookie.vid}"><a data-toggle="modal" href="#locked"><span class="glyphicon glyphicon-lock"></span></a></c:when>
                     <c:otherwise>
                         <c:choose>
-                            <c:when test="${votes[talk.id] == null}"><c:set var="lockClass" value="glyphicon glyphicon-star-empty"/></c:when>
-                            <c:otherwise><c:set var="lockClass" value="glyphicon glyphicon-star"/></c:otherwise>
+                            <c:when test="${talk.votedFor}">
+                                <c:set var="lockClass" value="glyphicon glyphicon-star"/>
+                                <c:set var="newVote" value="0" />
+                            </c:when>
+                            <c:otherwise>
+                                <c:set var="lockClass" value="glyphicon glyphicon-star-empty"/>
+                                <c:set var="newVote" value="1" />
+                            </c:otherwise>
                         </c:choose>
-                        <span class="${lockClass}"></span>
+                        <a href="<c:url value='/barcamp/vote?talk=${talk.talk.id}&vote=${newVote}'/>"><span class="${lockClass}"></span></a>
                     </c:otherwise>
                 </c:choose>
-                <c:out value="${talk.name}" /> (
-                <c:forEach var="presenter" items="${talk.presenters}" varStatus="status">
+                <c:out value="${talk.talk.name}" /> (
+                <c:forEach var="presenter" items="${talk.talk.presenters}" varStatus="status">
                     <c:out value="${presenter}"/><c:if test="${not status.last}">,</c:if>&nbsp;
                 </c:forEach>
-                )
+                )<br/>
+                ${talk.talk.shortDescription}
             </div>
         </div>
-        <c:if test="${not talkStatus.last}"><div class="row">&nbsp;</div></c:if>&nbsp;
+        <c:if test="${not talkStatus.last}"><div style="height:10px"></div></c:if>&nbsp;
     </c:forEach>
 
     <c:choose>
         <c:when test="${empty user}">
             <div class="alert alert-info">If you want to suggest a talk we'll need you to <a href="<c:url value='/register.jsp'/>"><b>Register</b></a>
-            and <a href="<c:url value='/' />"><b>Log in</b></a> so we can check you're registered to get in.</div>
+            and <a href="<c:url value='/login.jsp' />"><b>Log in</b></a> so we can check you're registered to get in.</div>
         </c:when>
         <c:otherwise>
             <div class="modal fade" id="newTalkModal" tabindex="-1" role="dialog" aria-labelledby="newTalkModal" aria-hidden="true">

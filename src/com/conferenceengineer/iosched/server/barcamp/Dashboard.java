@@ -1,24 +1,17 @@
 package com.conferenceengineer.iosched.server.barcamp;
 
-import com.conferenceengineer.iosched.server.datamodel.Conference;
-import com.conferenceengineer.iosched.server.datamodel.SystemUser;
-import com.conferenceengineer.iosched.server.datamodel.Talk;
-import com.conferenceengineer.iosched.server.datamodel.TalkVote;
-import com.conferenceengineer.iosched.server.utils.ConferenceUtils;
-import com.conferenceengineer.iosched.server.utils.EntityManagerWrapperBridge;
-import com.conferenceengineer.iosched.server.utils.LoginUtils;
-import com.conferenceengineer.iosched.server.utils.ServletUtils;
+import com.conferenceengineer.iosched.server.datamodel.*;
+import com.conferenceengineer.iosched.server.utils.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * The welcoming page for the barcamp system.
@@ -30,6 +23,11 @@ public class Dashboard extends HttpServlet {
 
     private static final Object VOTE_MARKER = new Object();
 
+    /**
+     * The counter used to ensure each voter gets a unique ID
+     */
+
+    private static int counter;
 
     @Override
     public void doGet(final HttpServletRequest request, final HttpServletResponse response)
@@ -41,7 +39,6 @@ public class Dashboard extends HttpServlet {
                 URI = URI.substring(0, URI.length()-1);
             }
 
-            log(URI);
             if(!"/barcamp/view".equals(URI)) {
                 int endIdx = URI.lastIndexOf('/');
                 if(endIdx == -1) {
@@ -65,19 +62,38 @@ public class Dashboard extends HttpServlet {
                 return;
             }
 
+            Tracker.setLocation(request, response, "barcamp_"+conference.getId());
             Query q =
                     em.createQuery("SELECT x FROM Talk x WHERE x.conference = :conference AND x.slot IS NULL AND x.type = "+ Talk.TYPE_PROPOSED);
             q.setParameter("conference", conference);
             List<Talk> talks = (List<Talk>)q.getResultList();
 
             request.setAttribute("conference", conference);
-            request.setAttribute("talks", talks);
             SystemUser user = LoginUtils.getInstance().getUserFromCookie(request, em);
             if(user != null) {
                 request.setAttribute("user", user);
-                request.setAttribute("votes", getUserVotes(em, user, conference));
-
             }
+
+            Voter voter = VoterUtils.getVoter(request, response, em, user);
+            Map<Integer, Object> votes = getUserVotes(em, voter, conference);
+
+/*            List<Talk> randomSource = new ArrayList<Talk>(talks);
+            List<TalkHolder> randomisedList = new ArrayList<TalkHolder>(talks.size());
+            Random random = new Random();
+            while(!randomSource.isEmpty()) {
+                Talk thisTalk = randomSource.remove(random.nextInt(randomSource.size()));
+                boolean votedFor = votes.get(thisTalk.getId()) != null;
+                TalkHolder holder = new TalkHolder(thisTalk, votedFor);
+                randomisedList.add(holder);
+            }
+*/
+            List<TalkHolder> randomisedList = new ArrayList<TalkHolder>(talks.size());
+            for(Talk thisTalk : talks) {
+                boolean votedFor = votes.get(thisTalk.getId()) != null;
+                TalkHolder holder = new TalkHolder(thisTalk, votedFor);
+                randomisedList.add(holder);
+            }
+            request.setAttribute("talks", randomisedList);
 
             request.getRequestDispatcher("/barcamp/dashboard.jsp").forward(request, response);
         } finally {
@@ -86,13 +102,13 @@ public class Dashboard extends HttpServlet {
     }
 
     /**
-     * Get the list of votes the user has cast
+     * Get the list of votes the voter has cast
      */
 
-    private Map<Integer,Object> getUserVotes(final EntityManager em, final SystemUser user, final Conference conference) {
+    private Map<Integer,Object> getUserVotes(final EntityManager em, final Voter voter, final Conference conference) {
         Query q =
-                em.createQuery("SELECT x FROM TalkVote x WHERE x.talk.conference = :conference AND x.systemUser = :user");
-        q.setParameter("user", user);
+                em.createQuery("SELECT x FROM TalkVote x WHERE x.talk.conference = :conference AND x.voter = :voter");
+        q.setParameter("voter", voter);
         q.setParameter("conference", conference);
 
         Map<Integer, Object> votes = new HashMap<Integer,Object>();
@@ -104,4 +120,24 @@ public class Dashboard extends HttpServlet {
 
         return votes;
     }
+
+
+    public class TalkHolder {
+        public Talk talk;
+        public boolean votedFor;
+
+        TalkHolder(final Talk talk, final boolean votedFor) {
+            this.talk = talk;
+            this.votedFor = votedFor;
+        }
+
+        public Talk getTalk() {
+            return talk;
+        }
+
+        public boolean isVotedFor() {
+            return votedFor;
+        }
+    }
+
 }
