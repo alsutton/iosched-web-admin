@@ -2,6 +2,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
+<head>
+
+</head>
 <body>
 <div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -26,6 +29,24 @@
         <c:set scope="session" var="message" value="" />
     </c:if>
 
+    <div class="modal fade" id="locked" tabindex="-1" role="dialog" aria-labelledby="locked" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Locked Voting</h4>
+                </div>
+                <div class="modal-body">
+                    To ensure everyone only gets one vote we only allow people who've <a href="<c:url value='/'/>">Logged in</a>
+                    to vote.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-primary">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-12">
             <h4>Proposed Barcamp Talks</h4>
@@ -35,11 +56,21 @@
     <c:forEach var="talk" items="${talks}" varStatus="talkStatus">
         <div class="row">
             <div class="col-md-12">
-                <c:out value="${talk.name}" /><br/>
-                Presented by:
+                <c:choose>
+                    <c:when test="${empty user}"><a data-toggle="modal" href="#locked"><span class="glyphicon glyphicon-lock"></span></a></c:when>
+                    <c:otherwise>
+                        <c:choose>
+                            <c:when test="${votes[talk.id] == null}"><c:set var="lockClass" value="glyphicon glyphicon-star-empty"/></c:when>
+                            <c:otherwise><c:set var="lockClass" value="glyphicon glyphicon-star"/></c:otherwise>
+                        </c:choose>
+                        <span class="${lockClass}"></span>
+                    </c:otherwise>
+                </c:choose>
+                <c:out value="${talk.name}" /> (
                 <c:forEach var="presenter" items="${talk.presenters}" varStatus="status">
                     <c:out value="${presenter}"/><c:if test="${not status.last}">,</c:if>&nbsp;
                 </c:forEach>
+                )
             </div>
         </div>
         <c:if test="${not talkStatus.last}"><div class="row">&nbsp;</div></c:if>&nbsp;

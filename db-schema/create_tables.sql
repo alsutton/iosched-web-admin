@@ -134,6 +134,13 @@ CREATE TABLE talk_permission (
 	permission integer
 );
 
+CREATE TABLE talk_vote (
+  id serial PRIMARY KEY,
+  talk_id integer references talk(id),
+  users_id integer references system_users(id),
+  vote integer
+);
+
 CREATE TABLE talk_presenter (
 	id serial PRIMARY KEY,
 	talks_id integer references talk(id),
