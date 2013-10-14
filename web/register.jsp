@@ -41,20 +41,11 @@
 
 <div class="row">
     <div class="col-md-12">
-        <p>Please Note : You are currently limited to only having one conference, so ensure you enter your conference
-        name correctly when you register.</p>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12">
         <form class="form" role="form" name="registrationdetails" action="<c:url value='/Register'/>" method="POST" accept-charset="UTF-8">
             <label for="humanName">Your Name</label>
             <input type="text" id="humanName" name="name" class="form-control" placeholder="Joe Bloggs" value="${param.name}"/>
             <label for="email">Your Email Address</label>
             <input type="text" id="email" name="email" class="form-control" placeholder="me@somewhere.com" value="${param.email}"/>
-            <label for="conference">Your Conference Name</label>
-            <input type="text" id="conference" name="conference" class="form-control" placeholder="SuperMegaConference 2199" value="${param.conference}"/>
             <button type="submit" class="btn btn-lg btn-primary" style="margin-top: 10px">I agree to the Terms of Service, so sign me up</button>
         </form>
     </div>

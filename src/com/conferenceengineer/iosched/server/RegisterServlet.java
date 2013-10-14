@@ -37,12 +37,10 @@ public class RegisterServlet extends HttpServlet {
     public void doPost(final HttpServletRequest request, final HttpServletResponse response)
         throws ServletException, IOException {
         String  name = request.getParameter("name"),
-                email = request.getParameter("email"),
-                conferenceName = request.getParameter("conference");
+                email = request.getParameter("email");
 
         if(name == null || name.isEmpty()
-        || email == null || email.isEmpty()
-        || conferenceName == null || conferenceName.isEmpty()) {
+        || email == null || email.isEmpty()) {
             request.getSession().setAttribute("error", "Please fill in all the registration fields.");
             doGet(request, response);
             return;
@@ -58,7 +56,7 @@ public class RegisterServlet extends HttpServlet {
 
             em.getTransaction().begin();
 
-            createNew(em, name, email, conferenceName);
+            createNew(em, name, email);
 
             em.getTransaction().commit();
 
@@ -82,23 +80,13 @@ public class RegisterServlet extends HttpServlet {
     }
 
 
-    private void createNew(final EntityManager em, final String name, final String email, final String conferenceName)
+    private void createNew(final EntityManager em, final String name, final String email)
             throws NoSuchAlgorithmException, UnsupportedEncodingException, MessagingException {
         SystemUser user = new SystemUser();
         user.setEmail(email);
         user.setHumanName(name);
 
-        Conference conference = new Conference();
-        conference.setName(conferenceName);
-
         em.persist(user);
-        em.persist(conference);
-
-        ConferencePermission permission = new ConferencePermission();
-        permission.setConference(conference);
-        permission.setSystemUser(user);
-        permission.setPermission(ConferencePermission.PERMISSION_ADMINISTER_COLLABORATORS);
-        em.persist(permission);
 
         String password = PasswordGenerator.generatePassword();
         UserAuthenticationInformationDAO.
