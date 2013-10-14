@@ -17,10 +17,12 @@
             <ul class="nav navbar-nav navbar-right">
                 <c:choose>
                     <c:when test="${empty user}">
-                        <li><a href="<c:url value='/dashboard/conference'/>">Build</a></li>
                         <li><a href="<c:url value='/login.jsp'/>">Login</a></li>
                     </c:when>
-                    <c:otherwise><li><a href="<c:url value='/Logout'/>">Logout</a></li></c:otherwise>
+                    <c:otherwise>
+                        <li><a href="<c:url value='/dashboard/conference'/>">Build</a></li>
+                        <li><a href="<c:url value='/Logout'/>">Logout</a></li>
+                    </c:otherwise>
                 </c:choose>
             </ul>
         </div>
