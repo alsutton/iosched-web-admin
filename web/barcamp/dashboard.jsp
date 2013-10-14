@@ -13,6 +13,14 @@
             </button>
             <a class="navbar-brand" href="/">${conference.name} Barcamp</a>
         </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <c:choose>
+                    <c:when test="${empty user}"><li><a href="<c:url value='/login.jsp'/>">Login</a></li></c:when>
+                    <c:otherwise><li><a href="<c:url value='/Logout'/>">Logout</a></li></c:otherwise>
+                </c:choose>
+            </ul>
+        </div>
     </div>
 </div>
 <div class="container">
@@ -50,10 +58,11 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12">
-            The order of the talks will be randomised each time you vote.
+        <div class="col-md-12" style="padding-bottom: 10px">
+            Vote for the talks you'd like to see at this the ${conference.name} barcamp!
         </div>
     </div>
+
     <c:forEach var="talk" items="${talks}" varStatus="talkStatus">
         <div class="row">
             <div class="col-md-12">
