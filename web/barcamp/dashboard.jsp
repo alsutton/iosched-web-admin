@@ -64,31 +64,27 @@
     </div>
 
     <c:forEach var="talk" items="${talks}" varStatus="talkStatus">
-        <div class="row">
-            <div class="col-md-12">
-                <c:choose>
-                    <c:when test="${empty cookie.vid}"><a data-toggle="modal" href="#locked"><span class="glyphicon glyphicon-lock"></span></a></c:when>
-                    <c:otherwise>
-                        <c:choose>
-                            <c:when test="${talk.votedFor}">
-                                <c:set var="lockClass" value="glyphicon glyphicon-star"/>
-                                <c:set var="newVote" value="0" />
-                            </c:when>
-                            <c:otherwise>
-                                <c:set var="lockClass" value="glyphicon glyphicon-star-empty"/>
-                                <c:set var="newVote" value="1" />
-                            </c:otherwise>
-                        </c:choose>
-                        <a href="<c:url value='/barcamp/vote?talk=${talk.talk.id}&vote=${newVote}'/>"><span class="${lockClass}"></span></a>
-                    </c:otherwise>
-                </c:choose>
-                <c:out value="${talk.talk.name}" /> (
-                <c:forEach var="presenter" items="${talk.talk.presenters}" varStatus="status">
-                    <c:out value="${presenter}"/><c:if test="${not status.last}">,</c:if>&nbsp;
-                </c:forEach>
-                )<br/>
-                ${talk.talk.shortDescription}
-            </div>
+        <div class="panel panel-default">
+            <div class="panel-heading"><c:choose>
+                <c:when test="${empty cookie.vid}"><a data-toggle="modal" href="#locked"><span class="glyphicon glyphicon-lock"></span></a></c:when>
+                <c:otherwise>
+                    <c:choose>
+                        <c:when test="${talk.votedFor}">
+                            <c:set var="lockClass" value="glyphicon glyphicon-star"/>
+                            <c:set var="newVote" value="0" />
+                        </c:when>
+                        <c:otherwise>
+                            <c:set var="lockClass" value="glyphicon glyphicon-star-empty"/>
+                            <c:set var="newVote" value="1" />
+                        </c:otherwise>
+                    </c:choose>
+                    <a href="<c:url value='/barcamp/vote?talk=${talk.talk.id}&vote=${newVote}'/>"><span class="${lockClass}"></span></a>
+                </c:otherwise>
+            </c:choose>
+            <b><c:out value="${talk.talk.name}" /></b> by <c:forEach var="presenter" items="${talk.talk.presenters}" varStatus="status">
+                <c:out value="${presenter}"/><c:if test="${not status.last}">,</c:if>&nbsp;
+            </c:forEach></div>
+            <div class="panel-body">${talk.talk.shortDescription}</div>
         </div>
         <c:if test="${not talkStatus.last}"><div style="height:10px"></div></c:if>&nbsp;
     </c:forEach>
