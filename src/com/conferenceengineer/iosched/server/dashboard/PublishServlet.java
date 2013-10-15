@@ -68,7 +68,7 @@ public class PublishServlet extends HttpServlet {
             throws IOException {
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
-        HttpPost post = new HttpPost("https://ce-uk-1.funkyandroid.net/receiver/receiver");
+        HttpPost post = new HttpPost("https://app3.funkyandroid.net/receiver/receiver");
         List<NameValuePair> params = new ArrayList<NameValuePair>(2);
         params.add(new BasicNameValuePair("file", name));
         params.add(new BasicNameValuePair("data", data));
