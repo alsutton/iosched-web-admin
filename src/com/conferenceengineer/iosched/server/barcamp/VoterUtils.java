@@ -56,7 +56,10 @@ public final class VoterUtils {
             q.setMaxResults(1);
             List<Voter> voters = q.getResultList();
             if(!voters.isEmpty()) {
-                return voters.get(0);
+                Voter voter = voters.get(0);
+                Cookie cookie = new Cookie(VOTER_ID_COOKIE, Integer.toString(voter.getId()));
+                response.addCookie(cookie);
+                return voter;
             }
         }
 
