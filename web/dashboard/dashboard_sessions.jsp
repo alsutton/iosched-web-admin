@@ -194,7 +194,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading" onclick="showHide(${slot.id});">
                     <h3 class="panel-title">
-                        <c:out value="${startTime}" />&nbsp;-&nbsp;<c:out value="${endTime}" />
+                        <c:out value="${startTime}" />&nbsp;-&nbsp;<c:out value="${endTime}" />&nbsp;
                         <a data-toggle="modal" href="#editSlotModal${slot.id}"><span class="glyphicon glyphicon-pencil"></span></a>
                         <a data-toggle="modal" href="#deleteSlotModal${slot.id}"><span class="glyphicon glyphicon-trash"></span></a>
                     </h3>
@@ -268,6 +268,27 @@
                         <div style="padding-top:5px">&nbsp;</div>
 
                         <c:forEach var="talk" items="${slot.talkList}">
+                            <div class="modal fade" id="deleteTalkModal${talk.id}" tabindex="-1" role="dialog" aria-labelledby="deleteTalkModal${talk.id}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title">Delete talk</h4>
+                                        </div>
+                                        <form accept-charset="utf-8" action="talks" role="form" method="POST">
+                                            <input type="hidden" name="talkId" value="${talk.id}" />
+                                            <input type="hidden" name="action" value="delete" />
+                                            <div class="modal-body">
+                                                <p>Please confirm you wish to delete the talk &quot;<c:out value="${talk.name}"/>&quot;</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary">OK</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="modal fade" id="editTalkModal${talk.id}" tabindex="-1" role="dialog" aria-labelledby="editTalkModal${talk.id}" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -377,8 +398,9 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <h4>
-                                        <span onclick="showHide('t${talk.id}');">[${talk.track.name}] ${talk.name}</span>
+                                        <span onclick="showHide('t${talk.id}');">[${talk.track.name}] ${talk.name}</span>&nbsp;
                                         <a data-toggle="modal" href="#editTalkModal${talk.id}"><span class="glyphicon glyphicon-pencil"></span></a>
+                                        <a data-toggle="modal" href="#deleteTalkModal${talk.id}"><span class="glyphicon glyphicon-trash"></span></a>
                                     </h4>
                                     <div id="t${talk.id}_hiddenhint" onclick="showHide('t${talk.id}');">
                                         &hellip;

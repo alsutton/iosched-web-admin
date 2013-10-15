@@ -44,11 +44,19 @@ public class TalksServlet extends HttpServlet {
         EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
         try {
             em.getTransaction().begin();
+            String action = request.getParameter("action");
             String talkId = request.getParameter("talkId");
-            if(talkId == null) {
-                add(em, request);
+            if(action != null && "delete".equals(action)) {
+                Talk talk = em.find(Talk.class, Integer.parseInt(talkId));
+                if(talk != null) {
+                    delete(em, talk);
+                }
             } else {
-                edit(em, request, talkId);
+                if(talkId == null) {
+                    add(em, request);
+                } else {
+                    edit(em, request, talkId);
+                }
             }
             em.getTransaction().commit();
         } finally {
@@ -56,6 +64,18 @@ public class TalksServlet extends HttpServlet {
         }
 
         response.sendRedirect("DashboardSessions");
+    }
+
+    /**
+     * Handle a delete
+     */
+
+    private void delete(final EntityManager em, final Talk talk) {
+        for(Presenter presenter : talk.getPresenters()) {
+            presenter.getTalks().remove(talk);
+        }
+        talk.getPresenters().clear();
+        em.remove(talk);
     }
 
     /**
