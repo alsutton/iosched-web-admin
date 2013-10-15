@@ -376,39 +376,46 @@
 
                             <div class="row">
                                 <div class="col-md-12">
-                                        <h4><a data-toggle="modal" href="#editTalkModal${talk.id}">[${talk.track.name}] ${talk.name}</a></h4>
-
-                                        <p>Location: ${talk.location.name}</p>
-                                        <p>Presenters:
-                                        <c:forEach var="presenter" items="${talk.presenters}" varStatus="status">
-                                            <div class="modal fade" id="removePresenterModal${talk.id}${presenter.id}" tabindex="-1" role="dialog" aria-labelledby="removePresenterModal${talk.id}${presenter.id}" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                            <h4 class="modal-title">Remove A Presenter</h4>
+                                    <h4>
+                                        <span onclick="showHide('t${talk.id}');">[${talk.track.name}] ${talk.name}</span>
+                                        <a data-toggle="modal" href="#editTalkModal${talk.id}"><span class="glyphicon glyphicon-pencil"></span></a>
+                                    </h4>
+                                    <div id="t${talk.id}_hiddenhint" onclick="showHide('t${talk.id}');">
+                                        &hellip;
+                                    </div>
+                                        <div id="t${talk.id}_content" style="display:none">
+                                            <p>Location: ${talk.location.name}</p>
+                                            <p>Presenters:
+                                            <c:forEach var="presenter" items="${talk.presenters}" varStatus="status">
+                                                <div class="modal fade" id="removePresenterModal${talk.id}${presenter.id}" tabindex="-1" role="dialog" aria-labelledby="removePresenterModal${talk.id}${presenter.id}" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                <h4 class="modal-title">Remove A Presenter</h4>
+                                                            </div>
+                                                            <form accept-charset="utf-8" action="talks" role="form" method="POST">
+                                                                <input type="hidden" name="talkId" value="${talk.id}">
+                                                                <input type="hidden" name="presenter" value="${presenter.id}">
+                                                                <input type="hidden" name="delete" value="true">
+                                                                <div class="modal-body">
+                                                                    <p>Remove ${presenter.name} from ${talk.name}.</p>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="submit" class="btn btn-primary">Confirm</button>
+                                                                </div>
+                                                            </form>
                                                         </div>
-                                                        <form accept-charset="utf-8" action="talks" role="form" method="POST">
-                                                            <input type="hidden" name="talkId" value="${talk.id}">
-                                                            <input type="hidden" name="presenter" value="${presenter.id}">
-                                                            <input type="hidden" name="delete" value="true">
-                                                            <div class="modal-body">
-                                                                <p>Remove ${presenter.name} from ${talk.name}.</p>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="submit" class="btn btn-primary">Confirm</button>
-                                                            </div>
-                                                        </form>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <a data-toggle="modal" href="#removePresenterModal${talk.id}${presenter.id}">${presenter.name}</a><c:if test="${not status.last}">,</c:if>&nbsp;
-                                        </form>
-                                        </c:forEach>
-                                            <a data-toggle="modal" href="#addPresenterModal${talk.id}" class="btn btn-default btn-xs">Add presenter</a>
-                                        </p>
-                                        <p>${talk.shortDescription}</p>
+                                                <a data-toggle="modal" href="#removePresenterModal${talk.id}${presenter.id}">${presenter.name}</a><c:if test="${not status.last}">,</c:if>&nbsp;
+                                            </form>
+                                            </c:forEach>
+                                                <a data-toggle="modal" href="#addPresenterModal${talk.id}" class="btn btn-default btn-xs">Add presenter</a>
+                                            </p>
+                                            <p>${talk.shortDescription}</p>
+                                        </div>
                                 </div>
                             </div>
                         </c:forEach>
