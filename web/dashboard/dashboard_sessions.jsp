@@ -251,7 +251,20 @@
                                             <div class="modal-body">
                                                 <div class="form-group">
                                                     <label for="editTalkSlot_${talk.id}">Time Slot</label>
-                                                    <input type="text" id="editTalkSlot_${talk.id}" class="form-control" readonly="readonly" value="${conferenceDate}, ${startTime}-${endTime}" />
+                                                    <select name="slot" class="form-control" id="editTalkSlot_${talk.id}">
+                                                    <c:forEach var="optionDay" items="${conference.dateList}">
+                                                        <c:forEach var="optionSlot" items="${optionDay.talkSlotList}">
+                                                            <c:choose>
+                                                                <c:when test="${optionSlot.id eq slot.id}"><c:set var="optionSelected" value="selected='selected'"/></c:when>
+                                                                <c:otherwise><c:set var="optionSelected" value=""/></c:otherwise>
+                                                            </c:choose>
+                                                            <option value="${optionSlot.id}" ${optionSelected}>
+                                                                <fmt:formatDate value="${optionDay.date}" pattern="dd MMMM yyyy"/>,
+                                                                <fmt:formatDate value="${optionSlot.start.time}" pattern="HH:mm"/>-<fmt:formatDate value="${optionSlot.end.time}" pattern="HH:mm"/>
+                                                            </option>
+                                                        </c:forEach>
+                                                    </c:forEach>
+                                                    </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="editTalkTitle_${talk.id}">Title</label>
