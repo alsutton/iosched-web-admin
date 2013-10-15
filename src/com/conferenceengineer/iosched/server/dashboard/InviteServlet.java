@@ -118,8 +118,9 @@ public class InviteServlet extends HttpServlet {
         message.setRecipient(Message.RecipientType.TO, new InternetAddress(user.getEmail()));
         message.setSubject("Conference Engineer Invite");
         message.setText(
-                "Your have been invited to work on the schedule for "+conference.getName()+".\n\n"+
-                "The next time you log in to Conference Engineer you'll see it listed as an option.");
+                "You have been invited to work on the schedule for "+conference.getName()+".\n\n"+
+                "The next time you log in to Conference Engineer (https://conferenceenginer.com/)\n"+
+                "you'll have access to its schedule.");
         message.setHeader("X-Mailer", "ConferenceEngineerAutomailer");
         message.setSentDate(new Date());
 
