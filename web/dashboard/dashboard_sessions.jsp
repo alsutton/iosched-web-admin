@@ -167,7 +167,8 @@
             <div class="panel panel-default">
                 <div class="panel-heading" onclick="showHide(${slot.id});">
                     <h3 class="panel-title">
-                        <a data-toggle="modal" href="#deleteSlotModal${slot.id}"><c:out value="${startTime}" />&nbsp;-&nbsp;<c:out value="${endTime}" /></a>
+                        <c:out value="${startTime}" />&nbsp;-&nbsp;<c:out value="${endTime}" />
+                        <a data-toggle="modal" href="#deleteSlotModal${slot.id}"><span class="glyphicon glyphicon-trash"></span></a>
                     </h3>
                 </div>
                 <div class="panel-body">
