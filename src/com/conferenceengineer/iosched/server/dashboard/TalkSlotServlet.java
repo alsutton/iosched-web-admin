@@ -1,7 +1,5 @@
 package com.conferenceengineer.iosched.server.dashboard;
 
-import com.conferenceengineer.iosched.server.datamodel.Conference;
-import com.conferenceengineer.iosched.server.datamodel.ConferenceDAO;
 import com.conferenceengineer.iosched.server.datamodel.ConferenceDay;
 import com.conferenceengineer.iosched.server.datamodel.TalkSlot;
 import com.conferenceengineer.iosched.server.utils.EntityManagerWrapperBridge;
@@ -12,8 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -30,16 +26,20 @@ public class TalkSlotServlet extends HttpServlet {
         throws IOException, ServletException {
         String action = request.getParameter("action");
         if(action == null || action.isEmpty()) {
-            add(request, response);
+            String slotId = request.getParameter("slot");
+            if(slotId == null) {
+                add(request);
+            } else {
+                edit(request, slotId);
+            }
         } else if("delete".equals(action)) {
-            delete(request, response);
+            delete(request);
         }
 
         response.sendRedirect("DashboardSessions");
     }
 
-    private void add(final HttpServletRequest request, final HttpServletResponse response)
-        throws IOException, ServletException {
+    private void add(final HttpServletRequest request) {
         EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
         try {
             em.getTransaction().begin();
@@ -63,11 +63,33 @@ public class TalkSlotServlet extends HttpServlet {
         }
     }
 
+    private void edit(final HttpServletRequest request, final String slotId) {
+        EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
+        try {
+            em.getTransaction().begin();
+            TalkSlot slot = em.find(TalkSlot.class, Integer.parseInt(slotId));
+
+            Calendar start = Calendar.getInstance();
+            start.setTime(slot.getConferenceDay().getDate());
+            setCalendarWithTime(start, request.getParameter("start"));
+            slot.setStart(start);
+
+            Calendar end = Calendar.getInstance();
+            end.setTime(slot.getConferenceDay().getDate());
+            setCalendarWithTime(end, request.getParameter("end"));
+            slot.setEnd(end);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
+
+
     /**
      * Delete a slot
      */
 
-    private void delete(final HttpServletRequest request, final HttpServletResponse response)
+    private void delete(final HttpServletRequest request)
         throws ServletException, IOException{
         String id = request.getParameter("id");
         if(id == null || id.isEmpty()) {

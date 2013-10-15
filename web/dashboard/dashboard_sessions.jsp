@@ -142,6 +142,33 @@
             <fmt:formatDate var="startTime" value="${slot.start.time}" pattern="HH:mm"/>
             <fmt:formatDate var="endTime" value="${slot.end.time}" pattern="HH:mm"/>
 
+            <div class="modal fade" id="editSlotModal${slot.id}" tabindex="-1" role="dialog" aria-labelledby="editSlotModal${slot.id}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Edit Session Slot</h4>
+                        </div>
+                        <form accept-charset="utf-8" action="talkSlots" role="form" method="POST">
+                            <input type="hidden" name="slot" value="${slot.id}" />
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="editStart${slot.id}">Start time (hh:mm);</label>
+                                    <input type="text" name="start" id="editStart${slot.id}" class="form-control" value="${startTime}" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="editEnd${slot.id}">End time (hh:mm);</label>
+                                    <input type="text" name="end" id="editEnd${slot.id}" class="form-control" value="${endTime}"/>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             <div class="modal fade" id="deleteSlotModal${slot.id}" tabindex="-1" role="dialog" aria-labelledby="deleteSlotModal${slot.id}" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -168,6 +195,7 @@
                 <div class="panel-heading" onclick="showHide(${slot.id});">
                     <h3 class="panel-title">
                         <c:out value="${startTime}" />&nbsp;-&nbsp;<c:out value="${endTime}" />
+                        <a data-toggle="modal" href="#editSlotModal${slot.id}"><span class="glyphicon glyphicon-pencil"></span></a>
                         <a data-toggle="modal" href="#deleteSlotModal${slot.id}"><span class="glyphicon glyphicon-trash"></span></a>
                     </h3>
                 </div>
