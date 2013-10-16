@@ -17,14 +17,17 @@ public final class Tracker {
 
     public static void setLocation(final HttpServletRequest request, final HttpServletResponse response,
                               final String location) {
-        for(Cookie cookie: request.getCookies()) {
-            if(TRACKER_COOKIE_NAME.equals(cookie.getName())) {
-                if(location.equals(cookie.getValue())) {
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null) {
+            for(Cookie cookie: cookies) {
+                if(TRACKER_COOKIE_NAME.equals(cookie.getName())) {
+                    if(location.equals(cookie.getValue())) {
+                        return;
+                    }
+                    cookie.setValue(location);
+                    response.addCookie(cookie);
                     return;
                 }
-                cookie.setValue(location);
-                response.addCookie(cookie);
-                return;
             }
         }
 
@@ -35,9 +38,12 @@ public final class Tracker {
     }
 
     public static String getLocation(final HttpServletRequest request) {
-        for(Cookie cookie: request.getCookies()) {
-            if(TRACKER_COOKIE_NAME.equals(cookie.getName())) {
-                return cookie.getValue();
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null) {
+            for(Cookie cookie: request.getCookies()) {
+                if(TRACKER_COOKIE_NAME.equals(cookie.getName())) {
+                    return cookie.getValue();
+                }
             }
         }
         return null;
