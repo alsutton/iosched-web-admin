@@ -6,10 +6,7 @@ import com.conferenceengineer.iosched.server.utils.*;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.*;
 
@@ -17,6 +14,12 @@ import java.util.*;
  * The welcoming page for the barcamp system.
  */
 public class Dashboard extends HttpServlet {
+    /**
+     * The Empty Map used to represent a non-existant voters votes
+     */
+
+    private static final Map<Integer, Object> EMPTY_VOTE_MAP = new HashMap<Integer, Object>();
+
     /**
      * The marker used to indicate votes
      */
@@ -32,31 +35,10 @@ public class Dashboard extends HttpServlet {
     @Override
     public void doGet(final HttpServletRequest request, final HttpServletResponse response)
         throws IOException, ServletException {
-        try {
-
-            String URI = request.getRequestURI();
-            if(URI.endsWith("/")) {
-                URI = URI.substring(0, URI.length()-1);
-            }
-
-            if(!"/barcamp/view".equals(URI)) {
-                int endIdx = URI.lastIndexOf('/');
-                if(endIdx == -1) {
-                    throw new RuntimeException("Unable to find conference ID");
-                }
-
-                String storedConferenceId = URI.substring(endIdx+1);
-                request.getSession(true).setAttribute("conferenceId", Integer.parseInt(storedConferenceId));
-            }
-        } catch (Exception e) {
-            log("Error, sending user to "+request.getContextPath(), e);
-            ServletUtils.redirectToIndex(request, response);
-            return;
-        }
 
         EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
         try {
-            Conference conference = ConferenceUtils.getCurrentConference(request, em);
+            Conference conference = Utils.getConferenceFromURL(request, em);
             if(conference == null) {
                 ServletUtils.redirectToIndex(request, response);
                 return;
@@ -74,8 +56,25 @@ public class Dashboard extends HttpServlet {
                 request.setAttribute("user", user);
             }
 
-            Voter voter = VoterUtils.getVoter(request, response, em, user);
-            Map<Integer, Object> votes = getUserVotes(em, voter, conference);
+            Voter voter = VoterUtils.getVoter(request, em, user);
+            if(voter == null) {
+                HttpSession session = request.getSession(true);
+                if(session.getAttribute("created_vid") == null) {
+                    voter = VoterUtils.createVoter(response, em, user);
+                    session.setAttribute("created_vid", voter.getId());
+                    response.sendRedirect(request.getRequestURL()+"?"+request.getQueryString());
+                    return;
+                } else {
+                    session.setAttribute("error", "Please enable cookies so your votes can be counted");
+                }
+            }
+
+            Map<Integer, Object> votes;
+            if(voter != null) {
+                votes = getUserVotes(em, voter, conference);
+            } else {
+                votes = EMPTY_VOTE_MAP;
+            }
 
 /*            List<Talk> randomSource = new ArrayList<Talk>(talks);
             List<TalkHolder> randomisedList = new ArrayList<TalkHolder>(talks.size());

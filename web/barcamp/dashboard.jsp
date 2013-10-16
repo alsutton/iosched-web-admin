@@ -83,7 +83,7 @@
                             <c:set var="newVote" value="1" />
                         </c:otherwise>
                     </c:choose>
-                    <a href="<c:url value='/barcamp/vote?talk=${talk.talk.id}&vote=${newVote}'/>"><span class="${lockClass}"></span></a>
+                    <a href="<c:url value='/barcamp/vote/${conference.id}?talk=${talk.talk.id}&vote=${newVote}'/>"><span class="${lockClass}"></span></a>
                 </c:otherwise>
             </c:choose>
             <b><c:out value="${talk.talk.name}" /></b> by <c:forEach var="presenter" items="${talk.talk.presenters}" varStatus="status">
@@ -107,7 +107,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             <h4 class="modal-title">Suggest a talk</h4>
                         </div>
-                        <form accept-charset="utf-8" action="<c:url value='/barcamp/talks'/>" role="form" method="POST">
+                        <form accept-charset="utf-8" action="<c:url value='/barcamp/talks/${conference.id}'/>" role="form" method="POST">
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label for="userName">Your Name</label>

@@ -182,12 +182,12 @@
 
     <servlet-mapping>
         <servlet-name>BarcampVoteServlet</servlet-name>
-        <url-pattern>/barcamp/vote</url-pattern>
+        <url-pattern>/barcamp/vote/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>BarcampTalks</servlet-name>
-        <url-pattern>/barcamp/talks</url-pattern>
+        <url-pattern>/barcamp/talks/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

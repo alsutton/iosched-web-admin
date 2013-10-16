@@ -28,8 +28,7 @@ public final class VoterUtils {
      * Get the voter ID
      */
 
-    static Voter getVoter(final HttpServletRequest request, final HttpServletResponse response,
-                           final EntityManager em, final SystemUser user) {
+    static Voter getVoter(final HttpServletRequest request, final EntityManager em, final SystemUser user) {
         try {
             Cookie[] cookies = request.getCookies();
             if(cookies != null) {
@@ -49,7 +48,11 @@ public final class VoterUtils {
         } catch (Exception e) {
             // Do nothing, this just indicated a cookie issue.
         }
+        return null;
+    }
 
+    static Voter createVoter(final HttpServletResponse response,
+                             final EntityManager em, final SystemUser user) {
         if(user != null) {
             Query q = em.createQuery("SELECT x FROM Voter x WHERE x.user = :user");
             q.setParameter("user", user);
@@ -58,6 +61,8 @@ public final class VoterUtils {
             if(!voters.isEmpty()) {
                 Voter voter = voters.get(0);
                 Cookie cookie = new Cookie(VOTER_ID_COOKIE, Integer.toString(voter.getId()));
+                cookie.setPath("/");
+                cookie.setMaxAge(14*24*60*60);
                 response.addCookie(cookie);
                 return voter;
             }
@@ -72,6 +77,8 @@ public final class VoterUtils {
         em.getTransaction().commit();
 
         Cookie cookie = new Cookie(VOTER_ID_COOKIE, Integer.toString(voter.getId()));
+        cookie.setPath("/");
+        cookie.setMaxAge(14*24*60*60);
         response.addCookie(cookie);
         return voter;
     }

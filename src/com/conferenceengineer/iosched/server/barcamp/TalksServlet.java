@@ -8,6 +8,7 @@ import com.conferenceengineer.iosched.server.utils.LoginUtils;
 import com.conferenceengineer.iosched.server.utils.ServletUtils;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -23,35 +24,12 @@ import java.util.Set;
  */
 public class TalksServlet extends HttpServlet {
 
-    /**
-     * Get the JSON in a format suitable for IOSched
-     */
-
-    @Override
-    public void doGet(final HttpServletRequest request, final HttpServletResponse response)
-        throws IOException {
-        String json;
-
-        EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
-        try {
-            json = SessionsJSON.export(ConferenceUtils.getCurrentConference(request, em));
-        } finally {
-            em.close();
-        }
-
-        response.setHeader("Content-Disposition", "attachment; filename=\"sessions.json\"");
-        response.getOutputStream().write(json.getBytes("UTF-8"));
-    }
-
-
     @Override
     public void doPost(final HttpServletRequest request, final HttpServletResponse response)
         throws IOException, ServletException {
         EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
         try {
-            em.getTransaction().begin();
-
-            Conference conference = ConferenceUtils.getCurrentConference(request, em);
+            Conference conference = Utils.getConferenceFromURL(request, em);
             if(conference == null) {
                 ServletUtils.redirectToIndex(request, response);
                 return;
@@ -60,20 +38,29 @@ public class TalksServlet extends HttpServlet {
             SystemUser user = LoginUtils.getInstance().getUserFromCookie(request, em);
             if(user != null) {
                 String talkId = request.getParameter("talkId");
-                if(talkId == null) {
-                    add(em, conference, request);
-                } else {
-                    edit(em, request, talkId);
+                em.getTransaction().begin();
+                try {
+                    if(talkId == null) {
+                        add(em, conference, request);
+                    } else {
+                        edit(em, request, talkId);
+                    }
+                    em.getTransaction().commit();
+                } finally {
+                    EntityTransaction transaction = em.getTransaction();
+                    if(transaction.isActive()) {
+                        transaction.rollback();
+                    }
                 }
-                em.getTransaction().commit();
 
-                request.getSession().setAttribute("message", "Your submission has been accepted.");
+                request.getSession().setAttribute("message", "Your submission has added to the list of proposals.");
             }
+
+            ServletUtils.redirectTo(request, response, "/barcamp/view/" + conference.getId());
         } finally {
             em.close();
         }
 
-        ServletUtils.redirectTo(request, response, "/barcamp/view/");
     }
 
     /**
