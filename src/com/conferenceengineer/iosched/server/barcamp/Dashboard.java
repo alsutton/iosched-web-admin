@@ -62,7 +62,14 @@ public class Dashboard extends HttpServlet {
                 if(session.getAttribute("created_vid") == null) {
                     voter = VoterUtils.createVoter(response, em, user);
                     session.setAttribute("created_vid", voter.getId());
-                    response.sendRedirect(request.getRequestURL()+"?"+request.getQueryString());
+                    StringBuilder url = new StringBuilder();
+                    url.append(request.getRequestURL());
+                    String queryString = request.getQueryString();
+                    if(queryString != null) {
+                        url.append('?');
+                        url.append(queryString);
+                    }
+                    response.sendRedirect(url.toString());
                     return;
                 } else {
                     session.setAttribute("error", "Please enable cookies so your votes can be counted");
