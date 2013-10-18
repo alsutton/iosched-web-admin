@@ -39,17 +39,10 @@ public final class SessionsJSON {
 
                     Integer type = talk.getType();
                     String typeString;
-                    if(type != null) {
-                        switch(type) {
-                            case Talk.TYPE_KEYNOTE:
-                                typeString = "keynote";
-                                break;
-                            default:
-                                typeString = "session";
-                                break;
-                        }
+                    if(type != null && type.intValue() == Talk.TYPE_KEYNOTE) {
+                        typeString = "KEYNOTE";
                     } else {
-                        typeString = "session";
+                        typeString = "SESSION";
                     }
                     json.put("subtype", typeString);
                     json.put("location", Integer.toString(talk.getLocation().getId()));
