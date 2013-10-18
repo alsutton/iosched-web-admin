@@ -42,14 +42,14 @@ public final class SessionsJSON {
                     if(type != null) {
                         switch(type) {
                             case Talk.TYPE_KEYNOTE:
-                                typeString = "KEYNOTE";
+                                typeString = "keynote";
                                 break;
                             default:
-                                typeString = "SESSION";
+                                typeString = "session";
                                 break;
                         }
                     } else {
-                        typeString = "SESSION";
+                        typeString = "session";
                     }
                     json.put("subtype", typeString);
                     json.put("location", Integer.toString(talk.getLocation().getId()));
