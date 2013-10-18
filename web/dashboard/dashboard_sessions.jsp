@@ -401,12 +401,12 @@
                                         <span onclick="showHide('t${talk.id}');">[${talk.track.name}] ${talk.name}</span>&nbsp;
                                         <a data-toggle="modal" href="#editTalkModal${talk.id}"><span class="glyphicon glyphicon-pencil"></span></a>
                                         <a data-toggle="modal" href="#deleteTalkModal${talk.id}"><span class="glyphicon glyphicon-trash"></span></a>
+                                        <p>Location: ${talk.location.name}</p>
                                     </h4>
                                     <div id="t${talk.id}_hiddenhint" onclick="showHide('t${talk.id}');">
                                         &hellip;
                                     </div>
                                         <div id="t${talk.id}_content" style="display:none">
-                                            <p>Location: ${talk.location.name}</p>
                                             <p>Presenters:
                                             <c:forEach var="presenter" items="${talk.presenters}" varStatus="status">
                                                 <div class="modal fade" id="removePresenterModal${talk.id}${presenter.id}" tabindex="-1" role="dialog" aria-labelledby="removePresenterModal${talk.id}${presenter.id}" aria-hidden="true">
