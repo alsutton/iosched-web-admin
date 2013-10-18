@@ -31,6 +31,18 @@ public final class Utils {
         }
 
         String conferenceId = URI.substring(lastSlash+1);
-        return em.find(Conference.class, Integer.parseInt(conferenceId));
+        StringBuilder id = new StringBuilder();
+        for(Character c : conferenceId.toCharArray()) {
+            if(!Character.isDigit(c)) {
+                break;
+            }
+            id.append(c);
+        }
+
+        if(id.length() == 0) {
+            return null;
+        }
+
+        return em.find(Conference.class, Integer.parseInt(id.toString()));
     }
 }
