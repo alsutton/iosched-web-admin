@@ -233,6 +233,7 @@
                                             <div class="form-group">
                                                 <label for="newTalkTrack_${slot.id}">Track</label>
                                                 <select name="track" id="newTalkTrack_${slot.id}" class="form-control">
+                                                    <option value="-1">Keynote</option>
                                                     <c:forEach var="track" items="${conference.trackList}">
                                                         <option value="${track.id}">${track.name}</option>
                                                     </c:forEach>
@@ -323,16 +324,27 @@
                                                 <div class="form-group">
                                                     <label for="editTalkTrack_${talk.id}">Track</label>
                                                     <select name="track" id="editTalkTrack_${talk.id}" class="form-control">
-                                                        <c:forEach var="track" items="${conference.trackList}">
-                                                            <c:choose>
-                                                                <c:when test="${talk.track.id == track.id}">
-                                                                    <option value="${track.id}" selected="selected">${track.name}</option>
-                                                                </c:when>
-                                                                <c:otherwise>
+                                                        <c:choose>
+                                                            <c:when test="${talk.type == 2}">
+                                                                <option value="-1" selected="selected">Keynote</option>
+                                                                <c:forEach var="track" items="${conference.trackList}">
                                                                     <option value="${track.id}">${track.name}</option>
-                                                                </c:otherwise>
-                                                            </c:choose>
-                                                        </c:forEach>
+                                                                </c:forEach>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <option value="-1">Keynote</option>
+                                                                <c:forEach var="track" items="${conference.trackList}">
+                                                                    <c:choose>
+                                                                        <c:when test="${talk.track.id == track.id}">
+                                                                            <option value="${track.id}" selected="selected">${track.name}</option>
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            <option value="${track.id}">${track.name}</option>
+                                                                        </c:otherwise>
+                                                                    </c:choose>
+                                                                </c:forEach>
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
@@ -398,11 +410,21 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <h4>
-                                        <span onclick="showHide('t${talk.id}');">[${talk.track.name}] ${talk.name}</span>&nbsp;
+                                        <span onclick="showHide('t${talk.id}');">[
+                                            <c:choose>
+                                                <c:when test="${talk.type == 2}">
+                                                    Keynote
+                                                </c:when>
+                                                <c:otherwise>
+                                                    ${talk.track.name}
+                                                </c:otherwise>
+                                            </c:choose>]
+                                            ${talk.name}
+                                        </span>&nbsp;
                                         <a data-toggle="modal" href="#editTalkModal${talk.id}"><span class="glyphicon glyphicon-pencil"></span></a>
                                         <a data-toggle="modal" href="#deleteTalkModal${talk.id}"><span class="glyphicon glyphicon-trash"></span></a>
-                                        <p>Location: ${talk.location.name}</p>
                                     </h4>
+                                    <p>Location: ${talk.location.name}</p>
                                     <div id="t${talk.id}_hiddenhint" onclick="showHide('t${talk.id}');">
                                         &hellip;
                                     </div>

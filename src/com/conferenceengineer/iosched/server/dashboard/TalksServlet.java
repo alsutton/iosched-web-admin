@@ -130,8 +130,14 @@ public class TalksServlet extends HttpServlet {
             talk.setSlot(slot);
         }
 
-        Track track = em.find(Track.class, Integer.parseInt(request.getParameter("track")));
-        talk.setTrack(track);
+        int track = Integer.parseInt(request.getParameter("track"));
+        if(track == -1) {
+            talk.setType(Talk.TYPE_KEYNOTE);
+            talk.setTrack(null);
+        } else {
+            talk.setType(Talk.TYPE_ACCEPTED);
+            talk.setTrack(em.find(Track.class, track));
+        }
 
         talk.setName(request.getParameter("title"));
         talk.setInformationURL(request.getParameter("infoURL"));

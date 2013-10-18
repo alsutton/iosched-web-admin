@@ -37,7 +37,21 @@ public final class SessionsJSON {
                     }
                     json.put("presenterIds", presenterIds);
 
-                    json.put("subtype", "SESSION");
+                    Integer type = talk.getType();
+                    String typeString;
+                    if(type != null) {
+                        switch(type) {
+                            case Talk.TYPE_KEYNOTE:
+                                typeString = "KEYNOTE";
+                                break;
+                            default:
+                                typeString = "SESSION";
+                                break;
+                        }
+                    } else {
+                        typeString = "SESSION";
+                    }
+                    json.put("subtype", typeString);
                     json.put("location", Integer.toString(talk.getLocation().getId()));
 
                     String link = talk.getInformationURL();

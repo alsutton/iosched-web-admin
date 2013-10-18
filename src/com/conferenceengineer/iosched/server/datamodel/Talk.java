@@ -12,10 +12,12 @@ import java.util.Set;
 public class Talk {
 
     /**
-     * The types of talks
+     * The types of talks.
      */
 
-    public static final int TYPE_ACCEPTED = 0, TYPE_PROPOSED = 1;
+    public static final int TYPE_ACCEPTED = 0x00,
+                            TYPE_PROPOSED = 0x01,
+                            TYPE_KEYNOTE = 0x02;
 
     @Id
     @GeneratedValue
