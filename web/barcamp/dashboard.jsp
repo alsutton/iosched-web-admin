@@ -2,6 +2,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
+<head>
+<script type="text/javascript">
+    <!--
+    function showHide(id) {
+        var content = document.getElementById(id+"_content");
+        if(content.style.display == 'block') {
+            content.style.display = 'none';
+        } else {
+            content.style.display = 'block';
+        }
+    }
+    //-->
+</script>
+</head>
 <body>
 <div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -64,7 +78,8 @@
 
     <div class="row">
         <div class="col-md-12" style="padding-bottom: 10px">
-            Vote for the talks you'd like to see at the ${conference.name} barcamp!
+            Vote for the talks you'd like to see at the ${conference.name} barcamp!. If you want to find out more about
+            a talk, click on it's title to read the details.
         </div>
     </div>
 
@@ -86,12 +101,12 @@
                     <a href="<c:url value='/barcamp/vote/${conference.id}?talk=${talk.talk.id}&vote=${newVote}'/>"><span class="${lockClass}"></span></a>
                 </c:otherwise>
             </c:choose>
-            <b><c:out value="${talk.talk.name}" /></b> by <c:forEach var="presenter" items="${talk.talk.presenters}" varStatus="status">
+            <b onclick="showHide(${talk.talk.id});"><c:out value="${talk.talk.name}" /></b> by <c:forEach var="presenter" items="${talk.talk.presenters}" varStatus="status">
                 <c:out value="${presenter}"/><c:if test="${not status.last}">,</c:if>&nbsp;
             </c:forEach></div>
-            <div class="panel-body">${talk.talk.shortDescription}</div>
+            <div  id="${talk.talk.id}_content" onclick="showHide(${talk.talk.id});" class="panel-body" style="display:none">${talk.talk.shortDescription}</div>
         </div>
-        <c:if test="${not talkStatus.last}"><div style="height:10px"></div></c:if>&nbsp;
+        <c:if test="${not talkStatus.last}"><div style="height:10px"></div></c:if>
     </c:forEach>
 
     <c:choose>
@@ -135,8 +150,8 @@
                 </div>
             </div>
 
-            <div class="row"><div class="col-md-12"><a data-toggle="modal" href="#newTalkModal" class="btn btn-default btn-sm">Suggest a talk</a></div></div>
-
+            <div class="row"><div class="col-md-12"><a data-toggle="modal" href="#newTalkModal" class="btn btn-primary">Suggest a talk</a></div></div>
+            <div style="height:20px">&nbsp;</div>
         </c:otherwise>
     </c:choose>
 
