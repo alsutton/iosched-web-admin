@@ -86,6 +86,11 @@
     </servlet>
 
     <servlet>
+        <servlet-name>DashboardBarcamp</servlet-name>
+        <servlet-class>com.conferenceengineer.iosched.server.dashboard.DashboardBarcamp</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>DashboardLocations</servlet-name>
         <servlet-class>com.conferenceengineer.iosched.server.dashboard.DashboardLocations</servlet-class>
     </servlet>
@@ -198,6 +203,11 @@
     <servlet-mapping>
         <servlet-name>Dashboard</servlet-name>
         <url-pattern>/dashboard/Dashboard</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>DashboardBarcamp</servlet-name>
+        <url-pattern>/dashboard/DashboardBarcamp</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

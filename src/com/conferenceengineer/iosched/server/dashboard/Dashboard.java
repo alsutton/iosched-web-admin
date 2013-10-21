@@ -14,24 +14,19 @@ import java.io.IOException;
  */
 public class Dashboard extends DashboardBase {
 
+    /**
+     * Overrideable method to add elements to the request object.
+     */
     @Override
-    public void doGet(final HttpServletRequest request, final HttpServletResponse response)
-        throws IOException, ServletException {
+    protected void populateRequest(final HttpServletRequest request, final EntityManager em) {
+        request.setAttribute(
+                "user",
+                LoginUtils.getInstance().getUserFromCookie(request, em));
+
         request.setAttribute("serverStatus", "All servers are operational");
         request.setAttribute("serverStatusType", "Good");
-
-
-        EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
-        try {
-            request.setAttribute(
-                    "user",
-                    LoginUtils.getInstance().getUserFromCookie(request, em));
-        } finally {
-            em.close();
-        }
-
-        super.doGet(request, response);
     }
+
 
     /**
      * Get the next page to send the user to.

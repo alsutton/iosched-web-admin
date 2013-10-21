@@ -21,6 +21,7 @@
                 <li class="active"><a href="#">Locations</a></li>
                 <li><a href="<c:url value='/dashboard/DashboardSpeakers' />">Speakers</a></li>
                 <li><a href="<c:url value='/dashboard/DashboardSessions' />">Schedule</a></li>
+                <li><a href="<c:url value='/dashboard/DashboardBarcamp' />">Barcamp</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="<c:url value='/dashboard/conference'/>">Build</a></li>
