@@ -30,7 +30,7 @@ public abstract class DashboardBase extends HttpServlet {
                 ServletUtils.redirectTo(request, response, "/login.jsp");
                 return;
             }
-            request.setAttribute("conference", );
+            request.setAttribute("conference", conference );
             populateRequest(request, em);
             request.getRequestDispatcher("/dashboard/"+getNextPage()).forward(request, response);
         } finally {
