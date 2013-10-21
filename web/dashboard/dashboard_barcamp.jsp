@@ -45,6 +45,8 @@
 </div>
 <div class="container">
     <div class="row">&nbsp;</div>
+    <div class="row"><div class="col-md-12">Your barcamp URL is <a href="https://conferenceengineer.com/barcamp/view/${conference.id}" target="_blank">https://conferenceengineer.com/barcamp/view/${conference.id}</a></div></div>
+    <div class="row">&nbsp;</div>
     <c:if test="${not empty sessionScope.error}">
         <div class="row"><div class="alert alert-danger text-center">${sessionScope.error}</div></div>
         <c:set scope="session" var="error" value="" />
@@ -56,7 +58,7 @@
 
     <c:forEach var="talkholder" items="${sortedTalks}" varStatus="talkStatus">
         <div class="panel panel-default">
-            <div class="panel-heading">[${talkholder.votes}]&nbsp;
+            <div class="panel-heading">[${talkholder.votes}<span class="glyphicon glyphicon-star"></span>]&nbsp;
             <c:set var="talk" value="${talkholder.talk}"/>
             <b onclick="showHide(${talk.id});"><c:out value="${talk.name}" /></b> by <c:forEach var="presenter" items="${talk.presenters}" varStatus="status">
                 <c:out value="${presenter}"/><c:if test="${not status.last}">,</c:if>&nbsp;
