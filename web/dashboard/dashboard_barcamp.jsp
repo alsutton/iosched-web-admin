@@ -57,12 +57,34 @@
     </c:if>
 
     <c:forEach var="talkholder" items="${sortedTalks}" varStatus="talkStatus">
+        <c:set var="talk" value="${talkholder.talk}"/>
+
+        <div class="modal fade" id="deleteTalkModal${talk.id}" tabindex="-1" role="dialog" aria-labelledby="deleteTalkModal${talk.id}" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Delete Barcamp Talk</h4>
+                    </div>
+                    <form accept-charset="utf-8" action="<c:url value='/dashboard/talks'/>" role="form" method="POST">
+                        <input type="hidden" name="talkId" value="${talk.id}" />
+                        <input type="hidden" name="action" value="delete" />
+                        <input type="hidden" name="next" value="DashboardBarcamp" />
+                        <div class="modal-body">
+                            <p>Please confirm you wish to delete <c:out value="${talk.name}" /></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">OK</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <div class="panel panel-default">
             <div class="panel-heading">[${talkholder.votes}<span class="glyphicon glyphicon-star"></span>]&nbsp;
-            <c:set var="talk" value="${talkholder.talk}"/>
             <b onclick="showHide(${talk.id});"><c:out value="${talk.name}" /></b> by <c:forEach var="presenter" items="${talk.presenters}" varStatus="status">
                 <c:out value="${presenter}"/><c:if test="${not status.last}">,</c:if>&nbsp;
-            </c:forEach></div>
+            </c:forEach>&nbsp;<a data-toggle="modal" href="#deleteTalkModal${talk.id}"><span class="glyphicon glyphicon-trash"></span></a></div>
             <div  id="${talk.id}_content" onclick="showHide(${talk.id});" class="panel-body" style="display:none">${talk.shortDescription}</div>
         </div>
         <c:if test="${not talkStatus.last}"><div style="height:10px"></div></c:if>

@@ -6,11 +6,13 @@ import com.conferenceengineer.iosched.server.utils.ConferenceUtils;
 import com.conferenceengineer.iosched.server.utils.EntityManagerWrapperBridge;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Servlet to handle tracks
@@ -63,7 +65,11 @@ public class TalksServlet extends HttpServlet {
             em.close();
         }
 
-        response.sendRedirect("DashboardSessions");
+        String next = request.getParameter("next");
+        if(next == null) {
+            next = "DashboardSessions";
+        }
+        response.sendRedirect(next);
     }
 
     /**
@@ -71,6 +77,11 @@ public class TalksServlet extends HttpServlet {
      */
 
     private void delete(final EntityManager em, final Talk talk) {
+        Query query = em.createQuery("SELECT x FROM TalkVote x WHERE x.talk = :talk");
+        query.setParameter("talk", talk);
+        for(TalkVote vote : (List<TalkVote>)query.getResultList()) {
+            em.remove(vote);
+        }
         for(Presenter presenter : talk.getPresenters()) {
             presenter.getTalks().remove(talk);
         }
