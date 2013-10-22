@@ -80,11 +80,42 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="scheduleTalkModal${talk.id}" tabindex="-1" role="dialog" aria-labelledby="scheduleTalkModal${talk.id}" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Select Time Slot</h4>
+                    </div>
+                    <form accept-charset="utf-8" action="<c:url value='/dashboard/barcamp'/>" role="form" method="POST">
+                        <input type="hidden" name="talkId" value="${talk.id}" />
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="scheduleTalkSlot${talk.id}">Time slot for <c:out value='${talk.name}'/></label>
+                                <select name="slot" id="scheduleTalkSlot${talk.id}" class="form-control">
+                                    <c:forEach var="slot" items="${slots}">
+                                        <option value="${slot.id}">${slot.name}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <div class="panel panel-default">
             <div class="panel-heading">[${talkholder.votes}<span class="glyphicon glyphicon-star"></span>]&nbsp;
-            <b onclick="showHide(${talk.id});"><c:out value="${talk.name}" /></b> by <c:forEach var="presenter" items="${talk.presenters}" varStatus="status">
-                <c:out value="${presenter}"/><c:if test="${not status.last}">,</c:if>&nbsp;
-            </c:forEach>&nbsp;<a data-toggle="modal" href="#deleteTalkModal${talk.id}"><span class="glyphicon glyphicon-trash"></span></a></div>
+                <b onclick="showHide(${talk.id});"><c:out value="${talk.name}" /></b> by <c:forEach var="presenter" items="${talk.presenters}" varStatus="status">
+                    <c:out value="${presenter}"/><c:if test="${not status.last}">,</c:if>&nbsp;
+                </c:forEach>&nbsp;
+                <a data-toggle="modal" href="#deleteTalkModal${talk.id}"><span class="glyphicon glyphicon-trash"></span></a>
+                <a data-toggle="modal" href="#scheduleTalkModal${talk.id}"><span class="glyphicon glyphicon-time"></span></a>
+            </div>
             <div  id="${talk.id}_content" onclick="showHide(${talk.id});" class="panel-body" style="display:none">${talk.shortDescription}</div>
         </div>
         <c:if test="${not talkStatus.last}"><div style="height:10px"></div></c:if>

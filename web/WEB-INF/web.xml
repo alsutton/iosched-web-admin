@@ -76,6 +76,11 @@
     </servlet>
 
     <servlet>
+        <servlet-name>BarcampServlet</servlet-name>
+        <servlet-class>com.conferenceengineer.iosched.server.dashboard.BarcampServlet</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>ConferenceServlet</servlet-name>
         <servlet-class>com.conferenceengineer.iosched.server.dashboard.ConferenceServlet</servlet-class>
     </servlet>
@@ -193,6 +198,11 @@
     <servlet-mapping>
         <servlet-name>BarcampTalks</servlet-name>
         <url-pattern>/barcamp/talks/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>BarcampServlet</servlet-name>
+        <url-pattern>/dashboard/barcamp</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

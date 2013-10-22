@@ -1,11 +1,14 @@
 package com.conferenceengineer.iosched.server.dashboard;
 
 import com.conferenceengineer.iosched.server.datamodel.Conference;
+import com.conferenceengineer.iosched.server.datamodel.ConferenceDay;
 import com.conferenceengineer.iosched.server.datamodel.Talk;
+import com.conferenceengineer.iosched.server.datamodel.TalkSlot;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -44,6 +47,23 @@ public class DashboardBarcamp extends DashboardBase {
         Collections.sort(talks, VOTE_SORTER);
         request.setAttribute("sortedTalks", talks);
 
+        List<ScheduleSlotHolder> slots = new ArrayList<ScheduleSlotHolder>();
+        SimpleDateFormat dayFormat = new SimpleDateFormat("dd MMMM yyyy");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        for(ConferenceDay day:conference.getDateList()) {
+            for(TalkSlot slot : day.getTalkSlotList()) {
+                StringBuilder builder = new StringBuilder();
+                builder.append(dayFormat.format(day.getDate()));
+                builder.append(", ");
+                builder.append(timeFormat.format(slot.getStart().getTime()));
+                builder.append('-');
+                builder.append(timeFormat.format(slot.getEnd().getTime()));
+
+                slots.add(new ScheduleSlotHolder(slot.getId(), builder.toString()));
+            }
+        }
+        request.setAttribute("slots", slots);
+
         request.setAttribute("serverStatus", "All servers are operational");
         request.setAttribute("serverStatusType", "Good");
     }
@@ -79,4 +99,25 @@ public class DashboardBarcamp extends DashboardBase {
         }
     }
 
+    /**
+     * Wrapper for a schedule slot
+     */
+
+    public class ScheduleSlotHolder {
+        private int id;
+        private String name;
+
+        ScheduleSlotHolder(final int id, final String name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
+        }
+    }
 }
