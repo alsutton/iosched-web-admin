@@ -64,8 +64,9 @@ public class Dashboard extends HttpServlet {
                     voter = VoterUtils.createVoter(response, em, user);
                     StringBuilder url = new StringBuilder();
                     url.append(request.getRequestURL());
-                    url.append("?vid=true&");
+                    url.append("?vid=true");
                     if(queryString != null) {
+                        url.append('&');
                         url.append(queryString);
                     }
                     response.sendRedirect(url.toString());
