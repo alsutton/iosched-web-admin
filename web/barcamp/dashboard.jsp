@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
+<title>${conference.name} Barcamp</title>
 <script type="text/javascript">
     <!--
     function showHide(id) {

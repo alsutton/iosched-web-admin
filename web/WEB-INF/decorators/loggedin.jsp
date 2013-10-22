@@ -4,12 +4,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title><decorator:title default="Conference Engineer"/></title>
     <meta name="description" content="Enter your order for Enterprise Password Safe licenses and agreements into this page.">
     <meta name="keywords" content="password management, password safe, password vault, password storage, enterprise password safe, passwords">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Funky Android Ltd.">
     <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-    <title>Conference Engineer</title>
     <link rel="stylesheet" type="text/css" href="<c:url value='/css/bootstrap.min.css' />" >
     <link rel="stylesheet" type="text/css" href="<c:url value='/css/style.css' />" >
     <script src="<c:url value='/js/jquery-1.10.2.min.js' />"></script>
