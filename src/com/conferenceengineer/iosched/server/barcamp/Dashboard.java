@@ -59,14 +59,13 @@ public class Dashboard extends HttpServlet {
             Voter voter = VoterUtils.getVoter(request, em, user);
             if(voter == null) {
                 HttpSession session = request.getSession(true);
-                if(session.getAttribute("created_vid") == null) {
+                String queryString = request.getQueryString();
+                if(queryString == null || !queryString.contains("vid=true")) {
                     voter = VoterUtils.createVoter(response, em, user);
-                    session.setAttribute("created_vid", voter.getId());
                     StringBuilder url = new StringBuilder();
                     url.append(request.getRequestURL());
-                    String queryString = request.getQueryString();
+                    url.append("?vid=true&");
                     if(queryString != null) {
-                        url.append('?');
                         url.append(queryString);
                     }
                     response.sendRedirect(url.toString());
