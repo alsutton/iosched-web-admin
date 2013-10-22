@@ -175,7 +175,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">Add Session Slot</h4>
+                            <h4 class="modal-title">Delete Session Slot</h4>
                         </div>
                         <form accept-charset="utf-8" action="talkSlots" role="form" method="POST">
                             <input type="hidden" name="id" value="${slot.id}" />
