@@ -3,6 +3,10 @@ package com.conferenceengineer.iosched.server.exporters;
 import com.conferenceengineer.iosched.server.datamodel.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import sun.util.logging.PlatformLogger;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Exporter for speakers in the JSON format iosched wants
@@ -45,7 +49,12 @@ public final class SessionsJSON {
                         typeString = "SESSION";
                     }
                     json.put("subtype", typeString);
-                    json.put("location", Integer.toString(talk.getLocation().getId()));
+
+                    if(talk.getLocation() == null) {
+                        Logger.getAnonymousLogger().log(Level.WARNING, "No location for " + talk.getName());
+                    } else {
+                        json.put("location", Integer.toString(talk.getLocation().getId()));
+                    }
 
                     String link = talk.getInformationURL();
                     if(link != null) {
