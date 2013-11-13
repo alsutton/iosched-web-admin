@@ -11,7 +11,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">${conference.name}</a>
+            <a class="navbar-brand" href="<c:url value='/dashboard/conference'/>">${requestScope.conference.name}</a>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
@@ -42,9 +42,9 @@
 
     <div class="row">
         <c:choose>
-            <c:when test='${serverStatusType eq "Good"}'><c:set var="statusClass">alert-info</c:set></c:when>
-            <c:when test='${serverStatusType eq "Bad"}'><c:set var="statusClass">alert-warning</c:set></c:when>
-            <c:when test='${serverStatusType eq "Ugly"}'><c:set var="statusClass">alert-danger</c:set></c:when>
+            <c:when test='${requestScope.serverStatusType eq "Good"}'><c:set var="statusClass">alert-info</c:set></c:when>
+            <c:when test='${requestScope.serverStatusType eq "Bad"}'><c:set var="statusClass">alert-warning</c:set></c:when>
+            <c:when test='${requestScope.serverStatusType eq "Ugly"}'><c:set var="statusClass">alert-danger</c:set></c:when>
             <c:otherwise><c:set var="statusClass">alert-info</c:set></c:otherwise>
         </c:choose>
         <div class="alert ${statusClass} text-center">${serverStatus}</div>
@@ -59,10 +59,10 @@
     <div class="row">
         <div class="col-md-12">
             <form accept-charset="utf-8" action="users" class="form-horizontal" role="form" method="POST">
-                <input type="hidden" name="id" value="${user.id}" />
+                <input type="hidden" name="id" value="${requestScope.user.id}" />
                 <div class="form-group">
                     <label for="login" class="col-lg-2">Your login</label>
-                    <div class="col-lg-4"><input type="text" id="login" class="form-control" readonly="readonly" value="${user}" /></div>
+                    <div class="col-lg-4"><input type="text" id="login" class="form-control" readonly="readonly" value="${requestScope.user}" /></div>
                 </div>
                 <div class="form-group">
                     <label for="password1" class="col-lg-2">New password</label>
@@ -90,7 +90,7 @@
     <div class="row">
         <div class="col-md-12">
             <ul>
-            <c:forEach var="permission" items="${conference.collaborators}">
+            <c:forEach var="permission" items="${requestScope.conference.collaborators}">
                 <li><c:out value="${permission.systemUser}"/></li>
             </c:forEach>
             </ul>
@@ -119,11 +119,11 @@
     <div class="row">
         <div class="col-md-12">
         <c:choose>
-            <c:when test="${not empty conference.hashtag}">
+            <c:when test="${not empty requestScope.conference.hashtag}">
                 Last published :&nbsp;
                 <c:choose>
-                    <c:when test="${conference.metadata == null || conference.metadata.lastPublished == null}"><i>Never</i></c:when>
-                    <c:otherwise><fmt:formatDate value="${conference.metadata.lastPublished.time}" pattern="MMM dd, yyyy 'at' HH:mm"/></c:otherwise>
+                    <c:when test="${requestScope.conference.metadata == null || requestScope.conference.metadata.lastPublished == null}"><i>Never</i></c:when>
+                    <c:otherwise><fmt:formatDate value="${requestScope.conference.metadata.lastPublished.time}" pattern="MMM dd, yyyy 'at' HH:mm"/></c:otherwise>
                 </c:choose>
                 <br /><a href="<c:url value='/dashboard/publish' />" class="btn btn-default btn-xs">Publish Now</a>
             </c:when>
