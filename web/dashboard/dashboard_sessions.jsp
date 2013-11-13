@@ -202,71 +202,72 @@
                     </h3>
                 </div>
                 <div class="panel-body">
-                <div class="modal fade" id="newTalkModal${slot.id}" tabindex="-1" role="dialog" aria-labelledby="newTalkModal${slot.id}" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title">Add A Session</h4>
+                    <div class="modal fade" id="newTalkModal${slot.id}" tabindex="-1" role="dialog" aria-labelledby="newTalkModal${slot.id}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title">Add A Session</h4>
+                                </div>
+                                <form accept-charset="utf-8" action="talks" role="form" method="POST">
+                                    <input type="hidden" name="slot" value="${slot.id}" />
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="newTalkSlot_${slot.id}">Time Slot</label>
+                                            <input type="text" id="newTalkSlot_${slot.id}" class="form-control" readonly="readonly" value="${conferenceDate}, ${startTime}-${endTime}" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="newTalkTitle_${slot.id}">Title</label>
+                                            <input type="text" name="title" id="newTalkTitle_${slot.id}" class="form-control" placeholder="A talk about something" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="newTalkPresenter_${slot.id}">Speaker</label>
+                                            <select name="presenter" id="newTalkPresenter_${slot.id}" class="form-control">
+                                                <c:forEach var="presenter" items="${conference.presenterList}">
+                                                    <option value="${presenter.id}">${presenter.name}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="newTalkTrack_${slot.id}">Track</label>
+                                            <select name="track" id="newTalkTrack_${slot.id}" class="form-control">
+                                                <option value="-1">Keynote</option>
+                                                <c:forEach var="track" items="${conference.trackList}">
+                                                    <option value="${track.id}">${track.name}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="newTalkLocation_${slot.id}">Location</label>
+                                            <select name="location" id="newTalkLocation_${slot.id}" class="form-control">
+                                                <c:forEach var="location" items="${conference.talkLocationList}">
+                                                    <option value="${location.id}">${location.name}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="newTalkInfoURL_${slot.id}">More Info URL</label>
+                                            <input type="text" name="infoURL" id="newTalkInfoURL_${slot.id}" class="form-control" placeholder="http://somewhere/page" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="newTalkDescription_${slot.id}">Description</label>
+                                            <textarea name="description" id="newTalkDescription_${slot.id}" class="form-control" placeholder="This talk will cover something really interesting." ></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    </div>
+                                </form>
                             </div>
-                            <form accept-charset="utf-8" action="talks" role="form" method="POST">
-                                <input type="hidden" name="slot" value="${slot.id}" />
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <label for="newTalkSlot_${slot.id}">Time Slot</label>
-                                        <input type="text" id="newTalkSlot_${slot.id}" class="form-control" readonly="readonly" value="${conferenceDate}, ${startTime}-${endTime}" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="newTalkTitle_${slot.id}">Title</label>
-                                        <input type="text" name="title" id="newTalkTitle_${slot.id}" class="form-control" placeholder="A talk about something" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="newTalkPresenter_${slot.id}">Speaker</label>
-                                        <select name="presenter" id="newTalkPresenter_${slot.id}" class="form-control">
-                                            <c:forEach var="presenter" items="${conference.presenterList}">
-                                                <option value="${presenter.id}">${presenter.name}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="newTalkTrack_${slot.id}">Track</label>
-                                        <select name="track" id="newTalkTrack_${slot.id}" class="form-control">
-                                            <option value="-1">Keynote</option>
-                                            <c:forEach var="track" items="${conference.trackList}">
-                                                <option value="${track.id}">${track.name}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="newTalkLocation_${slot.id}">Location</label>
-                                        <select name="location" id="newTalkLocation_${slot.id}" class="form-control">
-                                            <c:forEach var="location" items="${conference.talkLocationList}">
-                                                <option value="${location.id}">${location.name}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="newTalkInfoURL_${slot.id}">More Info URL</label>
-                                        <input type="text" name="infoURL" id="newTalkInfoURL_${slot.id}" class="form-control" placeholder="http://somewhere/page" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="newTalkDescription_${slot.id}">Description</label>
-                                        <textarea name="description" id="newTalkDescription_${slot.id}" class="form-control" placeholder="This talk will cover something really interesting." ></textarea>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Save</button>
-                                </div>
-                            </form>
                         </div>
                     </div>
-                </div>
 
-                <div class="row"><div class="col-md-12"><a data-toggle="modal" href="#newTalkModal${slot.id}" class="btn btn-default btn-sm">Add a session</a></div></div>
-                <div style="height: 10px">&nbsp;</div>
-                <c:if test="${not empty slot.talkList}">
-                    <div id="${slot.id}_hiddenhint" onclick="showHide(${slot.id});">
-                            <span class="glyphicon glyphicon-expand">&nbsp;</span> <c:out value="${fn:length(slot.talkList)}"/> talk<c:if test="${fn:length(slot.talkList) > 1}">s</c:if>&nbsp;&hellip;
+                    <div class="row">
+                        <div class="col-md-12"><a data-toggle="modal" href="#newTalkModal${slot.id}" class="btn btn-default btn-sm">Add a session</a></div></div>
+                    <div style="height: 10px">&nbsp;</div>
+                    <c:if test="${not empty slot.talkList}">
+                        <div id="${slot.id}_hiddenhint" onclick="showHide(${slot.id});">
+                                <span class="glyphicon glyphicon-expand">&nbsp;</span> <c:out value="${fn:length(slot.talkList)}"/> talk<c:if test="${fn:length(slot.talkList) > 1}">s</c:if>&nbsp;&hellip;
                         </div>
                         <div id="${slot.id}_content" style="display:none">
                             <span class="glyphicon glyphicon-collapse-down" onclick="showHide(${slot.id});">&nbsp;</span>
@@ -467,8 +468,8 @@
                                 </div>
                             </c:forEach>
                         </div>
-                    </div>
-                </c:if>
+                    </c:if>
+                </div>
             </div>
         </c:forEach>
     </c:forEach>
