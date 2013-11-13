@@ -99,7 +99,7 @@ public class PublishServlet extends HttpServlet {
 
 
         File dataRootDir = new File(dataRoot);
-        File eventBase = new File(dataRootDir, "events/"+conference.getHashtag());
+        File eventBase = new File(dataRootDir, "events/"+conference.getId());
         if(!eventBase.exists()) {
             if(!eventBase.mkdirs()) {
                 log("Unable to make directories for "+eventBase.getCanonicalPath());
