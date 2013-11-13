@@ -137,7 +137,7 @@
                     <ul>
                         <li><a href="<c:url value='/dashboard/talkLocations' />" target="_blank">Rooms JSON</a></li>
                         <li><a href="<c:url value='/dashboard/searchSuggestions' />" target="_blank">Search Suggestions JSON</a></li>
-                        <li><a href="<c:url value='/dashboard/talks' />" target="_blank">Download Sessions JSON</a></li>
+                        <li><a href="<c:url value='/dashboard/talks' />" target="_blank">Sessions JSON</a></li>
                         <li><a href="<c:url value='/dashboard/speakers' />" target="_blank">Speakers JSON</a></li>
                         <li><a href="<c:url value='/dashboard/tracks' />" target="_blank">Tracks JSON</a></li>
                         <li><a href="<c:url value='/dashboard/trackSessions' />" target="_blank">Track/Sessions JSON</a></li>
