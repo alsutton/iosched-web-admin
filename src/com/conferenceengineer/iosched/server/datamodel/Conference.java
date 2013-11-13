@@ -29,6 +29,9 @@ public class Conference {
     @Column(name="conference_name")
     private String name;
 
+    @Column(name="hashtag")
+    private String hashtag;
+
     @OneToOne(mappedBy = "conference")
     private ConferenceMetadata metadata;
 
@@ -89,6 +92,14 @@ public class Conference {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getHashtag() {
+        return hashtag;
+    }
+
+    public void setHashtag(String hashtag) {
+        this.hashtag = hashtag;
     }
 
     public ConferenceMetadata getMetadata() {

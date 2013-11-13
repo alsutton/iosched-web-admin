@@ -5,6 +5,10 @@
 		  http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
            version="2.5">
 
+    <context-param>
+        <param-name>data_root</param-name>
+        <param-value>/Users/alsutton/Temp</param-value>
+    </context-param>
     <filter>
         <filter-name>AuthenticationFilter</filter-name>
         <filter-class>com.conferenceengineer.iosched.server.AuthenticationFilter</filter-class>

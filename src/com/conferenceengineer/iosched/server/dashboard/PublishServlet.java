@@ -7,25 +7,17 @@ import com.conferenceengineer.iosched.server.exporters.SpeakersJSON;
 import com.conferenceengineer.iosched.server.exporters.TrackSessionsJSON;
 import com.conferenceengineer.iosched.server.utils.ConferenceUtils;
 import com.conferenceengineer.iosched.server.utils.EntityManagerWrapperBridge;
-import org.apache.http.HttpEntity;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
 
 import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.PrintWriter;
 import java.util.Calendar;
-import java.util.List;
 
 /**
  * Display the conference dashboard to the user.
@@ -35,13 +27,19 @@ public class PublishServlet extends HttpServlet {
     @Override
     public void doGet(final HttpServletRequest request, final HttpServletResponse response)
         throws IOException, ServletException {
+
+        String dataRoot = request.getServletContext().getInitParameter("data_root");
+        if(dataRoot == null) {
+            dataRoot = System.getProperty("user.home");
+        }
+
         EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
         try {
             Conference conference = ConferenceUtils.getCurrentConference(request, em);
 
-            publishUpdate("presenters", SpeakersJSON.export(conference));
-            publishUpdate("tracks", TrackSessionsJSON.export(conference));
-            publishUpdate("sessions", SessionsJSON.export(conference));
+            publishUpdate(dataRoot, conference, "presenters", SpeakersJSON.export(conference));
+            publishUpdate(dataRoot, conference, "tracks", TrackSessionsJSON.export(conference));
+            publishUpdate(dataRoot, conference, "sessions", SessionsJSON.export(conference));
 
             em.getTransaction().begin();
             ConferenceMetadata metadata = conference.getMetadata();
@@ -64,8 +62,22 @@ public class PublishServlet extends HttpServlet {
         response.sendRedirect("Dashboard");
     }
 
-    private void publishUpdate(final String name, final String data)
+    /**
+     * Publish the data for clients to download.
+     *
+     * @param dataRoot The root of all conference engineer data files.
+     * @param conference The conference the data is being exported for.
+     * @param name The name of the file being exported.
+     * @param data The data to be exported.
+     *
+     * @throws IOException
+     */
+    private void publishUpdate(final String dataRoot, final Conference conference,
+                               final String name, final String data)
             throws IOException {
+        /*
+            Old server publishing code
+
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
         HttpPost post = new HttpPost("https://app3.funkyandroid.net/receiver/receiver");
@@ -83,5 +95,33 @@ public class PublishServlet extends HttpServlet {
         } finally {
             response.close();
         }
+        */
+
+
+        File dataRootDir = new File(dataRoot);
+        File eventBase = new File(dataRootDir, "events/"+conference.getHashtag());
+        if(!eventBase.exists()) {
+            if(!eventBase.mkdirs()) {
+                log("Unable to make directories for "+eventBase.getCanonicalPath());
+            }
+        }
+        File exportFile = new File(eventBase, name+".json");
+        File exportTempFile = new File(eventBase, name+".tmp");
+        PrintWriter printWriter = new PrintWriter(new FileOutputStream(exportTempFile));
+        try {
+            printWriter.println(data);
+        } finally {
+            printWriter.close();
+        }
+
+        if(exportFile.exists()) {
+            if(!exportFile.delete()) {
+                log("Unable to delete existing file "+exportFile.getCanonicalPath());
+            }
+        }
+        if(!exportTempFile.renameTo(exportFile)) {
+            log("Unable to rename "+exportTempFile.getCanonicalPath()+" to "+exportFile.getCanonicalPath());
+        }
+
     }
 }
