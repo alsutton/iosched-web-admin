@@ -5,6 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import sun.util.logging.PlatformLogger;
 
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,15 +26,19 @@ public final class SessionsJSON {
         JSONObject root = new JSONObject();
         JSONArray sessions = new JSONArray();
 
+        TimeZone defaultTZ = TimeZone.getDefault();
+        TimeZone conferenceTZ = TimeZone.getTimeZone(conference.getTimezone());
         for(ConferenceDay day : conference.getDateList()) {
+            int adjustment =  conferenceTZ.getOffset(day.getDate().getTime())
+                            - defaultTZ.getOffset(day.getDate().getTime());
             for(TalkSlot slot : day.getTalkSlotList()) {
                 for(Talk talk : slot.getTalkList()) {
                     JSONObject json = new JSONObject();
                     json.put("id", Integer.toString(talk.getId()));
                     json.put("title", talk.getName());
                     json.put("description", talk.getShortDescription());
-                    json.put("startTimestamp", slot.getStart().getTimeInMillis()/1000);
-                    json.put("endTimestamp", slot.getEnd().getTimeInMillis()/1000);
+                    json.put("startTimestamp", (slot.getStart().getTimeInMillis()-adjustment)/1000);
+                    json.put("endTimestamp", (slot.getEnd().getTimeInMillis()-adjustment)/1000);
 
                     JSONArray presenterIds = new JSONArray();
                     for(Presenter presenter : talk.getPresenters()) {
