@@ -119,7 +119,7 @@
     <div class="row">
         <div class="col-md-12">
         <c:choose>
-            <c:when test="${conference.id == 1}">
+            <c:when test="${not empty conference.hashtag}">
                 Last published :&nbsp;
                 <c:choose>
                     <c:when test="${conference.metadata == null || conference.metadata.lastPublished == null}"><i>Never</i></c:when>
