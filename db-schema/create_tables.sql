@@ -50,7 +50,8 @@ CREATE TABLE conference (
 	id serial PRIMARY KEY,
 	series_id integer references series(id),
 	location_id integer references location(id),
-	conference_name varchar(128)
+	conference_name varchar(128),
+  hashtag varchar(64)
 );
 
 CREATE TABLE conference_metadata (
