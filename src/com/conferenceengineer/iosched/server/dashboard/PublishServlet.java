@@ -105,7 +105,7 @@ public class PublishServlet extends HttpServlet {
                 log("Unable to make directories for "+eventBase.getCanonicalPath());
             }
         }
-        File exportFile = new File(eventBase, name+".json");
+        File exportFile = new File(eventBase, name);
         File exportTempFile = new File(eventBase, name+".tmp");
         PrintWriter printWriter = new PrintWriter(new FileOutputStream(exportTempFile));
         try {
