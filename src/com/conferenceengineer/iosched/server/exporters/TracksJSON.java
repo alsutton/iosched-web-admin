@@ -6,26 +6,10 @@ import com.conferenceengineer.iosched.server.datamodel.Track;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
- * Exporter for talk slots in the JSON format iosched wants
+ * Exporter for Track data
  */
 public final class TracksJSON {
-
-    // Hack to keep colours for IOsched tracks
-    private static final Map<Integer,String> COLOUR_MAP = new HashMap<Integer,String>();
-    static {
-        COLOUR_MAP.put(14, "#fe4a9e");
-        COLOUR_MAP.put(18, "#d35400");
-        COLOUR_MAP.put(19, "#45699e");
-        COLOUR_MAP.put(20, "#8fb655");
-        COLOUR_MAP.put(21, "#cecece");
-        COLOUR_MAP.put(22, "#000000");
-    }
-
 
     private TracksJSON() {
         super();
@@ -44,7 +28,7 @@ public final class TracksJSON {
             trackJSON.put("id", Integer.toString(track.getId()));
             trackJSON.put("title", track.getName());
             trackJSON.put("description", track.getDescription());
-            String colour = COLOUR_MAP.get(track.getId());
+            String colour = track.getColour();
             if(colour == null) {
                 colour = "#336699";
             }

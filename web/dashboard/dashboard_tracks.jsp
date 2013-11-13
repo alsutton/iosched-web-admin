@@ -46,11 +46,15 @@
                 <form accept-charset="utf-8" action="<c:url value='/dashboard/tracks' />" role="form" method="POST">
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="newTrackName">Please enter the new track name;</label>
-                            <input type="text" name="name" id="newTrackName" class="form-control" />
+                            <label for="newTrackName">Track Name;</label>
+                            <input type="text" name="name" id="newTrackName" class="form-control" placeholder="Design" />
                         </div>
                         <div class="form-group">
-                            <label for="newTrackDescription">Please enter a description;</label>
+                            <label for="newTrackColour">Track Colour;</label>
+                            <input type="text" name="colour" id="newTrackColour" class="form-control" placeholder="#336699" />
+                        </div>
+                        <div class="form-group">
+                            <label for="newTrackDescription">Description;</label>
                             <textarea name="description" id="newTrackDescription" class="form-control"></textarea>
                         </div>
                     </div>
@@ -76,11 +80,15 @@
                                 <input type="hidden" name="id" value="${track.id}" />
                                 <div class="modal-body">
                                     <div class="form-group">
-                                        <label for="editTrack${track.id}Name">Please enter the new track name;</label>
-                                        <input type="text" name="name" id="editTrack${track.id}Name" class="form-control" value="${track.name}"/>
+                                        <label for="editTrack${track.id}Name">Track name;</label>
+                                        <input type="text" name="name" id="editTrack${track.id}Name" class="form-control" value="${track.name}" placeholder="Design"/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="editTrack${track.id}Description">Please enter a description;</label>
+                                        <label for="editTrack${track.id}Colour">Track Colour;</label>
+                                        <input type="text" name="colour" id="editTrack${track.id}Colour" class="form-control" value="${track.colour}" placeholder="#336699"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="editTrack${track.id}Description">Description;</label>
                                         <textarea name="description" id="editTrack${track.id}Description" class="form-control">${track.description}</textarea>
                                     </div>
                                 </div>

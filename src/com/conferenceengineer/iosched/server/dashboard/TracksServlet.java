@@ -59,6 +59,7 @@ public class TracksServlet extends HttpServlet {
             }
 
             track.setName(request.getParameter("name"));
+            track.setColour(request.getParameter("colour"));
             track.setDescription(request.getParameter("description"));
 
             if(isNew) {
