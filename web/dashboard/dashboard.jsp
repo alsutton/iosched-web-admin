@@ -61,15 +61,15 @@
             <form accept-charset="utf-8" action="users" class="form-horizontal" role="form" method="POST">
                 <input type="hidden" name="id" value="${requestScope.user.id}" />
                 <div class="form-group">
-                    <label for="login" class="col-lg-2">Your login</label>
+                    <label for="login" class="col-lg-2 control-label">Your login</label>
                     <div class="col-lg-4"><input type="text" id="login" class="form-control" readonly="readonly" value="${requestScope.user}" /></div>
                 </div>
                 <div class="form-group">
-                    <label for="password1" class="col-lg-2">New password</label>
+                    <label for="password1" class="col-lg-2 control-label">New password</label>
                     <div class="col-lg-4"><input type="password" name="password1" id="password1" class="form-control" /></div>
                 </div>
                 <div class="form-group">
-                    <label for="password2" class="col-lg-2">Confirm new password</label>
+                    <label for="password2" class="col-lg-2 control-label">Confirm new password</label>
                     <div class="col-lg-4"><input type="password" name="password2" id="password2" class="form-control" /></div>
                 </div>
                 <div class="col-lg-6 text-right">
@@ -100,10 +100,15 @@
 
     <div class="row">
         <div class="col-md-12">
-            <form accept-charset="utf-8" action="invite" class="form" role="form" method="POST">
-                <label for="email">If you want to invite other people to work on this schedule, enter their email address below;</label>
-                <input type="text" id="email" class="form-control " name="email" placeholder="someone@somewhere.xyz" />
-                <button type="submit" class="btn btn-primary btn-sm" style="margin-top: 10px">Send Invite</button>
+            <p>If you want to invite other people to work on this schedule, enter their email address below.</p>
+            <form accept-charset="utf-8" action="invite" class="form-horizontal" role="form" method="POST">
+                <div class="form-group">
+                    <label for="email" class="col-lg-2 control-label">Email Address</label>
+                    <div class="col-lg-4"><input type="text" name="email" id="email" class="form-control" /></div>
+                </div>
+                <div class="col-lg-6 text-right">
+                    <button type="submit" class="btn btn-primary btn-sm" style="margin-top: 10px">Send Invite</button>
+                </div>
             </form>
         </div>
     </div>
