@@ -51,7 +51,8 @@ CREATE TABLE conference (
 	series_id integer references series(id),
 	location_id integer references location(id),
 	conference_name varchar(128),
-  hashtag varchar(64)
+  hashtag varchar(64),
+  timezone varchar(64)
 );
 
 CREATE TABLE conference_metadata (

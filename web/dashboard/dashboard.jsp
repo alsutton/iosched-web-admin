@@ -50,113 +50,171 @@
         <div class="alert ${statusClass} text-center">${serverStatus}</div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <h4>Your information</h4>
-        </div>
-    </div>
+    <ul class="nav nav-tabs" id="tabs">
+        <li><a href="#conference" data-toggle="tab">Conference</a></li>
+        <li><a href="#app" data-toggle="tab">App Static Data</a></li>
+        <li><a href="#ota" data-toggle="tab">OTA Updates</a></li>
+        <li><a href="#user" data-toggle="tab">Your Account</a></li>
+    </ul>
 
-    <div class="row">
-        <div class="col-md-12">
-            <form accept-charset="utf-8" action="users" class="form-horizontal" role="form" method="POST">
-                <input type="hidden" name="id" value="${requestScope.user.id}" />
-                <div class="form-group">
-                    <label for="login" class="col-lg-2 control-label">Your login</label>
-                    <div class="col-lg-4"><input type="text" id="login" class="form-control" readonly="readonly" value="${requestScope.user}" /></div>
+    <div class="tab-content">
+        <div class="tab-pane active" id="conference">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Time Zone</h4>
                 </div>
-                <div class="form-group">
-                    <label for="password1" class="col-lg-2 control-label">New password</label>
-                    <div class="col-lg-4"><input type="password" name="password1" id="password1" class="form-control" /></div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <form accept-charset="utf-8" action="<c:url value='/dashboard/timezone' />" class="form-horizontal"
+                          role="form" method="POST">
+                        <div class="form-group">
+                            <label for="timezone" class="col-lg-2 control-label">Conference Timezone</label>
+                            <div class="col-lg-4">
+                                <select name="timezone" id="timezone" class="form-control">
+                                    <c:forEach var="timezone" items="${timezones}">
+                                        <c:choose>
+                                            <c:when test="${conference.timezone eq timezone}">
+                                                <c:set var="selected" value="selected=\"selected\"" />
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:set var="selected" value="" />
+                                            </c:otherwise>
+                                        </c:choose>
+                                        <option ${selected}>${timezone}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 text-right">
+                            <button type="submit" class="btn btn-primary btn-sm" style="margin-top: 10px">Update</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label for="password2" class="col-lg-2 control-label">Confirm new password</label>
-                    <div class="col-lg-4"><input type="password" name="password2" id="password2" class="form-control" /></div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Collaborators</h4>
                 </div>
-                <div class="col-lg-6 text-right">
-                    <button type="submit" class="btn btn-primary btn-sm">Update</button>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <ul>
+                        <c:forEach var="permission" items="${requestScope.conference.collaborators}">
+                            <li><c:out value="${permission.systemUser}"/></li>
+                        </c:forEach>
+                    </ul>
                 </div>
-            </form>
-        </div>
-    </div>
+            </div>
 
-    <div class="row">&nbsp;</div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <h4>Collaborators</h4>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <ul>
-            <c:forEach var="permission" items="${requestScope.conference.collaborators}">
-                <li><c:out value="${permission.systemUser}"/></li>
-            </c:forEach>
-            </ul>
-        </div>
-    </div>
-
-
-    <div class="row">
-        <div class="col-md-12">
-            <p>If you want to invite other people to work on this schedule, enter their email address below.</p>
-            <form accept-charset="utf-8" action="invite" class="form-horizontal" role="form" method="POST">
-                <div class="form-group">
-                    <label for="email" class="col-lg-2 control-label">Email Address</label>
-                    <div class="col-lg-4"><input type="text" name="email" id="email" class="form-control" /></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p>If you want to invite other people to work on this schedule, enter their email address below.</p>
+                    <form accept-charset="utf-8" action="invite" class="form-horizontal" role="form" method="POST">
+                        <div class="form-group">
+                            <label for="email" class="col-lg-2 control-label">Email Address</label>
+                            <div class="col-lg-4"><input type="text" name="email" id="email" class="form-control" /></div>
+                        </div>
+                        <div class="col-lg-6 text-right">
+                            <button type="submit" class="btn btn-primary btn-sm" style="margin-top: 10px">Send Invite</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="col-lg-6 text-right">
-                    <button type="submit" class="btn btn-primary btn-sm" style="margin-top: 10px">Send Invite</button>
+            </div>
+        </div>
+        <div class="tab-pane active" id="app">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Downloads for Conference App Development (iosched)</h4>
                 </div>
-            </form>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <ul>
+                        <li><a href="<c:url value='/dashboard/talkLocations' />" target="_blank">Rooms JSON</a></li>
+                        <li><a href="<c:url value='/dashboard/searchSuggestions' />" target="_blank">Search Suggestions JSON</a></li>
+                        <li><a href="<c:url value='/dashboard/talks' />" target="_blank">Download Sessions JSON</a></li>
+                        <li><a href="<c:url value='/dashboard/speakers' />" target="_blank">Speakers JSON</a></li>
+                        <li><a href="<c:url value='/dashboard/tracks' />" target="_blank">Tracks JSON</a></li>
+                        <li><a href="<c:url value='/dashboard/trackSessions' />" target="_blank">Track/Sessions JSON</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane active" id="ota">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>OTA update information</h4>
+                </div>
+            </div>
+
+            <c:choose>
+                <c:when test="${not empty requestScope.conference.hashtag}">
+                    <div class="row">
+                        <div class="col-md-12">
+                            Last published :&nbsp;
+                            <c:choose>
+                                <c:when test="${requestScope.conference.metadata == null || requestScope.conference.metadata.lastPublished == null}"><i>Never</i></c:when>
+                                <c:otherwise><fmt:formatDate value="${requestScope.conference.metadata.lastPublished.time}" pattern="MMM dd, yyyy 'at' HH:mm"/></c:otherwise>
+                            </c:choose>
+                        </div>
+                    </div>
+                    <div style="height: 10px">&nbsp;</div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="<c:url value='/dashboard/publish' />" class="btn btn-primary btn-xs">Publish Now</a>
+                        </div>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <i>OTA Updates are not available for this conference</i>
+                        </div>
+                    </div>
+                </c:otherwise>
+            </c:choose>
+        </div>
+        <div class="tab-pane active" id="user">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>Account Information</h4>
+                        </div>
+                    </div>
+                    <form accept-charset="utf-8" action="users" class="form-horizontal" role="form" method="POST">
+                        <input type="hidden" name="id" value="${requestScope.user.id}" />
+                        <div class="form-group">
+                            <label for="login" class="col-lg-2 control-label">Your login</label>
+                            <div class="col-lg-4"><input type="text" id="login" class="form-control" readonly="readonly" value="${requestScope.user}" /></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password1" class="col-lg-2 control-label">New password</label>
+                            <div class="col-lg-4"><input type="password" name="password1" id="password1" class="form-control" /></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password2" class="col-lg-2 control-label">Confirm new password</label>
+                            <div class="col-lg-4"><input type="password" name="password2" id="password2" class="form-control" /></div>
+                        </div>
+                        <div class="col-lg-6 text-right">
+                            <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
-
-
-    <div class="row">&nbsp;</div>
-    <div class="row">
-        <div class="col-md-12">
-            <h4>OTA update information</h4>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-        <c:choose>
-            <c:when test="${not empty requestScope.conference.hashtag}">
-                Last published :&nbsp;
-                <c:choose>
-                    <c:when test="${requestScope.conference.metadata == null || requestScope.conference.metadata.lastPublished == null}"><i>Never</i></c:when>
-                    <c:otherwise><fmt:formatDate value="${requestScope.conference.metadata.lastPublished.time}" pattern="MMM dd, yyyy 'at' HH:mm"/></c:otherwise>
-                </c:choose>
-                <br /><a href="<c:url value='/dashboard/publish' />" class="btn btn-default btn-xs">Publish Now</a>
-            </c:when>
-            <c:otherwise><i>OTA Updates are not available for this conference</i></c:otherwise>
-        </c:choose>
-        </div>
-    </div>
-
-    <div class="row">&nbsp;</div>
-    <div class="row">
-        <div class="col-md-12">
-            <h4>Downloads for Conference App Development (iosched)</h4>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <ul>
-                <li><a href="<c:url value='/dashboard/talkLocations' />" target="_blank">Rooms JSON</a></li>
-                <li><a href="<c:url value='/dashboard/searchSuggestions' />" target="_blank">Search Suggestions JSON</a></li>
-                <li><a href="<c:url value='/dashboard/talks' />" target="_blank">Download Sessions JSON</a></li>
-                <li><a href="<c:url value='/dashboard/speakers' />" target="_blank">Speakers JSON</a></li>
-                <li><a href="<c:url value='/dashboard/tracks' />" target="_blank">Tracks JSON</a></li>
-                <li><a href="<c:url value='/dashboard/trackSessions' />" target="_blank">Track/Sessions JSON</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="row">&nbsp;</div>
 </div>
+<script src="<c:url value='/js/bootstrap.min.js' />"></script>
+<script language="javascript">
+    $(window).load(function() {
+        $('#tabs a[href="#conference"]').tab('show');
+    });
+</script>
 </body>
 </html>

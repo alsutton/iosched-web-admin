@@ -155,6 +155,11 @@
     </servlet>
 
     <servlet>
+        <servlet-name>TimezoneServlet</servlet-name>
+        <servlet-class>com.conferenceengineer.iosched.server.dashboard.TimezoneServlet</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>TracksServlet</servlet-name>
         <servlet-class>com.conferenceengineer.iosched.server.dashboard.TracksServlet</servlet-class>
     </servlet>
@@ -272,6 +277,11 @@
     <servlet-mapping>
         <servlet-name>TalkLocationsServlet</servlet-name>
         <url-pattern>/dashboard/talkLocations</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>TimezoneServlet</servlet-name>
+        <url-pattern>/dashboard/timezone</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

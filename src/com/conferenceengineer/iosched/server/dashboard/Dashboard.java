@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.*;
 
 /**
  * Display the conference dashboard to the user.
@@ -25,6 +26,10 @@ public class Dashboard extends DashboardBase {
 
         request.setAttribute("serverStatus", "All servers are operational");
         request.setAttribute("serverStatusType", "Good");
+
+        List<String> timezones = Arrays.asList(TimeZone.getAvailableIDs());
+        Collections.sort(timezones);
+        request.setAttribute("timezones", timezones);
     }
 
 

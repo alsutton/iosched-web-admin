@@ -13,6 +13,11 @@ import java.util.List;
 @Table( name = "conference" )
 public class Conference {
 
+    /**
+     * The default timezone for migrated conferences.
+     */
+    private static final String DEFAULT_TIMEZONE = "Europe/London";
+
     @Id
     @GeneratedValue
     @Column(name="id")
@@ -31,6 +36,9 @@ public class Conference {
 
     @Column(name="hashtag")
     private String hashtag;
+
+    @Column(name="timezone")
+    private String timezone;
 
     @OneToOne(mappedBy = "conference")
     private ConferenceMetadata metadata;
@@ -92,6 +100,17 @@ public class Conference {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getTimezone() {
+        if(timezone == null) {
+            return DEFAULT_TIMEZONE;
+        }
+        return timezone;
+    }
+
+    public void setTimezone(String timezone) {
+        this.timezone = timezone;
     }
 
     public String getHashtag() {
