@@ -25,7 +25,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<c:url value='/dashboard/Dashboard'/>"><c:out value="${conference.name}"/></a>
+            <a class="navbar-brand" href=<c:url value='/dashboard/conference'/>"><c:out value="${conference.name}"/></a>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">

@@ -11,7 +11,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Conference Engineer</a>
+            <a class="navbar-brand" href="<c:url value='/dashboard/conference'/>">Conference Engineer</a>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
