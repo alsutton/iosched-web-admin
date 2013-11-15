@@ -69,8 +69,11 @@
 
     <div class="row">
         <div class="col-md-12">
-            <c:forEach var="permission" items="${user.permissions}">
-                <p><a href="conference?id=${permission.conference.id}">${permission.conference.name}</a></p>
+            <c:forEach var="permission" items="${requestScope.user.permissions}">
+                <c:url var="conference_url" value="/dashboard/conference">
+                    <c:param name="id" value="${permission.conference.id}" />
+                </c:url>
+                <p><a href="${conference_url}">${permission.conference.name}</a></p>
             </c:forEach>
         </div>
     </div>
