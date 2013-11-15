@@ -11,7 +11,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">${conference.name}</a>
+            <a class="navbar-brand" href="<c:url value='/dashboard/conference'/>">${requestScope.conference.name}</a>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
@@ -31,8 +31,8 @@
 </div>
 <div class="container">
     <div class="row">&nbsp;</div>
-    <c:if test="${not empty error}">
-        <div class="row"><div class="alert alert-danger text-center">${error}</div></div>
+    <c:if test="${not empty requestScope.error}">
+        <div class="row"><div class="alert alert-danger text-center">${requestScope.error}</div></div>
         <div class="row">&nbsp;</div>
     </c:if>
 
@@ -68,7 +68,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <c:forEach var="track" items="${conference.trackList}">
+            <c:forEach var="track" items="${requestScope.conference.trackList}">
                 <div class="modal fade" id="editTrackModal${track.id}" tabindex="-1" role="dialog" aria-labelledby="editTrackModal${track.id}" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -99,7 +99,18 @@
                         </div>
                     </div>
                 </div>
-                <h4><a data-toggle="modal" href="#editTrackModal${track.id}">${track.name}</a></h4>
+
+                <c:choose>
+                    <c:when test="${not empty track.colour}">
+                        <c:set var="track_colour" value="${track.colour}" />
+                    </c:when>
+                    <c:otherwise>
+                        <c:set var="track_colour" value="#336699" />
+                    </c:otherwise>
+                </c:choose>
+
+
+                <h4><span class="glyphicon glyphicon-stop" style="color: ${track_colour}"></span>&nbsp;<a data-toggle="modal" href="#editTrackModal${track.id}">${track.name}</a></h4>
             </c:forEach>
         </div>
     </div>
@@ -114,8 +125,5 @@
 
     <div class="row">&nbsp;</div>
 </div>
-
-<script src="<c:url value='/js/modal.js' />" />
-
 </body>
 </html>
