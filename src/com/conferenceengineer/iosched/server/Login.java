@@ -56,42 +56,41 @@ public class Login extends HttpServlet {
                 return;
             }
 
+            boolean authenticated = false;
+
             LoginUtils loginUtils = LoginUtils.getInstance();
             for(UserAuthenticationInformation authenticator : authenticators) {
                 if(authenticator.getAuthenticatorType() != UserAuthenticationInformationDAO.AUTHENTICATOR_INTERNAL) {
                     continue;
                 }
 
-                if(loginUtils.isUserValid(name, password, authenticator)) {
-                    loginUtils.addCookie(response, user);
+                if(!loginUtils.isUserValid(name, password, authenticator)) {
+                    continue;
+                }
 
-                    String area = Tracker.getLocation(request);
-                    if(area != null && area.startsWith("barcamp_")) {
-                        ServletUtils.redirectTo(request, response, "/barcamp/view/"+area.substring(8));
-                        return;
-                    }
+                loginUtils.addCookie(response, user);
 
-                    List<ConferencePermission> permissions = user.getPermissions();
-                    if(permissions == null || permissions.isEmpty()) {
-                        request.getSession().setAttribute("conferenceId", "There has been a problem logging you in. Please try again later.");
-                        log("User " + user.getId() + " has no conference permissions");
-                        ServletUtils.redirectToIndex(request, response);
-                        return;
-                    }
-
-                    if(permissions.size() > 1) {
-                        response.sendRedirect("dashboard/conference");
-                    } else {
-                        request.getSession().setAttribute("conferenceId", permissions.get(0).getConference().getId());
-                        response.sendRedirect("dashboard/Dashboard");
-                    }
-
-                    em.getTransaction().commit();
+                String area = Tracker.getLocation(request);
+                if(area != null && area.startsWith("barcamp_")) {
+                    ServletUtils.redirectTo(request, response, "/barcamp/view/"+area.substring(8));
                     return;
                 }
+
+                List<ConferencePermission> permissions = user.getPermissions();
+                if(permissions == null || permissions.size() != 1) {
+                    ServletUtils.redirectTo(request, response, "/dashboard/conference");
+                } else {
+                    request.getSession().setAttribute("conferenceId", permissions.get(0).getConference().getId());
+                    response.sendRedirect("dashboard/Dashboard");
+                }
+
+                authenticated = true;
+                break;
             }
 
-            reportLoginError(request, response);
+            if(!authenticated) {
+                reportLoginError(request, response);
+            }
             em.getTransaction().commit();
         } finally {
             em.close();
