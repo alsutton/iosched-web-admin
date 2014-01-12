@@ -22,7 +22,7 @@
 </div>
 <div id="footer">
     <div class="container">
-        <p class="text-center">Website and back-end software : &copy;Copyright 2013 <a target="_blank" href="http://funkyandroid.com/">Funky Android Ltd.</a>, All rights reserved.</p>
+        <p class="text-center">Website and back-end software : &copy;Copyright 2013-2014 <a target="_blank" href="http://funkyandroid.com/">Funky Android Ltd.</a>, All rights reserved.</p>
     </div>
 </div>
 </body>
