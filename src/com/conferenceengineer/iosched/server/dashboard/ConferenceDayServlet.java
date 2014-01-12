@@ -27,24 +27,28 @@ public class ConferenceDayServlet extends HttpServlet {
     public void doPost(final HttpServletRequest request, final HttpServletResponse response)
         throws IOException, ServletException {
         String action = request.getParameter("action");
+        String append = "";
         if(action == null || action.isEmpty()) {
-            add(request, response);
+            append = add(request, response);
         } else if("delete".equals(action)) {
             delete(request, response);
         }
 
-        response.sendRedirect("DashboardSessions");
+        response.sendRedirect("DashboardSessions"+append);
     }
 
-    private void add(final HttpServletRequest request, final HttpServletResponse response)
+    private String add(final HttpServletRequest request, final HttpServletResponse response)
             throws IOException, ServletException {
         EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
         try {
             em.getTransaction().begin();
             String date = request.getParameter("date");
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            em.persist(new ConferenceDay(ConferenceUtils.getCurrentConference(request, em), sdf.parse(date)));
+            ConferenceDay day = new ConferenceDay(ConferenceUtils.getCurrentConference(request, em), sdf.parse(date));
+            em.persist(day);
             em.getTransaction().commit();
+
+            return "#day_"+day.getId();
         } catch (ParseException e) {
             throw new ServletException(e);
         } finally {

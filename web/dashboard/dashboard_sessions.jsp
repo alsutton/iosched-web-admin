@@ -77,6 +77,14 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-md-12">
+            <a data-toggle="modal" href="#addDayModal" class="btn btn-primary btn-sm">Add Day</a>
+        </div>
+    </div>
+
+    <div class="row">&nbsp;</div>
+
     <c:forEach var="conferenceDay" items="${conference.dateList}">
         <fmt:formatDate var="conferenceDate" value="${conferenceDay.date}" pattern="dd MMMM yyyy"/>
 
@@ -104,7 +112,11 @@
 
 
         <div class="row">
-            <div class="col-md-12"><h2><a data-toggle="modal" href="#deleteDayModal${conferenceDay.id}"><c:out value="${conferenceDate}" /></a></h2></div>
+            <div class="col-md-12">
+                <a name="day_${conferenceDay.id}">
+                    <h2><a data-toggle="modal" href="#deleteDayModal${conferenceDay.id}"><c:out value="${conferenceDate}" /></a></h2>
+                </a>
+            </div>
         </div>
 
         <fmt:formatDate var="dateCode" value="${conferenceDay.date}" pattern="yyyyMMdd"/>
@@ -194,13 +206,15 @@
             </div>
 
             <div class="panel panel-default">
-                <div class="panel-heading" onclick="showHide(${slot.id});">
-                    <h3 class="panel-title">
-                        <c:out value="${startTime}" />&nbsp;-&nbsp;<c:out value="${endTime}" />&nbsp;
-                        <a data-toggle="modal" href="#editSlotModal${slot.id}"><span class="glyphicon glyphicon-pencil"></span></a>
-                        <a data-toggle="modal" href="#deleteSlotModal${slot.id}"><span class="glyphicon glyphicon-trash"></span></a>
-                    </h3>
-                </div>
+                <a name="slot_${slot.id}">
+                    <div class="panel-heading" onclick="showHide(${slot.id});">
+                        <h3 class="panel-title">
+                            <c:out value="${startTime}" />&nbsp;-&nbsp;<c:out value="${endTime}" />&nbsp;
+                            <a data-toggle="modal" href="#editSlotModal${slot.id}"><span class="glyphicon glyphicon-pencil"></span></a>
+                            <a data-toggle="modal" href="#deleteSlotModal${slot.id}"><span class="glyphicon glyphicon-trash"></span></a>
+                        </h3>
+                    </div>
+                </a>
                 <div class="panel-body">
                     <div class="modal fade" id="newTalkModal${slot.id}" tabindex="-1" role="dialog" aria-labelledby="newTalkModal${slot.id}" aria-hidden="true">
                         <div class="modal-dialog">
@@ -412,6 +426,7 @@
 
 
                                 <div class="row">
+                                    <a name="talk_${talk.id}">
                                     <div class="col-md-12">
                                         <h4>
                                             <span onclick="showHide('t${talk.id}');">[
@@ -465,6 +480,7 @@
                                                 <p>${talk.shortDescription}</p>
                                             </div>
                                     </div>
+                                    </a>
                                 </div>
                             </c:forEach>
                         </div>
@@ -475,16 +491,6 @@
     </c:forEach>
     <div class="row">&nbsp;</div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <a data-toggle="modal" href="#addDayModal" class="btn btn-primary btn-sm">Add Day</a>
-        </div>
-    </div>
-
-    <div class="row">&nbsp;</div>
 </div>
-
-<script src="<c:url value='/js/modal.js' />" />
-
 </body>
 </html>

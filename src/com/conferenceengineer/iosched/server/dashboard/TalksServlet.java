@@ -43,6 +43,8 @@ public class TalksServlet extends HttpServlet {
     @Override
     public void doPost(final HttpServletRequest request, final HttpServletResponse response)
         throws IOException, ServletException {
+        String append = "";
+
         EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
         try {
             em.getTransaction().begin();
@@ -55,9 +57,9 @@ public class TalksServlet extends HttpServlet {
                 }
             } else {
                 if(talkId == null) {
-                    add(em, request);
+                    append=add(em, request);
                 } else {
-                    edit(em, request, talkId);
+                    append=edit(em, request, talkId);
                 }
             }
             em.getTransaction().commit();
@@ -67,7 +69,7 @@ public class TalksServlet extends HttpServlet {
 
         String next = request.getParameter("next");
         if(next == null) {
-            next = "DashboardSessions";
+            next = "DashboardSessions"+append;
         }
         response.sendRedirect(next);
     }
@@ -93,28 +95,29 @@ public class TalksServlet extends HttpServlet {
      * Handle an add
      */
 
-    private void add(final EntityManager em, final HttpServletRequest request) {
+    private String add(final EntityManager em, final HttpServletRequest request) {
         Talk talk = new Talk();
         populateObject(em, talk, request);
         em.persist(talk);
         addPresenter(em, talk, request);
+        return "#slot_"+talk.getSlot().getId();
     }
 
     /**
      * Handle an edit
      */
 
-    private void edit(final EntityManager em, final HttpServletRequest request, final String slotId) {
+    private String edit(final EntityManager em, final HttpServletRequest request, final String slotId) {
         Talk talk = em.find(Talk.class, Integer.parseInt(slotId));
         String presenterId = request.getParameter("presenter");
         if(presenterId != null) {
             // We're just altering a presenter
             editPresenter(em, request, talk, presenterId);
-            return;
+        } else {
+            // We're updating the object.
+            populateObject(em, talk, request);
         }
-
-        // We're updating the object.
-        populateObject(em, talk, request);
+        return "#slot_"+talk.getSlot().getId();
     }
 
 

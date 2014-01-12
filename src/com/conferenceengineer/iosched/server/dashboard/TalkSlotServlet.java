@@ -25,21 +25,22 @@ public class TalkSlotServlet extends HttpServlet {
     public void doPost(final HttpServletRequest request, final HttpServletResponse response)
         throws IOException, ServletException {
         String action = request.getParameter("action");
+        String append = "";
         if(action == null || action.isEmpty()) {
             String slotId = request.getParameter("slot");
             if(slotId == null) {
-                add(request);
+                append = add(request);
             } else {
-                edit(request, slotId);
+                append = edit(request, slotId);
             }
         } else if("delete".equals(action)) {
             delete(request);
         }
 
-        response.sendRedirect("DashboardSessions");
+        response.sendRedirect("DashboardSessions"+append);
     }
 
-    private void add(final HttpServletRequest request) {
+    private String add(final HttpServletRequest request) {
         EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
         try {
             em.getTransaction().begin();
@@ -56,14 +57,17 @@ public class TalkSlotServlet extends HttpServlet {
             end.setTime(conferenceDay.getDate());
             setCalendarWithTime(end, request.getParameter("end"));
 
-            em.persist(new TalkSlot(conferenceDay, start, end));
+            TalkSlot slot = new TalkSlot(conferenceDay, start, end);
+            em.persist(slot);
             em.getTransaction().commit();
+
+            return "#slot_"+slot.getId();
         } finally {
             em.close();
         }
     }
 
-    private void edit(final HttpServletRequest request, final String slotId) {
+    private String edit(final HttpServletRequest request, final String slotId) {
         EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
         try {
             em.getTransaction().begin();
@@ -79,6 +83,8 @@ public class TalkSlotServlet extends HttpServlet {
             setCalendarWithTime(end, request.getParameter("end"));
             slot.setEnd(end);
             em.getTransaction().commit();
+
+            return "#slot_"+slot.getId();
         } finally {
             em.close();
         }
