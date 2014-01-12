@@ -111,11 +111,12 @@
         </div>
 
 
+        <a name="day_${conferenceDay.id}">&nbsp;</a>
         <div class="row">
             <div class="col-md-12">
-                <a name="day_${conferenceDay.id}">
-                    <h2><a data-toggle="modal" href="#deleteDayModal${conferenceDay.id}"><c:out value="${conferenceDate}" /></a></h2>
-                </a>
+                <h2><c:out value="${conferenceDate}" />
+                    <a data-toggle="modal" href="#deleteDayModal${conferenceDay.id}"><span class="glyphicon glyphicon-trash"></span></a>
+                </h2>
             </div>
         </div>
 
@@ -205,16 +206,15 @@
                 </div>
             </div>
 
+            <a name="slot_${slot.id}">&nbsp;</a>
             <div class="panel panel-default">
-                <a name="slot_${slot.id}">
-                    <div class="panel-heading" onclick="showHide(${slot.id});">
-                        <h3 class="panel-title">
-                            <c:out value="${startTime}" />&nbsp;-&nbsp;<c:out value="${endTime}" />&nbsp;
-                            <a data-toggle="modal" href="#editSlotModal${slot.id}"><span class="glyphicon glyphicon-pencil"></span></a>
-                            <a data-toggle="modal" href="#deleteSlotModal${slot.id}"><span class="glyphicon glyphicon-trash"></span></a>
-                        </h3>
-                    </div>
-                </a>
+                <div class="panel-heading" onclick="showHide(${slot.id});">
+                    <h3 class="panel-title">
+                        <c:out value="${startTime}" />&nbsp;-&nbsp;<c:out value="${endTime}" />&nbsp;
+                        <a data-toggle="modal" href="#editSlotModal${slot.id}"><span class="glyphicon glyphicon-pencil"></span></a>
+                        <a data-toggle="modal" href="#deleteSlotModal${slot.id}"><span class="glyphicon glyphicon-trash"></span></a>
+                    </h3>
+                </div>
                 <div class="panel-body">
                     <div class="modal fade" id="newTalkModal${slot.id}" tabindex="-1" role="dialog" aria-labelledby="newTalkModal${slot.id}" aria-hidden="true">
                         <div class="modal-dialog">
@@ -426,7 +426,7 @@
 
 
                                 <div class="row">
-                                    <a name="talk_${talk.id}">
+                                    <a name="talk_${talk.id}">&nbsp;</a>
                                     <div class="col-md-12">
                                         <h4>
                                             <span onclick="showHide('t${talk.id}');">[
@@ -480,7 +480,6 @@
                                                 <p>${talk.shortDescription}</p>
                                             </div>
                                     </div>
-                                    </a>
                                 </div>
                             </c:forEach>
                         </div>
