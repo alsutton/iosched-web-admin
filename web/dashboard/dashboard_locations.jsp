@@ -37,6 +37,14 @@
         <div class="row">&nbsp;</div>
     </c:if>
 
+    <div class="row">
+        <div class="col-md-12">
+            <a data-toggle="modal" href="#addLocation" class="btn btn-primary btn-sm">Add Location</a>
+        </div>
+    </div>
+
+    <div class="row">&nbsp;</div>
+
     <div class="modal fade" id="addLocation" tabindex="-1" role="dialog" aria-labelledby="addLocation" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -99,13 +107,6 @@
 
     <div class="row">&nbsp;</div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <a data-toggle="modal" href="#addLocation" class="btn btn-primary btn-sm">Add Location</a>
-        </div>
-    </div>
-
-    <div class="row">&nbsp;</div>
 </div>
 </body>
 </html>

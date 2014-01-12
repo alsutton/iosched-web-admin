@@ -36,6 +36,14 @@
         <div class="row">&nbsp;</div>
     </c:if>
 
+    <div class="row">
+        <div class="col-md-12">
+            <a data-toggle="modal" href="#addTrackModal" class="btn btn-primary btn-sm">Add Track</a>
+        </div>
+    </div>
+
+    <div class="row">&nbsp;</div>
+
     <div class="modal fade" id="addTrackModal" tabindex="-1" role="dialog" aria-labelledby="addTrackModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -112,14 +120,6 @@
 
                 <h4><span class="glyphicon glyphicon-stop" style="color: ${track_colour}"></span>&nbsp;<a data-toggle="modal" href="#editTrackModal${track.id}">${track.name}</a></h4>
             </c:forEach>
-        </div>
-    </div>
-
-    <div class="row">&nbsp;</div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <a data-toggle="modal" href="#addTrackModal" class="btn btn-primary btn-sm">Add Track</a>
         </div>
     </div>
 

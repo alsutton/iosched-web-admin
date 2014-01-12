@@ -36,6 +36,14 @@
         <div class="row">&nbsp;</div>
     </c:if>
 
+    <div class="row">
+        <div class="col-md-12">
+            <a data-toggle="modal" href="#addSpeaker" class="btn btn-primary btn-sm">Add Speaker</a>
+        </div>
+    </div>
+
+    <div class="row">&nbsp;</div>
+
     <div class="modal fade" id="addSpeaker" tabindex="-1" role="dialog" aria-labelledby="addSpeaker" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -123,17 +131,7 @@
     </div>
 
     <div class="row">&nbsp;</div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <a data-toggle="modal" href="#addSpeaker" class="btn btn-primary btn-sm">Add Speaker</a>
-        </div>
-    </div>
-
-    <div class="row">&nbsp;</div>
 </div>
-
-<script src="<c:url value='/js/modal.js' />" />
 
 </body>
 </html>
