@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -84,9 +85,6 @@ public class TalksServlet extends HttpServlet {
         for(TalkVote vote : (List<TalkVote>)query.getResultList()) {
             em.remove(vote);
         }
-        for(Presenter presenter : talk.getPresenters()) {
-            presenter.getTalks().remove(talk);
-        }
         talk.getPresenters().clear();
         em.remove(talk);
     }
@@ -97,9 +95,10 @@ public class TalksServlet extends HttpServlet {
 
     private String add(final EntityManager em, final HttpServletRequest request) {
         Talk talk = new Talk();
+        talk.setPresenters(new HashSet<Presenter>());
         populateObject(em, talk, request);
-        em.persist(talk);
         addPresenter(em, talk, request);
+        em.persist(talk);
         return "#slot_"+talk.getSlot().getId();
     }
 
@@ -168,11 +167,11 @@ public class TalksServlet extends HttpServlet {
 
     private void addPresenter(final EntityManager em, final Talk talk, final String presenterId) {
         Presenter presenter = em.find( Presenter.class, Integer.parseInt(presenterId));
-        presenter.getTalks().add(talk);
+        talk.getPresenters().add(presenter);
     }
 
     private void deletePresenter(final EntityManager em, final Talk talk, final String presenterId) {
         Presenter presenter = em.find( Presenter.class, Integer.parseInt(presenterId));
-        presenter.getTalks().remove(talk);
+        talk.getPresenters().remove(presenter);
     }
 }

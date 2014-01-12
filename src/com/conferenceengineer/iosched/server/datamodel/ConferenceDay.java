@@ -26,7 +26,7 @@ public class ConferenceDay implements Comparable<ConferenceDay>{
     @Temporal(value=TemporalType.DATE)
     private Date date;
 
-    @OneToMany(mappedBy = "conferenceDay")
+    @OneToMany(mappedBy = "conferenceDay", cascade = CascadeType.ALL)
     @OrderBy("start")
     private List<TalkSlot> talkSlotList;
 

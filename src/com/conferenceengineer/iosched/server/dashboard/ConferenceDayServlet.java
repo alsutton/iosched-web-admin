@@ -1,6 +1,8 @@
 package com.conferenceengineer.iosched.server.dashboard;
 
 import com.conferenceengineer.iosched.server.datamodel.ConferenceDay;
+import com.conferenceengineer.iosched.server.datamodel.Presenter;
+import com.conferenceengineer.iosched.server.datamodel.Talk;
 import com.conferenceengineer.iosched.server.datamodel.TalkSlot;
 import com.conferenceengineer.iosched.server.utils.ConferenceUtils;
 import com.conferenceengineer.iosched.server.utils.EntityManagerWrapperBridge;
@@ -71,8 +73,7 @@ public class ConferenceDayServlet extends HttpServlet {
         EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
         try {
             em.getTransaction().begin();
-            ConferenceDay day = em.find(ConferenceDay.class, Integer.parseInt(id));
-            em.remove(day);
+            em.remove(em.find(ConferenceDay.class, Integer.parseInt(id)));
             em.getTransaction().commit();
         } finally {
             em.close();

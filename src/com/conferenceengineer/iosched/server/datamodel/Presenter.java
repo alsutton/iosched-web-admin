@@ -38,8 +38,7 @@ public class Presenter {
     @JoinColumn(name="user_id")
     private SystemUser user;
 
-    @ManyToMany
-    @JoinTable(name="talk_presenter")
+    @ManyToMany(mappedBy="presenters")
     private Set<Talk> talks;
 
     public Presenter() {

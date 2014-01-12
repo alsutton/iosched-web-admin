@@ -55,7 +55,8 @@ public class Talk {
     @Column(name="information_url")
     private String informationURL;
 
-    @ManyToMany(mappedBy = "talks")
+    @ManyToMany
+    @JoinTable(name="talk_presenter")
     @OrderBy("name")
     private Set<Presenter> presenters;
 

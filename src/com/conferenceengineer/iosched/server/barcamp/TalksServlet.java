@@ -134,13 +134,13 @@ public class TalksServlet extends HttpServlet {
             em.persist(presenter);
         } else {
             presenter = presenterList.get(0);
-            presenter.getTalks().add(talk);
+            talk.getPresenters().add(presenter);
         }
 
     }
 
     private void deletePresenter(final EntityManager em, final Talk talk, final String presenterId) {
         Presenter presenter = em.find( Presenter.class, Integer.parseInt(presenterId));
-        presenter.getTalks().remove(talk);
+        talk.getPresenters().remove(presenter);
     }
 }
