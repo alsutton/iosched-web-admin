@@ -118,7 +118,8 @@
                 </c:choose>
 
 
-                <h4><span class="glyphicon glyphicon-stop" style="color: ${track_colour}"></span>&nbsp;<a data-toggle="modal" href="#editTrackModal${track.id}">${track.name}</a></h4>
+                <h4><span class="glyphicon glyphicon-stop" style="color: ${track_colour}"></span>&nbsp;
+                    ${track.name}&nbsp;<a data-toggle="modal" href="#editTrackModal${track.id}"><span class="glyphicon glyphicon-pencil"></span></a></h4>
             </c:forEach>
         </div>
     </div>

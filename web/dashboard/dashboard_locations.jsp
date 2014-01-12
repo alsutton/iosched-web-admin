@@ -100,7 +100,7 @@
                         </div>
                     </div>
                 </div>
-                <h4><a data-toggle="modal" href="#editLocation${location.id}">${location.name}</a></h4>
+                <h4>${location.name}&nbsp;<a data-toggle="modal" href="#editLocation${location.id}"><span class="glyphicon glyphicon-pencil"></span></a></h4>
             </c:forEach>
         </div>
     </div>

@@ -124,7 +124,7 @@
                     </div>
                 </div>
 
-                <h4><a data-toggle="modal" href="#editSpeaker_${presenter.id}">${presenter.name}</a></h4>
+                <h4>${presenter.name}&nbsp;<a data-toggle="modal" href="#editSpeaker_${presenter.id}"><span class="glyphicon glyphicon-pencil"></span></a></h4>
                 <p>${presenter.shortBiography}</p>
             </c:forEach>
         </div>
