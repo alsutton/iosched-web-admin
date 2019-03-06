@@ -1,4 +1,4 @@
-package com.conferenceengineer.iosched.server.datamodel;
+package com.conferenceengineer.server.datamodel;
 
 import javax.persistence.*;
 import java.util.List;
@@ -67,10 +67,16 @@ public class Track implements Comparable<Track>{
     }
 
     public String getColour() {
+        if(colour != null) {
+            colour = colour.trim();
+        }
         return colour;
     }
 
     public void setColour(String colour) {
+        if(colour != null) {
+            colour = colour.trim();
+        }
         this.colour = colour;
     }
 
@@ -96,11 +102,26 @@ public class Track implements Comparable<Track>{
             return 0;
         }
         if(name == null) {
-            return Integer.MIN_VALUE;
+            return -1;
         }
         if(other.name == null) {
-            return Integer.MAX_VALUE;
+            return 1;
         }
         return name.compareTo(other.name);
+    }
+
+
+    @Override
+    public boolean equals(Object other) {
+        if(!(other instanceof Track)) {
+            return false;
+        }
+
+        return compareTo((Track)other) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return ((Integer)id).hashCode();
     }
 }

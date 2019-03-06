@@ -1,10 +1,8 @@
-package com.conferenceengineer.iosched.server.datamodel;
-
-import com.conferenceengineer.iosched.server.datamodel.ConferenceDay;
+package com.conferenceengineer.server.datamodel;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Representation of a user in the system
@@ -43,6 +41,9 @@ public class Conference {
     @OneToOne(mappedBy = "conference")
     private ConferenceMetadata metadata;
 
+    @OneToOne(mappedBy = "conference")
+    private Survey survey;
+
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "conference")
     @OrderBy("date")
     private List<ConferenceDay> dateList;
@@ -61,6 +62,10 @@ public class Conference {
 
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "conference")
     private List<ConferencePermission> collaborators;
+
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "conference")
+    @MapKey(name="id")
+    private Map<Integer, PublicationEndpoint> publicationEndpoints;
 
     public Conference() {
         super();
@@ -129,6 +134,14 @@ public class Conference {
         this.metadata = metadata;
     }
 
+    public Survey getSurvey() {
+        return survey;
+    }
+
+    public void setSurvey(Survey survey) {
+        this.survey = survey;
+    }
+
     public List<ConferenceDay> getDateList() {
         return dateList;
     }
@@ -167,5 +180,13 @@ public class Conference {
 
     public void setCollaborators(List<ConferencePermission> collaborators) {
         this.collaborators = collaborators;
+    }
+
+    public Map<Integer,PublicationEndpoint> getPublicationEndpoints() {
+        return publicationEndpoints;
+    }
+
+    public void setPublicationEndpoints( Map<Integer,PublicationEndpoint> publicationEndpoints) {
+        this.publicationEndpoints = publicationEndpoints;
     }
 }

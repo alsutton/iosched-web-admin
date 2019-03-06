@@ -1,8 +1,12 @@
-package com.conferenceengineer.iosched.server.datamodel;
+package com.conferenceengineer.server.datamodel;
+
+import com.conferenceengineer.server.survey.QuestionSummaryCreator;
+import com.conferenceengineer.server.survey.QuestionSummaryFactory;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Representation of a user in the system
@@ -59,6 +63,9 @@ public class Talk {
     @JoinTable(name="talk_presenter")
     @OrderBy("name")
     private Set<Presenter> presenters;
+
+    @OneToMany(mappedBy = "talk")
+    private List<SurveyAnswer> answers;
 
     public Talk() {
         super();
@@ -151,4 +158,78 @@ public class Talk {
     public void setPresenters(Set<Presenter> presenters) {
         this.presenters = presenters;
     }
+
+    public List<SurveyAnswer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<SurveyAnswer> answers) {
+        this.answers = answers;
+    }
+
+    @Transient
+    public List<SurveyResponses> getSurveyResponses() {
+        Map<SurveyQuestion, List<SurveyAnswer>> answers = collectAnswersForQuestions();
+
+        List<SurveyResponses> responses = new ArrayList<SurveyResponses>();
+        for(Map.Entry<SurveyQuestion, List<SurveyAnswer>> thisEntry : answers.entrySet()) {
+            SurveyResponses response = new SurveyResponses(thisEntry.getKey(), thisEntry.getValue());
+            responses.add(response);
+        }
+        Collections.sort(responses, SURVEY_RESPONSES_COMPARATOR);
+
+        return responses;
+    }
+
+
+    private Map<SurveyQuestion, List<SurveyAnswer>> collectAnswersForQuestions() {
+        Map<SurveyQuestion, List<SurveyAnswer>> answers = new HashMap<>();
+
+        for(SurveyAnswer answer : getAnswers()) {
+            SurveyQuestion question = answer.getQuestion();
+            List<SurveyAnswer> answersForQuestion = answers.get(question);
+            if(answersForQuestion == null) {
+                answersForQuestion = new ArrayList<>();
+                answers.put(question, answersForQuestion);
+            }
+            answersForQuestion.add(answer);
+        }
+
+        return answers;
+    }
+
+    public class SurveyResponses {
+        private SurveyQuestion mQuestion;
+        private List<SurveyAnswer> mAnswers;
+
+        SurveyResponses(SurveyQuestion question, List<SurveyAnswer> answers) {
+            mQuestion = question;
+            mAnswers = answers;
+        }
+
+        public SurveyQuestion getQuestion() {
+            return mQuestion;
+        }
+
+        public List<SurveyAnswer> getAnswers() {
+            return mAnswers;
+        }
+
+        public List<String> getSummaries() {
+            QuestionSummaryCreator summariser = QuestionSummaryFactory.getSummariserFor(mQuestion);
+            if(summariser == null) {
+                return null;
+            }
+            return summariser.createSummary(mQuestion, mAnswers);
+        }
+
+    }
+
+    private static final Comparator<SurveyResponses> SURVEY_RESPONSES_COMPARATOR =
+            new Comparator<SurveyResponses>() {
+                @Override
+                public int compare(SurveyResponses o1, SurveyResponses o2) {
+                    return o1.getQuestion().getPosition() - o2.getQuestion().getPosition();
+                }
+            };
 }

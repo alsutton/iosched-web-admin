@@ -1,15 +1,12 @@
-package com.conferenceengineer.iosched.server;
+package com.conferenceengineer.server;
 
-import com.conferenceengineer.iosched.server.datamodel.*;
-import com.conferenceengineer.iosched.server.utils.EntityManagerWrapperBridge;
-import com.conferenceengineer.iosched.server.utils.PasswordGenerator;
+import com.conferenceengineer.server.datamodel.SystemUser;
+import com.conferenceengineer.server.datamodel.SystemUserDAO;
+import com.conferenceengineer.server.utils.EntityManagerWrapperBridge;
+import com.conferenceengineer.server.utils.PasswordGenerator;
+import com.conferenceengineer.server.utils.ServletUtils;
 
-import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.servlet.ServletException;
@@ -19,12 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Date;
-import java.util.Properties;
 
-/**
- * Servlet handling registrations
- */
 public class RegisterServlet extends HttpServlet {
 
     @Override
@@ -39,72 +31,54 @@ public class RegisterServlet extends HttpServlet {
         String  name = request.getParameter("name"),
                 email = request.getParameter("email");
 
-        if(name == null || name.isEmpty()
-        || email == null || email.isEmpty()) {
-            request.getSession().setAttribute("error", "Please fill in all the registration fields.");
-            doGet(request, response);
+        if(name == null || name.isEmpty() || email == null || email.isEmpty()) {
+            handleError(request, response, "Please fill in all the registration fields.");
             return;
         }
 
         EntityManager em = EntityManagerWrapperBridge.getEntityManager(request);
         try {
             if(SystemUserDAO.getInstance().getByEmail(em, email) != null) {
-                request.getSession().setAttribute("error", "That email address is already registered.");
-                doGet(request, response);
+                handleError(request, response, "That email address is already registered.");
                 return;
             }
 
-            em.getTransaction().begin();
-
-            createNew(em, name, email);
-
-            em.getTransaction().commit();
+            createUser(em, name, email);
 
             request.getRequestDispatcher("/register_thanks.jsp").forward(request, response);
-        } catch (NoSuchAlgorithmException e) {
-            request.getSession().setAttribute("error", "There was a problem creating your account, please try again later.");
+        } catch (NoSuchAlgorithmException | MessagingException e) {
             log("Problem creating account", e);
-            doGet(request, response);
-        } catch (MessagingException e) {
-            request.getSession().setAttribute("error", "There was a problem creating your account, please try again later.");
-            log("Problem creating account", e);
-            doGet(request, response);
+            handleError(request, response, "There was a problem creating your account, please try again later.");
         } finally {
-            EntityTransaction transaction = em.getTransaction();
-            if(transaction.isActive()) {
-                transaction.rollback();
-            }
             em.close();
         }
-
     }
 
-
-    private void createNew(final EntityManager em, final String name, final String email)
+    private void createUser(final EntityManager em, final String name, final String email)
             throws NoSuchAlgorithmException, UnsupportedEncodingException, MessagingException {
-        SystemUser user = new SystemUser();
-        user.setEmail(email);
-        user.setHumanName(name);
+        EntityTransaction transaction = em.getTransaction();
+        try {
+            transaction.begin();
 
-        em.persist(user);
+            SystemUser user = new SystemUser();
+            user.setEmail(email);
+            user.setHumanName(name);
 
-        String password = PasswordGenerator.generatePassword();
-        UserAuthenticationInformationDAO.
-                getInstance().
-                createInternalAuthenticationEntry(em, user, password);
+            em.persist(user);
 
-        Properties props = new Properties();
-        props.put("mail.smtp.host", "localhost");
-        Session session = Session.getDefaultInstance(props);
+            PasswordGenerator.getInstance().createRandomPasswordForUser(em, user);
+            transaction.commit();
+        } finally {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+        }
+    }
 
-        Message message = new MimeMessage(session);
-        message.setFrom(new InternetAddress("support@funkyandroid.com"));
-        message.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
-        message.setSubject("Conference Engineer Password");
-        message.setText("Your password for Conference Engineer is : "+password);
-        message.setHeader("X-Mailer", "ConferenceEngineerAutomailer");
-        message.setSentDate(new Date());
-
-        Transport.send(message);
+    private void handleError(final HttpServletRequest request, final HttpServletResponse response,
+                             final String message)
+            throws IOException {
+        ServletUtils.storeErrorInSession(request, message);
+        ServletUtils.redirectTo(request, response, "/Register");
     }
 }

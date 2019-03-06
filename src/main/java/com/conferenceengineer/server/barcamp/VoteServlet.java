@@ -1,9 +1,9 @@
-package com.conferenceengineer.iosched.server.barcamp;
+package com.conferenceengineer.server.barcamp;
 
-import com.conferenceengineer.iosched.server.datamodel.*;
-import com.conferenceengineer.iosched.server.utils.EntityManagerWrapperBridge;
-import com.conferenceengineer.iosched.server.utils.LoginUtils;
-import com.conferenceengineer.iosched.server.utils.ServletUtils;
+import com.conferenceengineer.server.datamodel.*;
+import com.conferenceengineer.server.utils.EntityManagerWrapperBridge;
+import com.conferenceengineer.server.utils.LoginUtils;
+import com.conferenceengineer.server.utils.ServletUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;

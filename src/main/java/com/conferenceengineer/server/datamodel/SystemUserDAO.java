@@ -1,10 +1,7 @@
-package com.conferenceengineer.iosched.server.datamodel;
+package com.conferenceengineer.server.datamodel;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
 
 /**

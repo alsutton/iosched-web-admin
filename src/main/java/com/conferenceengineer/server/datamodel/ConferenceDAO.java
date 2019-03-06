@@ -1,8 +1,7 @@
-package com.conferenceengineer.iosched.server.datamodel;
+package com.conferenceengineer.server.datamodel;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import java.util.Date;
 import java.util.List;
 
 /**

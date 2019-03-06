@@ -1,8 +1,7 @@
-package com.conferenceengineer.iosched.server.datamodel;
+package com.conferenceengineer.server.datamodel;
 
 import javax.persistence.*;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,8 +32,11 @@ public class TalkSlot {
     @JoinColumn(name="location_id")
     private Location location;
 
+    @Column(name="event")
+    private String event;
+
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "slot")
-    @OrderBy("name")
+    @OrderBy("location.id")
     private List<Talk> talkList;
 
     public TalkSlot() {
@@ -45,6 +47,13 @@ public class TalkSlot {
         this.conferenceDay = conferenceDay;
         this.start = start;
         this.end = end;
+    }
+
+    public TalkSlot(final ConferenceDay conferenceDay, final Calendar start, final Calendar end, final String event) {
+        this.conferenceDay = conferenceDay;
+        this.start = start;
+        this.end = end;
+        this.event = event;
     }
 
     public int getId() {
@@ -85,6 +94,14 @@ public class TalkSlot {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public String getEvent() {
+        return event;
+    }
+
+    public void setEvent(String event) {
+        this.event = event;
     }
 
     public List<Talk> getTalkList() {

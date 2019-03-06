@@ -1,7 +1,6 @@
-package com.conferenceengineer.iosched.server.datamodel;
+package com.conferenceengineer.server.datamodel;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * Representation of a user in the system

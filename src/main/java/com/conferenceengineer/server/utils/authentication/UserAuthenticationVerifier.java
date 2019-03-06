@@ -1,7 +1,7 @@
-package com.conferenceengineer.iosched.server.utils.authentication;
+package com.conferenceengineer.server.utils.authentication;
 
 
-import com.conferenceengineer.iosched.server.datamodel.UserAuthenticationInformation;
+import com.conferenceengineer.server.datamodel.UserAuthenticationInformation;
 
 /**
  * Interface for classes which verify a users login details are valid given the credentiations and the authentication

@@ -1,10 +1,9 @@
-package com.conferenceengineer.iosched.server.barcamp;
+package com.conferenceengineer.server.barcamp;
 
-import com.conferenceengineer.iosched.server.datamodel.Conference;
+import com.conferenceengineer.server.datamodel.Conference;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
-import java.util.StringTokenizer;
 
 /**
  * Created with IntelliJ IDEA.

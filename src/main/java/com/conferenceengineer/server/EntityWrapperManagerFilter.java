@@ -1,6 +1,6 @@
-package com.conferenceengineer.iosched.server;
+package com.conferenceengineer.server;
 
-import com.conferenceengineer.iosched.server.datamodel.utils.EntityManagerFactoryWrapper;
+import com.conferenceengineer.server.datamodel.utils.EntityManagerFactoryWrapper;
 
 import javax.servlet.*;
 import java.io.IOException;

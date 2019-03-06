@@ -1,7 +1,7 @@
-package com.conferenceengineer.iosched.server.utils;
+package com.conferenceengineer.server.utils;
 
-import com.conferenceengineer.iosched.server.EntityWrapperManagerFilter;
-import com.conferenceengineer.iosched.server.datamodel.utils.EntityManagerFactoryWrapper;
+import com.conferenceengineer.server.EntityWrapperManagerFilter;
+import com.conferenceengineer.server.datamodel.utils.EntityManagerFactoryWrapper;
 
 import javax.persistence.EntityManager;
 import javax.servlet.ServletRequest;

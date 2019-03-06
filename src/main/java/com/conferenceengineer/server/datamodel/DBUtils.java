@@ -1,4 +1,4 @@
-package com.conferenceengineer.iosched.server.datamodel;
+package com.conferenceengineer.server.datamodel;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

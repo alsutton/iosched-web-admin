@@ -1,8 +1,8 @@
-package com.conferenceengineer.iosched.server;
+package com.conferenceengineer.server;
 
-import com.conferenceengineer.iosched.server.datamodel.SystemUser;
-import com.conferenceengineer.iosched.server.utils.EntityManagerWrapperBridge;
-import com.conferenceengineer.iosched.server.utils.LoginUtils;
+import com.conferenceengineer.server.datamodel.SystemUser;
+import com.conferenceengineer.server.utils.EntityManagerWrapperBridge;
+import com.conferenceengineer.server.utils.LoginUtils;
 
 import javax.persistence.EntityManager;
 import javax.servlet.*;

@@ -1,7 +1,7 @@
-package com.conferenceengineer.iosched.server.barcamp;
+package com.conferenceengineer.server.barcamp;
 
-import com.conferenceengineer.iosched.server.datamodel.*;
-import com.conferenceengineer.iosched.server.utils.*;
+import com.conferenceengineer.server.datamodel.*;
+import com.conferenceengineer.server.utils.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -101,7 +101,7 @@ public class Dashboard extends HttpServlet {
             }
             request.setAttribute("talks", randomisedList);
 
-            request.getRequestDispatcher("/barcamp/dashboard.jsp").forward(request, response);
+            request.getRequestDispatcher("/barcamp/admin.jsp").forward(request, response);
         } finally {
             em.close();
         }

@@ -1,4 +1,4 @@
-package com.conferenceengineer.iosched.server;
+package com.conferenceengineer.server;
 
 import javax.servlet.*;
 import java.io.IOException;

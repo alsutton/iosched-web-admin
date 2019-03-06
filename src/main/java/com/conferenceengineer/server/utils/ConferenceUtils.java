@@ -1,7 +1,6 @@
-package com.conferenceengineer.iosched.server.utils;
+package com.conferenceengineer.server.utils;
 
-import com.conferenceengineer.iosched.server.datamodel.Conference;
-import com.conferenceengineer.iosched.server.datamodel.ConferenceDAO;
+import com.conferenceengineer.server.datamodel.Conference;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;

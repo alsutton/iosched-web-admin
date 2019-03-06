@@ -1,4 +1,4 @@
-package com.conferenceengineer.iosched.server.datamodel.utils;
+package com.conferenceengineer.server.datamodel.utils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -12,27 +12,31 @@ import java.util.Map;
  */
 public class EntityManagerFactoryWrapper {
 
+    private static final Map<String,String> ENTITY_MANAGER_PROPERTIES = new HashMap<>();
+    static {
+        // TODO Insert correct database credentials
+
+        ENTITY_MANAGER_PROPERTIES.put("javax.persistence.jdbc.user", "");
+        ENTITY_MANAGER_PROPERTIES.put("javax.persistence.jdbc.password", "");
+        ENTITY_MANAGER_PROPERTIES.put("javax.persistence.jdbc.driver", "org.postgresql.Driver");
+        ENTITY_MANAGER_PROPERTIES.put("javax.persistence.jdbc.url", "jdbc:postgresql://localhost:5432/conferenceengineer");
+    }
+
+
+    protected static Map<String,String> sEntityManagerProperties = ENTITY_MANAGER_PROPERTIES;
+
     /**
      * The EntityManagerFactory for this application.
      */
 
-    private final EntityManagerFactory mEntityManagerFactory;
-
-    /**
-     * The holder to the EntityManager
-     */
-
-    private static ThreadLocal<EntityManager> sEntityManagerHolder = new ThreadLocal<EntityManager>();
+    private EntityManagerFactory mEntityManagerFactory = null;
 
     /**
      * Private constructor to enforce singleton pattern
      */
 
     private EntityManagerFactoryWrapper() {
-        Map<String,String> entityProperties = new HashMap<String, String>();
-        entityProperties.put("javax.persistence.jdbc.user", "cewebapp");
-        entityProperties.put("javax.persistence.jdbc.password", "c00lb34ns");
-        mEntityManagerFactory = Persistence.createEntityManagerFactory("conferenceengineer", entityProperties);
+        super();
     }
 
 
@@ -42,7 +46,10 @@ public class EntityManagerFactoryWrapper {
      * @return An usable EntityManager
      */
 
-    public EntityManager getEntityManager() {
+    public synchronized EntityManager getEntityManager() {
+        if(mEntityManagerFactory == null) {
+            mEntityManagerFactory = Persistence.createEntityManagerFactory("conferenceengineer", sEntityManagerProperties);
+        }
         return mEntityManagerFactory.createEntityManager();
     }
 
@@ -50,10 +57,11 @@ public class EntityManagerFactoryWrapper {
      * Close the factory
      */
 
-    public void close() {
-        mEntityManagerFactory.close();
+    public synchronized void close() {
+        if(mEntityManagerFactory != null) {
+            mEntityManagerFactory.close();
+        }
     }
-
 
     /**
      * Singleton getInstance method

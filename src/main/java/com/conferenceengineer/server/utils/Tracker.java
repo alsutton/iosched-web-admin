@@ -1,4 +1,4 @@
-package com.conferenceengineer.iosched.server.utils;
+package com.conferenceengineer.server.utils;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

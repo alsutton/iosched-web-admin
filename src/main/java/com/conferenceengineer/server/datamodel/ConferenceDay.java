@@ -1,6 +1,4 @@
-package com.conferenceengineer.iosched.server.datamodel;
-
-import com.conferenceengineer.iosched.server.datamodel.Conference;
+package com.conferenceengineer.server.datamodel;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -78,11 +76,25 @@ public class ConferenceDay implements Comparable<ConferenceDay>{
             return 0;
         }
         if(date == null) {
-            return Integer.MIN_VALUE;
+            return -1;
         }
         if(other.date == null) {
-            return Integer.MAX_VALUE;
+            return 1;
         }
         return date.compareTo(other.date);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if(!(other instanceof ConferenceDay)) {
+            return false;
+        }
+
+        return compareTo((ConferenceDay)other) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return ((Integer)id).hashCode();
     }
 }

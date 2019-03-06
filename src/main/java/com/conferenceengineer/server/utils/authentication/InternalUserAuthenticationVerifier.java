@@ -1,10 +1,10 @@
-package com.conferenceengineer.iosched.server.utils.authentication;
+package com.conferenceengineer.server.utils.authentication;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
-import com.conferenceengineer.iosched.server.datamodel.UserAuthenticationInformation;
-import com.conferenceengineer.iosched.server.datamodel.UserAuthenticationInformationDAO;
+import com.conferenceengineer.server.datamodel.UserAuthenticationInformation;
+import com.conferenceengineer.server.datamodel.UserAuthenticationInformationDAO;
 
 /**
  * Authentication information verifier for the internal user database

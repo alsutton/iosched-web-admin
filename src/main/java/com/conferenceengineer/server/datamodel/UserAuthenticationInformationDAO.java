@@ -1,4 +1,4 @@
-package com.conferenceengineer.iosched.server.datamodel;
+package com.conferenceengineer.server.datamodel;
 
 import org.apache.commons.codec.binary.Base64;
 

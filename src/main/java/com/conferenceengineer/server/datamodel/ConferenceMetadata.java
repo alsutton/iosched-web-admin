@@ -1,8 +1,7 @@
-package com.conferenceengineer.iosched.server.datamodel;
+package com.conferenceengineer.server.datamodel;
 
 import javax.persistence.*;
 import java.util.Calendar;
-import java.util.List;
 
 /**
  * Representation of the metadata about the conference held in the database.

@@ -102,6 +102,7 @@ CREATE TABLE talk_slot (
 	conference_day integer references conference_day(id),
 	slot_start timestamp with time zone,
 	slot_end timestamp with time zone,
+	event text,
 	location_id integer references location(id)
 );
 
@@ -175,6 +176,65 @@ CREATE TABLE vote (
 	vote_series_id integer references vote_series(id),
 	user_id integer references system_users(id),
 	vote_option_id integer references vote_option(id)
+);
+
+CREATE TABLE password_reset_requests (
+	id serial PRIMARY KEY,
+	user_id integer references system_users(id),
+	request_timestamp timestamp with time zone,
+	secret varchar(1024),
+	state integer
+);
+
+CREATE TABLE publication_endpoint (
+  id serial PRIMARY KEY,
+  conference_id integer references conference(id),
+  type integer,
+  url varchar(1024),
+  apikey varchar(1024)
+);
+
+CREATE TABLE last_modification_times (
+  id serial PRIMARY KEY,
+  conference_id integer references conference(id),
+  last_modification timestamp with time zone,
+  name varchar(1024)
+);
+
+CREATE TABLE last_export_details (
+  id serial PRIMARY KEY,
+  serial_number integer,
+  export_type integer,
+  conference_id integer references conference(id),
+  last_export timestamp with time zone,
+  name varchar(1024)
+);
+
+CREATE TABLE survey (
+  id serial PRIMARY KEY,
+  conference_id integer references conference(id),
+  apikey text
+);
+
+CREATE TABLE survey_question (
+  id serial PRIMARY KEY,
+  survey_id integer references survey(id),
+  type integer,
+  position integer,
+  question text
+);
+
+CREATE TABLE survey_response (
+  id SERIAL PRIMARY KEY,
+  attendee TEXT
+);
+
+CREATE TABLE survey_answer (
+  id serial PRIMARY KEY,
+  talk_id integer references talk(id),
+  question_id integer references survey_question(id),
+  response_id integer references survey_response(id),
+  answer text
 );
 
 create sequence hibernate_sequence;

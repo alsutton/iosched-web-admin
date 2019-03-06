@@ -1,7 +1,7 @@
-package com.conferenceengineer.iosched.server.barcamp;
+package com.conferenceengineer.server.barcamp;
 
-import com.conferenceengineer.iosched.server.datamodel.SystemUser;
-import com.conferenceengineer.iosched.server.datamodel.Voter;
+import com.conferenceengineer.server.datamodel.SystemUser;
+import com.conferenceengineer.server.datamodel.Voter;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;

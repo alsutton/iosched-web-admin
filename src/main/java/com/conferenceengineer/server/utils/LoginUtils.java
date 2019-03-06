@@ -1,11 +1,11 @@
-package com.conferenceengineer.iosched.server.utils;
+package com.conferenceengineer.server.utils;
 
-import com.conferenceengineer.iosched.server.datamodel.SystemUser;
-import com.conferenceengineer.iosched.server.datamodel.SystemUserDAO;
-import com.conferenceengineer.iosched.server.datamodel.UserAuthenticationInformation;
-import com.conferenceengineer.iosched.server.datamodel.UserAuthenticationInformationDAO;
-import com.conferenceengineer.iosched.server.utils.authentication.InternalUserAuthenticationVerifier;
-import com.conferenceengineer.iosched.server.utils.authentication.UserAuthenticationVerifier;
+import com.conferenceengineer.server.datamodel.SystemUser;
+import com.conferenceengineer.server.datamodel.SystemUserDAO;
+import com.conferenceengineer.server.datamodel.UserAuthenticationInformation;
+import com.conferenceengineer.server.datamodel.UserAuthenticationInformationDAO;
+import com.conferenceengineer.server.utils.authentication.InternalUserAuthenticationVerifier;
+import com.conferenceengineer.server.utils.authentication.UserAuthenticationVerifier;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.Cookie;
@@ -100,11 +100,9 @@ public final class LoginUtils {
      */
 
     public Cookie createCookie(final SystemUser user) {
-        StringBuilder cookieString = new StringBuilder();
         Cookie cookie;
         if( user != null ) {
-            cookieString.append(Integer.toString(user.getId()));
-            cookie = new Cookie(COOKIE_NAME, cookieString.toString());
+            cookie = new Cookie(COOKIE_NAME, Integer.toString(user.getId()));
             cookie.setMaxAge(60*60*24*14);
             cookie.setPath("/");
         } else {
@@ -127,11 +125,7 @@ public final class LoginUtils {
                                final UserAuthenticationInformation authenticatorInformation) {
         UserAuthenticationVerifier verifier
                 = authenticationVerifiers.get(authenticatorInformation.getAuthenticatorType());
-        if(verifier == null) {
-            return false;
-        }
-
-        return verifier.isUserAuthenticated(username, password, authenticatorInformation);
+        return verifier != null && verifier.isUserAuthenticated(username, password, authenticatorInformation);
     }
 
     //--------- Singleton

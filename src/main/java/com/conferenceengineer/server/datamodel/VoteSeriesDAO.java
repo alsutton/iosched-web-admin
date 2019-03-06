@@ -1,4 +1,4 @@
-package com.conferenceengineer.iosched.server.datamodel;
+package com.conferenceengineer.server.datamodel;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
